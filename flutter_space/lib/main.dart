@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget{
-   Widget build(BuildContext context) {
-     return MaterialApp(home: Text('Welcome!'), );
-   }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('My Flutter App'),
+        ),
+        body: Text('Some text as placeholder!'),
+      ),
+    );
+  }
 }
