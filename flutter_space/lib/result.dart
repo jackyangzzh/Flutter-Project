@@ -7,7 +7,8 @@ class Result extends StatelessWidget {
   Result(this.resultScore, this.resetHandler);
 
   String get resultPhrase {
-    var resultText = 'You did it!';
+    var resultText;
+
     if (resultScore >= 70) {
       return resultText = 'We are very similiar ^_^';
     } else if (resultScore <= 30) {
@@ -15,6 +16,11 @@ class Result extends StatelessWidget {
     } else {
       return resultText = 'We are kinda alike =D';
     }
+  }
+
+  String get getPercentage {
+    var percentage = "We are " + resultScore.toString() + "% alike";
+    return percentage;
   }
 
   @override
@@ -29,6 +35,18 @@ class Result extends StatelessWidget {
           style: TextStyle(fontSize: 28),
           textAlign: TextAlign.center,
         ),
+        Padding(
+          padding: EdgeInsets.all(5),
+        ),
+        Text(
+          getPercentage,
+            style: TextStyle(fontSize: 20), 
+            textAlign: TextAlign.center
+        ),
+        Padding(
+          padding: EdgeInsets.all(20),
+        ),
+        
         FlatButton(
           child: Text(
             'Try again',
