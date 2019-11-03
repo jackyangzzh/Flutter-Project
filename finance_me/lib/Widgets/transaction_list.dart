@@ -3,47 +3,54 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
+  final List<Transaction> transactions;
 
+  TransactionList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-              children: _userTransactions.map((tx) {
-                return Card(
-                    child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 28),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        '\$ ${tx.amount}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 28),
-                      ),
-                    ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            tx.title,
+    return Container(
+      height: 300,
+      child: SingleChildScrollView(
+              child: Column(
+                  children: transactions.map((tx) {
+                    return Card(
+                        child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 28),
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            '\$ ${tx.amount}',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17),
+                                fontWeight: FontWeight.normal, fontSize: 28),
                           ),
-                          SizedBox(
-                            height: 10,
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                tx.title,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 17),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                DateFormat.yMMMEd().format(tx.date),
+                                style: TextStyle(color: Colors.grey[700]),
+                              )
+                            ],
                           ),
-                          Text(
-                            DateFormat.yMMMEd().format(tx.date),
-                            style: TextStyle(color: Colors.grey[700]),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ));
-              }).toList(),
-            );
+                        )
+                      ],
+                    ));
+                  }).toList(),
+                ),
+      ),
+    );
   }
 }
