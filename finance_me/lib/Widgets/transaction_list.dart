@@ -32,7 +32,7 @@ class TransactionList extends StatelessWidget {
                     Text(
                       transactions[index].title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                          Theme.of(context).textTheme.title,
                     ),
                     SizedBox(
                       height: 10,

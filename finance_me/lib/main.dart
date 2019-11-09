@@ -13,9 +13,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        accentColor: Colors.purple,
-      ),
+          primarySwatch: Colors.green,
+          accentColor: Colors.purple,
+          fontFamily: 'Montserrat',
+          textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold)),
+          appBarTheme: AppBarTheme(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                  title: TextStyle(fontFamily: 'Montserrat', fontSize: 20)))),
       title: 'Finance Me!',
       home: MyHomePage(),
     );
@@ -32,13 +40,18 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return GestureDetector(onTap: () {}, child: NewTransaction(_addNewTransaction),behavior: HitTestBehavior.opaque,);
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
       },
     );
   }
 
   final List<Transaction> _userTransactions = [
-    Transaction(id: 't1', title: 'Basketball Shoes', amount: 120, date: DateTime.now()),
+    Transaction(
+        id: 't1', title: 'Basketball Shoes', amount: 120, date: DateTime.now()),
     Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
   ];
 
