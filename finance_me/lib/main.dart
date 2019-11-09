@@ -50,9 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: 't1', title: 'Basketball Shoes', amount: 120, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
+    // Transaction(
+    //     id: 't1', title: 'Basketball Shoes', amount: 120, date: DateTime.now()),
+    // Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
   ];
 
   void _addNewTransaction(String title, double amount) {
@@ -81,19 +81,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text('Chart'),
-                elevation: 3,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    child: Card(
+                      child: Text('Chart'),
+                      elevation: 3,
+                    ),
+                  ),
+                  TransactionList(_userTransactions),
+                ],
               ),
-            ),
-            TransactionList(_userTransactions),
-          ],
-        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
