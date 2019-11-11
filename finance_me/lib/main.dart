@@ -3,6 +3,7 @@ import './Widgets/transaction_list.dart';
 import './Widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import './Models/transaction.dart';
+import './Widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -55,6 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
   ];
 
+  List<Transaction> get _recentTransaction {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   void _addNewTransaction(String title, double amount) {
     final newTx = Transaction(
         title: title,
@@ -81,19 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    child: Card(
-                      child: Text('Chart'),
-                      elevation: 3,
-                    ),
-                  ),
-                  TransactionList(_userTransactions),
-                ],
-              ),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Chart(_recentTransaction),
+            TransactionList(_userTransactions),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
