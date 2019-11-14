@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
     // Transaction(
     //     id: 't1', title: 'Basketball Shoes', amount: 120, date: DateTime.now()),
-     Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
+     //Transaction(id: 't2', title: 'Hoodie', amount: 79.99, date: DateTime.now()),
   ];
 
   List<Transaction> get _recentTransaction {
@@ -79,12 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Finance Me!'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add_circle_outline),
-            onPressed: () => _startAddNewTransaction(context),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -96,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => _startAddNewTransaction(context),
