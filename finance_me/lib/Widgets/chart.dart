@@ -35,8 +35,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
+    return Card(
         elevation: 5,
         margin: EdgeInsets.all(20),
         child: Row(
@@ -54,7 +53,6 @@ class Chart extends StatelessWidget {
             );
           }).toList(),
         ),
-      ),
     );
   }
 }
