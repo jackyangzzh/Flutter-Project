@@ -25,9 +25,13 @@ class TransactionList extends StatelessWidget {
                       'assets/images/nothing.png',
                       fit: BoxFit.cover,
                     )),
+                    SizedBox(
+                  height: 20,
+                ),
                 Text(
                   'Add something please',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.title, 
+                  
                 ),
               ],
             );

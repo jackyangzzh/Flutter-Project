@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -91,14 +94,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   ],
                 ),
               ),
-              FlatButton(
-                color: Theme.of(context).primaryColorDark,
-                child: Text(
-                  'Add',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
-                onPressed: _submitData,
-              )
+             button('Choose Date', _submitData),
             ],
           ),
         ),
