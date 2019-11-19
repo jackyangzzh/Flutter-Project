@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('Finance Me!'),
+            middle: const Text('Finance Me!'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
         : AppBar(
-            title: Text('Finance Me!'),
+            title: const Text('Finance Me!'),
           );
     final txList = Container(
         height: (mediaQuery.size.height -
