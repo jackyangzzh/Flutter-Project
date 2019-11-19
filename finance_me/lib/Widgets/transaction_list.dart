@@ -14,36 +14,37 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-          ? LayoutBuilder(builder: (ctx, contraints){
-            return Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 50,
-                ),
-                Container(
-                    height: contraints.maxHeight * 0.4,
-                    child: Image.asset(
-                      'assets/images/nothing.png',
-                      fit: BoxFit.cover,
-                    )),
-                    SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Add something please',
-                  style: Theme.of(context).textTheme.title, 
-                  
-                ),
-              ],
-            );
-          },) 
-          : ListView.builder(
-              itemBuilder: (ctx, index) {
-                return TransactionItem(transactions: transactions[index], deleteTransaction: _deleteTransaction);
-              },
-              itemCount: transactions.length,
-    );
+        ? LayoutBuilder(
+            builder: (ctx, contraints) {
+              return Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                      height: contraints.maxHeight * 0.4,
+                      child: Image.asset(
+                        'assets/images/nothing.png',
+                        fit: BoxFit.cover,
+                      )),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Add something please',
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ],
+              );
+            },
+          )
+        : ListView(
+            children: transactions
+                .map((tx) => TransactionItem(
+                    key: ValueKey(tx.id),
+                    transactions: tx,
+                    deleteTransaction: _deleteTransaction))
+                .toList(),
+          );
   }
 }
-
-
