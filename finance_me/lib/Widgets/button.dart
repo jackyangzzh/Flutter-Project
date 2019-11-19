@@ -6,7 +6,7 @@ class button extends StatelessWidget {
   final String text;
   final Function _func;
 
-  button(this.text, this._func);
+  const button(this.text, this._func);
 
   @override
   Widget build(BuildContext context) {
