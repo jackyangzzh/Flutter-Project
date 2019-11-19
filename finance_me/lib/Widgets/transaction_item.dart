@@ -19,11 +19,6 @@ class TransactionItem extends StatefulWidget {
 }
 
 class _TransactionItemState extends State<TransactionItem> {
-  @override
-  void initState() {
-    
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
