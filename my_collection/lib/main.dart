@@ -14,7 +14,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
         accentColor: Colors.redAccent,
-        canvasColor: Color.fromRGBO(255, 48, 48, 1),
+        canvasColor: Color.fromRGBO(235, 255, 255, 1),
+        fontFamily: 'Raleway',
+        textTheme: ThemeData.light().textTheme.copyWith(
+          body1: TextStyle(color: Colors.black),
+          body2: TextStyle(color: Colors.black),
+          title: TextStyle(fontSize: 24, fontFamily: 'Montserrat')
+        )
       ),
       home: CategoryScreen(),
     );
