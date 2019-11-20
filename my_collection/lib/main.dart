@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Collection App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.cyan,
+        accentColor: Colors.redAccent,
+        canvasColor: Color.fromRGBO(255, 48, 48, 1),
       ),
       home: CategoryScreen(),
     );

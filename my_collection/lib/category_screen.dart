@@ -6,16 +6,17 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My collection')),
+        appBar: AppBar(title: const Text('My collection')),
         body: GridView(
-      children: dummyData
-          .map((data) => CategoryItem(data.title, data.color))
-          .toList(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
-    ));
+          padding: EdgeInsets.all(15),
+          children: dummyData
+              .map((data) => CategoryItem(data.title, data.color))
+              .toList(),
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              childAspectRatio: 3 / 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20),
+        ));
   }
 }
