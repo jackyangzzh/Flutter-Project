@@ -13,7 +13,7 @@ const dummyData = const [
   Category(id: 'c8', title: 'Climbing', color: Colors.amber),
   Category(id: 'c9', title: 'Bars', color: Colors.lightBlue),
   Category(id: 'c10', title: 'Hype Collection', color: Colors.indigo),
-  Category(id: 'c11', title: 'Bags', color: Colors.lime),
+  Category(id: 'c11', title: 'Train Watching', color: Colors.lime),
   Category(id: 'c12', title: 'Brunch', color: Colors.teal),
 ];
 
@@ -92,5 +92,17 @@ const dummyCollection = const [
     difficulty: Difficulty.Challenging,
     wouldAgain: true,
     wouldRecommand: true,
-  )
+  ),
+  Collection(
+    id: 'e7',
+    categories: ['Climbing', 'Hiking', 'Train Watching'],
+    title: 'Astounshing view from top of Fuji Mountain',
+    location: 'Japan',
+    imageUrl:
+        'https://www.jrailpass.com/blog/wp-content/uploads/2016/05/FujiBulletTrain-1024x576.jpg',
+    description: 'Beautiful view from the train of Fuji Mountain',
+    difficulty: Difficulty.Average,
+    wouldAgain: true,
+    wouldRecommand: true,
+  ),
 ];
