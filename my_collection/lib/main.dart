@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         textTheme: ThemeData.light().textTheme.copyWith(
           body1: TextStyle(color: Colors.black),
           body2: TextStyle(color: Colors.black),
-          title: TextStyle(fontSize: 24, fontFamily: 'Montserrat')
+          title: TextStyle(fontSize: 17, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)
         )
       ),
       home: CategoryScreen(),
