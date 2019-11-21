@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CategoryCollectScreen extends StatelessWidget {
+  static const routeName = '/collection_page';
+
   @override
   Widget build(BuildContext context) {
     final routeArgs =

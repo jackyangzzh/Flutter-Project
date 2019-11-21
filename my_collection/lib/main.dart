@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600))),
       home: CategoryScreen(),
       routes: {
-        '/category_collection': (ctx) => CategoryCollectScreen(),
+        CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
       },
     );
   }
