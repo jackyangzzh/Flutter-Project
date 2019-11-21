@@ -22,7 +22,7 @@ class Collection {
       {@required this.id,
       @required this.categories,
       @required this.title,
-      @required this.location,
+      this.location,
       @required this.imageUrl,
       @required this.description,
       @required this.difficulty,
