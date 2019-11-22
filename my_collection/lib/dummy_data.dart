@@ -20,7 +20,7 @@ const dummyData = const [
 const dummyCollection = const [
   Collection(
     id: 'e1',
-    categories: ['Resturuants', 'Brunch', 'Meals'],
+    categories: ['c1', 'c12', 'c6'],
     title: 'Sunday Brunch at Madison Sourdough',
     location: 'Madison',
     imageUrl:
@@ -33,7 +33,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e2',
-    categories: ['Bars', 'Resturuants'],
+    categories: ['c9', 'c1'],
     title: 'Date night at 95th floor',
     location: 'Chicago',
     imageUrl:
@@ -46,7 +46,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e3',
-    categories: ['Keychain', 'Hype Collection'],
+    categories: ['c3', 'c10'],
     title: 'My birthday gift -- Gucci Keychain',
     imageUrl:
         'https://cdn-images.farfetch-contents.com/13/16/60/90/13166090_14273449_600.jpg',
@@ -58,7 +58,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e4',
-    categories: ['Hiking', 'Climbing'],
+    categories: ['c2', 'c8'],
     title: 'Catching fall color',
     location: 'Devil\'s Lake',
     imageUrl:
@@ -71,7 +71,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e5',
-    categories: ['Sneakers', 'Hype Collection'],
+    categories: ['c7', 'c10'],
     title: 'Finally Got it! Off White Shoes',
     imageUrl:
         'https://c.static-nike.com/a/images/w_1920,c_limit,f_auto/pv1p8loom2ykknqmdm1i/nike-the-ten-air-vapormax-off-white-white-release-date.jpg',
@@ -83,7 +83,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e6',
-    categories: ['Brunch', 'Hotel', 'Meals', 'Resturuants'],
+    categories: ['c12', 'c5', 'c6', 'c1'],
     title: 'Brunch at top of Chicago Athletic Association!',
     location: 'Chicago',
     imageUrl:
@@ -95,7 +95,7 @@ const dummyCollection = const [
   ),
   Collection(
     id: 'e7',
-    categories: ['Climbing', 'Hiking', 'Train Watching'],
+    categories: ['c8', 'c2', 'c11'],
     title: 'Astounshing view from top of Fuji Mountain',
     location: 'Japan',
     imageUrl:
@@ -105,4 +105,15 @@ const dummyCollection = const [
     wouldAgain: true,
     wouldRecommand: true,
   ),
+  Collection(
+    id: 'e8',
+    categories: ['c1', 'c3'],
+    title: 'Vintage Pizza Hut Keychain',
+    imageUrl:
+        'https://i.etsystatic.com/5700633/r/il/d04c32/1620437604/il_570xN.1620437604_sjdz.jpg',
+    description: 'A keychain that I found in my basement. Super cool.',
+    difficulty: Difficulty.Challenging,
+    wouldAgain: false,
+    wouldRecommand: false,
+  )
 ];
