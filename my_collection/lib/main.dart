@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './Screens/item_detail_screen.dart';
 import './Screens/category_collect_screen.dart';
 import './Screens/category_screen.dart';
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       home: CategoryScreen(),
       routes: {
         CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
+        ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
       },
     );
   }

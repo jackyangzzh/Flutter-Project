@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../Screens/item_detail_screen.dart';
 import '../Model/collection.dart';
 
 class CollectItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   final String location;
@@ -9,7 +11,8 @@ class CollectItem extends StatelessWidget {
   final Mood mood;
 
   CollectItem(
-      {@required this.title,
+      {@required this.id,
+      @required this.title,
       @required this.imageUrl,
       @required this.mood,
       this.location,
@@ -49,10 +52,13 @@ class CollectItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void selectItem() {}
+    void selectItem(BuildContext context) {
+      Navigator.of(context)
+          .pushNamed(ItemDetailScreen.routeName, arguments: {'id': id});
+    }
 
     return InkWell(
-      onTap: selectItem,
+      onTap: () => selectItem(context),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 5,
