@@ -7,6 +7,14 @@ enum Difficulty {
   Hard,
 }
 
+enum Mood {
+  Miserable,
+  Disappointing,
+  Average, 
+  Happy,
+  Amazing,
+}
+
 class Collection {
   final String id;
   final List<String> categories;
@@ -15,6 +23,7 @@ class Collection {
   final String imageUrl;
   final String description;
   final Difficulty difficulty;
+  final Mood mood;
   final bool wouldAgain;
   final bool wouldRecommand;
 
@@ -26,6 +35,7 @@ class Collection {
       @required this.imageUrl,
       @required this.description,
       @required this.difficulty,
+      @required this.mood,
       @required this.wouldAgain,
       @required this.wouldRecommand});
 }

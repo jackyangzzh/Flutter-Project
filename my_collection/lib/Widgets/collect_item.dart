@@ -6,16 +6,46 @@ class CollectItem extends StatelessWidget {
   final String imageUrl;
   final String location;
   final Difficulty difficulty;
+  final Mood mood;
 
   CollectItem(
       {@required this.title,
       @required this.imageUrl,
+      @required this.mood,
       this.location,
       @required this.difficulty});
 
-      String get getDifficulty {
-        
-      }
+  String get getDifficulty {
+    switch (difficulty) {
+      case Difficulty.Easy:
+        return 'Easy';
+      case Difficulty.Average:
+        return 'Average';
+      case Difficulty.Challenging:
+        return 'Challenging';
+      case Difficulty.Hard:
+        return 'Hard';
+      default:
+        return 'Unknown';
+    }
+  }
+
+  String get getMood {
+    switch (mood) {
+      case Mood.Disappointing:
+        return 'Disappointing';
+      case Mood.Miserable:
+        return 'Miserable';
+      case Mood.Happy:
+        return 'Happy';
+      case Mood.Average:
+        return 'Average';
+      case Mood.Amazing:
+        return 'Amazing';
+      default:
+        return 'Unknown';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +95,7 @@ class CollectItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Row(
                     children: <Widget>[
@@ -73,7 +104,7 @@ class CollectItem extends StatelessWidget {
                         width: 5,
                       ),
                       location == null
-                          ? Text('No Location')
+                          ? Text('Mystery')
                           : Text(
                               '$location',
                               style: TextStyle(fontSize: 13),
@@ -82,16 +113,26 @@ class CollectItem extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.location_on),
+                      Icon(Icons.event_note),
                       SizedBox(
                         width: 5,
                       ),
-                      location == null
-                          ? Text('No Location')
-                          : Text(
-                              '$location',
-                              style: TextStyle(fontSize: 13),
-                            ),
+                      Text(
+                        '$getDifficulty',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.mood),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '$getMood',
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ],
                   ),
                 ],

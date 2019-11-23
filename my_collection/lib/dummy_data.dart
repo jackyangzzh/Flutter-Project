@@ -28,6 +28,7 @@ const dummyCollection = const [
     description:
         'I had a great Sunday brunch with my friends. They have the best crossiant there!',
     difficulty: Difficulty.Easy,
+    mood: Mood.Happy,
     wouldAgain: true,
     wouldRecommand: true,
   ),
@@ -41,6 +42,7 @@ const dummyCollection = const [
     description:
         'A great date place in Chicago. The view was breathtaking. The food is average tho',
     difficulty: Difficulty.Challenging,
+    mood: Mood.Amazing,
     wouldAgain: false,
     wouldRecommand: true,
   ),
@@ -53,6 +55,7 @@ const dummyCollection = const [
     description:
         'This is a special keychain my girlfriend gifted for my birthday. Love it!',
     difficulty: Difficulty.Average,
+    mood: Mood.Amazing,
     wouldAgain: true,
     wouldRecommand: true,
   ),
@@ -66,6 +69,7 @@ const dummyCollection = const [
     description:
         'I was able to watch sunset on Devil\'s Lake. It was absolutely beautiful',
     difficulty: Difficulty.Challenging,
+    mood: Mood.Amazing,
     wouldAgain: true,
     wouldRecommand: true,
   ),
@@ -79,6 +83,7 @@ const dummyCollection = const [
         'Camp outside the Nike store for 5 hours and I finally got it! So happy!',
     difficulty: Difficulty.Hard,
     wouldAgain: true,
+    mood: Mood.Happy,
     wouldRecommand: false,
   ),
   Collection(
@@ -90,6 +95,7 @@ const dummyCollection = const [
         'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2F1445637410%2Fcindys-rooftop-chicago-ch1015.jpg%3Fitok%3Dj-1yTb04&c=sc&poi=face&q=85',
     description: 'So hard to get a spot, but it totally lives up to the hype!',
     difficulty: Difficulty.Challenging,
+    mood: Mood.Amazing,
     wouldAgain: true,
     wouldRecommand: true,
   ),
@@ -102,6 +108,7 @@ const dummyCollection = const [
         'https://www.jrailpass.com/blog/wp-content/uploads/2016/05/FujiBulletTrain-1024x576.jpg',
     description: 'Beautiful view from the train of Fuji Mountain',
     difficulty: Difficulty.Average,
+    mood: Mood.Amazing,
     wouldAgain: true,
     wouldRecommand: true,
   ),
@@ -111,8 +118,10 @@ const dummyCollection = const [
     title: 'Ramen Keychain',
     imageUrl:
         'https://ae01.alicdn.com/kf/HTB1s5DyQVXXXXciXFXXq6xXFXXXy/Mini-Simulation-Food-Key-chain-Cute-Car-Bag-keychain-Mini-Bowl-Food-14-Design-for-Women.jpg',
-    description: 'A keychain that I found in a small store in Chinatown. Super cool.',
+    description:
+        'A keychain that I found in a small store in Chinatown. Super cool.',
     difficulty: Difficulty.Challenging,
+    mood: Mood.Happy,
     wouldAgain: false,
     wouldRecommand: false,
   )
