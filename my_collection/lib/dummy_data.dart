@@ -108,10 +108,10 @@ const dummyCollection = const [
   Collection(
     id: 'e8',
     categories: ['c1', 'c3'],
-    title: 'Vintage Pizza Hut Keychain',
+    title: 'Ramen Keychain',
     imageUrl:
-        'https://i.etsystatic.com/5700633/r/il/d04c32/1620437604/il_570xN.1620437604_sjdz.jpg',
-    description: 'A keychain that I found in my basement. Super cool.',
+        'https://ae01.alicdn.com/kf/HTB1s5DyQVXXXXciXFXXq6xXFXXXy/Mini-Simulation-Food-Key-chain-Cute-Car-Bag-keychain-Mini-Bowl-Food-14-Design-for-Women.jpg',
+    description: 'A keychain that I found in a small store in Chinatown. Super cool.',
     difficulty: Difficulty.Challenging,
     wouldAgain: false,
     wouldRecommand: false,

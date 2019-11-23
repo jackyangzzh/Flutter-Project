@@ -25,6 +25,7 @@ class CategoryCollectScreen extends StatelessWidget {
           return CollectItem(
               title: _categoryItem[i].title,
               imageUrl: _categoryItem[i].imageUrl,
+              location: _categoryItem[i].location,
               difficulty: _categoryItem[i].difficulty);
         },
         itemCount: _categoryItem.length,
