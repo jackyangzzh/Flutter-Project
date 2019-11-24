@@ -11,7 +11,7 @@ class ItemDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Title' + _itemId),
+        title: Text('Title'),
       ),
       body: Text('Item Screen'),
     );
