@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Collection App',
       theme: ThemeData(
           primarySwatch: Colors.cyan,
-          accentColor: Colors.redAccent,
+          accentColor: Colors.yellow,
           canvasColor: Color.fromRGBO(235, 255, 255, 1),
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
