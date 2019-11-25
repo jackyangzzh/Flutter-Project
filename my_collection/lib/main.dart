@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './Screens/item_detail_screen.dart';
 import './Screens/category_collect_screen.dart';
 import './Screens/category_screen.dart';
+import './Screens/tab_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,10 +25,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 17,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w600),
-              caption: TextStyle(fontSize: 13)
-                  )),
-      home: CategoryScreen(),
+              caption: TextStyle(fontSize: 13))),
+      // home: TabScreen(),
+      initialRoute: '/',
       routes: {
+        '/': (ctx) => TabScreen(),
         CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
       },
