@@ -18,12 +18,14 @@ class MyApp extends StatelessWidget {
           canvasColor: Color.fromRGBO(235, 255, 255, 1),
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
-              body1: TextStyle(color: Colors.black),
+              body1: TextStyle(fontSize: 15, color: Colors.black),
               body2: TextStyle(color: Colors.black),
               title: TextStyle(
                   fontSize: 17,
                   fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w600))),
+                  fontWeight: FontWeight.w600),
+              caption: TextStyle(fontSize: 13)
+                  )),
       home: CategoryScreen(),
       routes: {
         CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),

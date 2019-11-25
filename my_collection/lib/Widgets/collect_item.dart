@@ -53,7 +53,6 @@ class CollectItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void selectItem(BuildContext context) {
-      print('collect item: ' + id);
       Navigator.of(context)
           .pushNamed(ItemDetailScreen.routeName, arguments: {'id': id});
     }
@@ -74,7 +73,7 @@ class CollectItem extends StatelessWidget {
                       topRight: Radius.circular(10)),
                   child: Image.network(
                     imageUrl,
-                    height: 250,
+                    height: MediaQuery.of(context).size.width * 0.55,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -83,7 +82,7 @@ class CollectItem extends StatelessWidget {
                   bottom: 10,
                   left: 5,
                   child: Container(
-                    width: 300,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     color: Colors.black54,
                     padding: EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                     child: Text(
