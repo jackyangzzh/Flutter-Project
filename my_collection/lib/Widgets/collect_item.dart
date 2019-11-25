@@ -53,6 +53,7 @@ class CollectItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void selectItem(BuildContext context) {
+      print('collect item: ' + id);
       Navigator.of(context)
           .pushNamed(ItemDetailScreen.routeName, arguments: {'id': id});
     }

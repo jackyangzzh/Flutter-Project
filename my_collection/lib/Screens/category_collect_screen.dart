@@ -23,7 +23,7 @@ class CategoryCollectScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (ctx, i) {
           return CollectItem(
-              id: _categoryID,
+              id: _categoryItem[i].id,
               title: _categoryItem[i].title,
               imageUrl: _categoryItem[i].imageUrl,
               location: _categoryItem[i].location,

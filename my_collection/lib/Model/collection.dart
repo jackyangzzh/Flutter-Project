@@ -10,7 +10,7 @@ enum Difficulty {
 enum Mood {
   Miserable,
   Disappointing,
-  Average, 
+  Average,
   Happy,
   Amazing,
 }

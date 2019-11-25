@@ -29,6 +29,10 @@ class MyApp extends StatelessWidget {
         CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
       },
+      //Fall back screen if error
+      onUnknownRoute: (setting) {
+        return MaterialPageRoute(builder: (ctx) => CategoryScreen());
+      },
     );
   }
 }
