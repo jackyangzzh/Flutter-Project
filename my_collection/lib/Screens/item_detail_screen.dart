@@ -67,6 +67,14 @@ class ItemDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.home,
+        ),
+        onPressed: (){
+          Navigator.of(context).pop(_itemId);
+        },
+      ),
     );
   }
 }

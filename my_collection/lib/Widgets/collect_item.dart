@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/dummy_data.dart';
 import '../Screens/item_detail_screen.dart';
 import '../Model/collection.dart';
 
@@ -9,6 +10,7 @@ class CollectItem extends StatelessWidget {
   final String location;
   final Difficulty difficulty;
   final Mood mood;
+  final Function remove;
 
   CollectItem(
       {@required this.id,
@@ -16,7 +18,8 @@ class CollectItem extends StatelessWidget {
       @required this.imageUrl,
       @required this.mood,
       this.location,
-      @required this.difficulty});
+      @required this.difficulty,
+      @required this.remove});
 
   String get getDifficulty {
     switch (difficulty) {
@@ -53,8 +56,9 @@ class CollectItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void selectItem(BuildContext context) {
-      Navigator.of(context)
-          .pushNamed(ItemDetailScreen.routeName, arguments: {'id': id});
+      Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: {
+        'id': id
+      }).then((result) => {if (result != null) remove(result)});
     }
 
     return InkWell(

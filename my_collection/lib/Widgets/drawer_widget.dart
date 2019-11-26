@@ -37,13 +37,13 @@ class DrawerWidget extends StatelessWidget {
             height: MediaQuery.of(context).size.width * 0.03,
           ),
           drawerBuilder(Icons.filter, 'Gallery', () {
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushReplacementNamed('/');
           }),
           drawerBuilder(Icons.filter_list, 'Filter', () {
-            Navigator.of(context).pushNamed(FilterScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(FilterScreen.routeName);
           }),
           drawerBuilder(Icons.settings, 'Setting', () {
-            Navigator.of(context).pushNamed(SettingScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(SettingScreen.routeName);
           })
         ],
       ),

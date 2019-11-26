@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
 import '../dummy_data.dart';
 import '../Widgets/collect_item.dart';
+import '../Model/collection.dart';
 
-class CategoryCollectScreen extends StatelessWidget {
+class CategoryCollectScreen extends StatefulWidget {
   static const routeName = '/collection_page';
 
   @override
-  Widget build(BuildContext context) {
+  _CategoryCollectScreenState createState() => _CategoryCollectScreenState();
+}
+
+class _CategoryCollectScreenState extends State<CategoryCollectScreen> {
+  String _categoryTitle;
+  List<Collection> displayedItem;
+
+  @override
+  void initState() {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
-    final _categoryTitle = routeArgs['title'];
+    _categoryTitle = routeArgs['title'];
     final _categoryID = routeArgs['id'];
-    final _categoryItem = dummyCollection.where((item) {
+    displayedItem = dummyCollection.where((item) {
       return item.categories.contains(_categoryID);
     }).toList();
 
+  }
+
+  void _removeItem(String id){
+    setState(() {
+      displayedItem.removeWhere((item){
+        return item.id.contains(id);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -23,14 +45,15 @@ class CategoryCollectScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (ctx, i) {
           return CollectItem(
-              id: _categoryItem[i].id,
-              title: _categoryItem[i].title,
-              imageUrl: _categoryItem[i].imageUrl,
-              location: _categoryItem[i].location,
-              mood: _categoryItem[i].mood,
-              difficulty: _categoryItem[i].difficulty);
+              id: displayedItem[i].id,
+              title: displayedItem[i].title,
+              imageUrl: displayedItem[i].imageUrl,
+              location: displayedItem[i].location,
+              mood: displayedItem[i].mood,
+              difficulty: displayedItem[i].difficulty,
+              remove: _removeItem,);
         },
-        itemCount: _categoryItem.length,
+        itemCount: displayedItem.length,
       ),
     );
   }
