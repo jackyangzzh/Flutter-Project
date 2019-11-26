@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './Screens/filter_screen.dart';
+import './Screens/setting_screen.dart';
 import './Screens/item_detail_screen.dart';
 import './Screens/category_collect_screen.dart';
 import './Screens/category_screen.dart';
@@ -32,6 +34,8 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => TabScreen(),
         CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
+        FilterScreen.routeName: (ctx) => FilterScreen(),
+        SettingScreen.routeName: (ctx) => SettingScreen(),
       },
       //Fall back screen if error
       onUnknownRoute: (setting) {
