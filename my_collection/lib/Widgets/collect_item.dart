@@ -53,14 +53,14 @@ class CollectItem extends StatelessWidget {
     }
   }
 
+  void selectItem(BuildContext context) {
+    Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: {
+      'id': id
+    }).then((result) => {if (result != null) remove(result)});
+  }
+
   @override
   Widget build(BuildContext context) {
-    void selectItem(BuildContext context) {
-      Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: {
-        'id': id
-      }).then((result) => {if (result != null) remove(result)});
-    }
-
     return InkWell(
       onTap: () => selectItem(context),
       child: Card(

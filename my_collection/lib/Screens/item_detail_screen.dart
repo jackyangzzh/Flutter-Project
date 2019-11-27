@@ -69,9 +69,9 @@ class ItemDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
-          Icons.home,
+          Icons.delete,
         ),
-        onPressed: (){
+        onPressed: () {
           Navigator.of(context).pop(_itemId);
         },
       ),
