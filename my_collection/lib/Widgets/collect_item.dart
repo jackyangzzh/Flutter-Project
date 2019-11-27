@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../dummy_data.dart';
+import 'package:my_collection/dummy_data.dart';
 import '../Screens/item_detail_screen.dart';
 import '../Model/collection.dart';
 
@@ -10,7 +10,7 @@ class CollectItem extends StatelessWidget {
   final String location;
   final Difficulty difficulty;
   final Mood mood;
-  final Function removeItem;
+  final Function remove;
 
   CollectItem(
       {@required this.id,
@@ -19,7 +19,7 @@ class CollectItem extends StatelessWidget {
       @required this.mood,
       this.location,
       @required this.difficulty,
-      @required this.removeItem});
+      @required this.remove});
 
   String get getDifficulty {
     switch (difficulty) {
@@ -53,17 +53,14 @@ class CollectItem extends StatelessWidget {
     }
   }
 
-  void selectItem(BuildContext context) {
-    Navigator.of(context).pushNamed(ItemDetailScreen.routeName,
-        arguments: {'id': id}).then((result) {
-      if (result != null) {
-        removeItem(result);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    void selectItem(BuildContext context) {
+      Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: {
+        'id': id
+      }).then((result) => {if (result != null) remove(result)});
+    }
+
     return InkWell(
       onTap: () => selectItem(context),
       child: Card(
