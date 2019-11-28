@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import '../dummy_data.dart';
 import '../Widgets/collect_item.dart';
 import '../Model/collection.dart';
 
 class CategoryCollectScreen extends StatefulWidget {
   static const routeName = '/collection_page';
+  final List<Collection> avaiableItem;
+
+  CategoryCollectScreen(this.avaiableItem);
 
   @override
   _CategoryCollectScreenState createState() => _CategoryCollectScreenState();
@@ -15,6 +17,7 @@ class _CategoryCollectScreenState extends State<CategoryCollectScreen> {
   List<Collection> displayedItem;
   bool _loadData = false;
 
+
   @override
   void didChangeDependencies() {
     if(!_loadData){
@@ -22,7 +25,7 @@ class _CategoryCollectScreenState extends State<CategoryCollectScreen> {
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     _categoryTitle = routeArgs['title'];
     final _categoryID = routeArgs['id'];
-    displayedItem = dummyCollection.where((item) {
+    displayedItem = widget.avaiableItem.where((item) {
       return item.categories.contains(_categoryID);
     }).toList();
     }

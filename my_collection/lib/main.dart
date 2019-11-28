@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:my_collection/Widgets/collect_item.dart';
 import './Screens/filter_screen.dart';
 import './Screens/setting_screen.dart';
 import './Screens/item_detail_screen.dart';
 import './Screens/category_collect_screen.dart';
 import './Screens/category_screen.dart';
 import './Screens/tab_screen.dart';
+import './dummy_data.dart';
+import './Model/collection.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,8 +23,18 @@ class _MyAppState extends State<MyApp> {
     'wouldAgain': false,
   };
 
+  List<Collection> _avaiableItem = dummyCollection;
+
   void _setFilter(Map<String, bool> filter) {
-    
+    setState(() {
+      _filter = filter;
+
+      _avaiableItem = dummyCollection.where((item) {
+        if(_filter['wouldRecommend']){
+          
+        }
+      }).toList();
+    });
   }
 
   @override
@@ -46,9 +59,9 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (ctx) => TabScreen(),
-        CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(),
+        CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(_avaiableItem),
         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
-        FilterScreen.routeName: (ctx) => FilterScreen(),
+        FilterScreen.routeName: (ctx) => FilterScreen(_setFilter),
         SettingScreen.routeName: (ctx) => SettingScreen(),
       },
       //Fall back screen if error
