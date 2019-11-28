@@ -4,16 +4,17 @@ import '../Widgets/drawer_widget.dart';
 class FilterScreen extends StatefulWidget {
   static const String routeName = '/filter_screen';
   final Function applyFilter;
+  final Map<String, bool> filter;
 
-  FilterScreen(this.applyFilter);
+  FilterScreen(this.filter, this.applyFilter);
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  bool _wouldRecommend = false;
-  bool _wouldAgain = false;
+  bool _wouldRecommend;
+  bool _wouldAgain;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,13 @@ class _FilterScreenState extends State<FilterScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: widget.applyFilter,
+            onPressed: () {
+              Map<String, bool> _filter = {
+                'wouldRecommend': _wouldRecommend,
+                'wouldAgain': _wouldAgain,
+              };
+              widget.applyFilter(_filter);
+            },
           )
         ],
       ),
@@ -41,7 +48,7 @@ class _FilterScreenState extends State<FilterScreen> {
               children: <Widget>[
                 SwitchListTile(
                   title: Text('Would Recommend'),
-                  value: _wouldRecommend,
+                  value: widget.filter['wouldRecommend'],
                   onChanged: (b) {
                     setState(() {
                       _wouldRecommend = b;
@@ -50,7 +57,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 ),
                 SwitchListTile(
                   title: Text('Would Do it Again'),
-                  value: _wouldAgain,
+                  value: widget.filter['wouldAgain'],
                   onChanged: (b) {
                     setState(() {
                       _wouldAgain = b;

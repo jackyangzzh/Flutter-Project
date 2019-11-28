@@ -24,15 +24,20 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Collection> _avaiableItem = dummyCollection;
+  List<Collection> _favoriateItem = [];
 
   void _setFilter(Map<String, bool> filter) {
     setState(() {
       _filter = filter;
 
       _avaiableItem = dummyCollection.where((item) {
-        if(_filter['wouldRecommend']){
-          
+        if (_filter['wouldRecommend'] && !item.wouldRecommand) {
+          return false;
         }
+        if (_filter['wouldAgain'] && !item.wouldAgain) {
+          return false;
+        }
+        return true;
       }).toList();
     });
   }
@@ -58,10 +63,11 @@ class _MyAppState extends State<MyApp> {
       // home: TabScreen(),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => TabScreen(),
-        CategoryCollectScreen.routeName: (ctx) => CategoryCollectScreen(_avaiableItem),
+        '/': (ctx) => TabScreen(_favoriateItem),
+        CategoryCollectScreen.routeName: (ctx) =>
+            CategoryCollectScreen(_avaiableItem),
         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
-        FilterScreen.routeName: (ctx) => FilterScreen(_setFilter),
+        FilterScreen.routeName: (ctx) => FilterScreen(_filter, _setFilter),
         SettingScreen.routeName: (ctx) => SettingScreen(),
       },
       //Fall back screen if error
