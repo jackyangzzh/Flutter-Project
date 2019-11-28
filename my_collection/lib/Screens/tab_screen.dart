@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/Model/collection.dart';
+import '../Model/collection.dart';
 import './favoriate_screen.dart';
 import './category_screen.dart';
 import '../Widgets/drawer_widget.dart';
@@ -8,22 +8,29 @@ class TabScreen extends StatefulWidget {
   final List<Collection> favoriateItem;
 
   TabScreen(this.favoriateItem);
-  
+
   @override
   _TabScreenState createState() => _TabScreenState();
 }
 
 class _TabScreenState extends State<TabScreen> {
-  final List<Map<String, Object>> _screens = [
-    {
-      'page': CategoryScreen(),
-      'title': 'Categories',
-    },
-    {
-      'page': FavoriateScreen(),
-      'title': 'Favorites',
-    }
-  ];
+  List<Map<String, Object>> _screens;
+
+  @override
+  void initState() {
+    _screens  = [
+      {
+        'page': CategoryScreen(),
+        'title': 'Categories',
+      },
+      {
+        'page': FavoriateScreen(widget.favoriateItem),
+        'title': 'Favorites',
+      }
+    ];
+
+    super.initState();
+  }
 
   int _selectedPageIndex = 0;
 

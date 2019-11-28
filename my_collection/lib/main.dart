@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/Widgets/collect_item.dart';
+import './Widgets/collect_item.dart';
 import './Screens/filter_screen.dart';
 import './Screens/setting_screen.dart';
 import './Screens/item_detail_screen.dart';
@@ -26,6 +26,10 @@ class _MyAppState extends State<MyApp> {
   List<Collection> _avaiableItem = dummyCollection;
   List<Collection> _favoriateItem = [];
 
+  bool _isFavoriate(String mealId){
+    return _favoriateItem.any((item)=>item.id == mealId);
+  }
+
   void _setFilter(Map<String, bool> filter) {
     setState(() {
       _filter = filter;
@@ -40,6 +44,20 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void _loadFavoriate(String itemId) {
+    final existingId = _favoriateItem.indexWhere((item) => item.id == itemId);
+    if (existingId > 0) {
+      setState(() {
+        _favoriateItem.removeAt(existingId);
+      });
+    } else {
+      setState(() {
+        _favoriateItem
+            .add(dummyCollection.firstWhere((item) => item.id == itemId));
+      });
+    }
   }
 
   @override
@@ -66,7 +84,7 @@ class _MyAppState extends State<MyApp> {
         '/': (ctx) => TabScreen(_favoriateItem),
         CategoryCollectScreen.routeName: (ctx) =>
             CategoryCollectScreen(_avaiableItem),
-        ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
+        ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(_isFavoriate, _loadFavoriate),
         FilterScreen.routeName: (ctx) => FilterScreen(_filter, _setFilter),
         SettingScreen.routeName: (ctx) => SettingScreen(),
       },

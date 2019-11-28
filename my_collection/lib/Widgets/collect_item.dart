@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_collection/dummy_data.dart';
+import '../dummy_data.dart';
 import '../Screens/item_detail_screen.dart';
 import '../Model/collection.dart';
 
