@@ -11,8 +11,8 @@ enum Mood {
 class Collection {
   final String id;
   final String title;
+  final String description;
   final String location;
-  final double score;
   final String imageUrl;
   final Mood mood;
   bool isFavoriate;
@@ -20,9 +20,9 @@ class Collection {
   Collection(
       {@required this.id,
       @required this.title,
+      @required this.description,
       this.location,
       @required this.mood,
-      @required this.score,
       @required this.imageUrl,
-      this.isFavoriate = false});
+      this.isFavoriate = false });
 }
