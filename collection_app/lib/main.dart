@@ -4,8 +4,7 @@ import './Screens/collect_overview_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

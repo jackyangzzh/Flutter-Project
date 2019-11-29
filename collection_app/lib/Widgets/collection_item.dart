@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CollectionItem extends StatelessWidget {
   final String imageUrl;
@@ -9,8 +10,17 @@ class CollectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-      child: FittedBox(child: Image.network(imageUrl), fit: BoxFit.cover), 
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+              Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+                Text(title,),
+            ],
+      ),
     );
   }
 }

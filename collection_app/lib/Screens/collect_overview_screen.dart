@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Models/collection.dart';
 import '../Widgets/collection_item.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CollectOverviewScreen extends StatelessWidget {
   List<Collection> dummyData = [
@@ -40,16 +41,14 @@ class CollectOverviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Collections')),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(10),
+      body: StaggeredGridView.countBuilder(
+        crossAxisCount: 4,
         itemCount: dummyData.length,
-        itemBuilder: (ctx, i) => CollectionItem(
-            dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 2.5,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 15),
+        itemBuilder: (context, i) => CollectionItem(
+             dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title),
+        staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 2,
       ),
     );
   }
