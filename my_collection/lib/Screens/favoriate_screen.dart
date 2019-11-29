@@ -8,7 +8,7 @@ class FavoriateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (favoriateItem.isEmpty) {
-      return Container(
+      return Center(
         child: Text('So empty right now -- Add some favoriates!'),
       );
     }

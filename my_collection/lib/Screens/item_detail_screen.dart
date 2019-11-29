@@ -43,7 +43,7 @@ class ItemDetailScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 margin: EdgeInsets.only(top: 25, bottom: 15, left: 8, right: 8),
                 child: Text(
-                  '${_selectedItem.title}',
+                  '${(_selectedItem.title)}',
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
@@ -55,8 +55,10 @@ class ItemDetailScreen extends StatelessWidget {
                     Icons.location_on,
                     color: Colors.grey,
                   ),
+                 
                   Text(
-                    '${_selectedItem.location}',
+                     _selectedItem.location == null ? 
+                    'Mystery' : '${_selectedItem.location}',
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ]),

@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
 
   void _loadFavoriate(String itemId) {
     final existingId = _favoriateItem.indexWhere((item) => item.id == itemId);
-    if (existingId > 0) {
+    if (existingId >= 0) {
       setState(() {
         _favoriateItem.removeAt(existingId);
       });
