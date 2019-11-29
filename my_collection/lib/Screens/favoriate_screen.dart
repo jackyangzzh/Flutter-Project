@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Model/collection.dart';
 import '../Widgets/collect_item.dart';
 
 class FavoriateScreen extends StatelessWidget {
