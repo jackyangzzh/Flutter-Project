@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './Screens/collect_overview_screen.dart';
+import './Screens/item_detail_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
               ),
               caption: TextStyle(fontSize: 13))),
       home: CollectOverviewScreen(),
+      routes: {
+         ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(), 
+      },
     );
   }
 }

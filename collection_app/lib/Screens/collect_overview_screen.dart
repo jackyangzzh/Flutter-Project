@@ -4,6 +4,8 @@ import '../Widgets/collection_item.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CollectOverviewScreen extends StatelessWidget {
+  final String routeName = '/collect-overview';
+
   List<Collection> dummyData = [
     Collection(
       id: 'p1',
@@ -39,6 +41,7 @@ class CollectOverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productId = ModalRoute.of(context).settings.arguments as String;
     return Scaffold(
       appBar: AppBar(title: Text('Collections')),
       body: StaggeredGridView.countBuilder(
@@ -46,7 +49,7 @@ class CollectOverviewScreen extends StatelessWidget {
         crossAxisCount: 4,
         itemCount: dummyData.length,
         itemBuilder: (context, i) => CollectionItem(
-             dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title),
+             dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title, dummyData[i].description),
         staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
         mainAxisSpacing: 3,
         crossAxisSpacing: 3,
