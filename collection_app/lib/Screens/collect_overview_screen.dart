@@ -42,13 +42,14 @@ class CollectOverviewScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Collections')),
       body: StaggeredGridView.countBuilder(
+        padding: const EdgeInsets.all(3),
         crossAxisCount: 4,
         itemCount: dummyData.length,
         itemBuilder: (context, i) => CollectionItem(
              dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title),
         staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 2,
+        mainAxisSpacing: 3,
+        crossAxisSpacing: 3,
       ),
     );
   }
