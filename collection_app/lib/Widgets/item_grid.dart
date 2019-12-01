@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import './collection_item.dart';
+import '../Providers/product_provider.dart';
 
-class ItemGrid extends StatelessWidget{
-
+class ItemGrid extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-    Provider.of(context);
+  Widget build(BuildContext context) {
+    final itemsData = Provider.of<ProductProvider>(context);
+    final items = itemsData.items;
     return StaggeredGridView.countBuilder(
-        padding: const EdgeInsets.all(3),
-        crossAxisCount: 4,
-        itemCount: dummyData.length,
-        itemBuilder: (context, i) => CollectionItem(
-             dummyData[i].imageUrl, dummyData[i].id, dummyData[i].title, dummyData[i].description),
-        staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
-        mainAxisSpacing: 3,
-        crossAxisSpacing: 3,
-      );
+      padding: const EdgeInsets.all(3),
+      crossAxisCount: 4,
+      itemCount: items.length,
+      itemBuilder: (context, i) => CollectionItem(
+          items[i].imageUrl, items[i].id, items[i].title, items[i].description),
+      staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
+      mainAxisSpacing: 3,
+      crossAxisSpacing: 3,
+    );
   }
 }

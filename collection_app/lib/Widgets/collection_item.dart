@@ -12,19 +12,20 @@ class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // margin: EdgeInsets.all(4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
         onTap: (){
           Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: id);
+          print(imageUrl);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-            ),
+            Image.network(imageUrl),
+            // Image.network(
+            //   imageUrl,
+            //   //fit: BoxFit.cover,
+            // ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
