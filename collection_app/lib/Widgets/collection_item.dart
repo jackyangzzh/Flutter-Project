@@ -21,11 +21,10 @@ class CollectionItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.network(imageUrl),
-            // Image.network(
-            //   imageUrl,
-            //   //fit: BoxFit.cover,
-            // ),
+            Image.network(
+              imageUrl,
+              //fit: BoxFit.cover,
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
