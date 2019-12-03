@@ -8,7 +8,7 @@ enum Mood {
   Amazing,
 }
 
-class Collection {
+class Collection with ChangeNotifier {
   final String id;
   final String title;
   final String description;
@@ -24,5 +24,10 @@ class Collection {
       this.location,
       @required this.mood,
       @required this.imageUrl,
-      this.isFavoriate = false });
+      this.isFavoriate = false});
+
+  void selectFavoriate() {
+    isFavoriate = !isFavoriate;
+    notifyListeners();
+  }
 }

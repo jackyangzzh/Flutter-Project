@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import '../Screens/item_detail_screen.dart';
+import 'package:provider/provider.dart';
+import '../Providers/collection.dart';
 
 class CollectionItem extends StatelessWidget {
-  final String imageUrl;
-  final String id;
-  final String title;
-  final String desciption;
-
-  CollectionItem(this.imageUrl, this.id, this.title, this.desciption);
-
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Collection>(context);
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
-        onTap: (){
-          Navigator.of(context).pushNamed(ItemDetailScreen.routeName, arguments: id);
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(ItemDetailScreen.routeName, arguments: item.id);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Image.network(
-              imageUrl,
+              item.imageUrl,
               fit: BoxFit.cover,
             ),
             SizedBox(
@@ -29,7 +27,8 @@ class CollectionItem extends StatelessWidget {
             ),
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 3),
-                child: Text(title, style: Theme.of(context).textTheme.title)),
+                child:
+                    Text(item.title, style: Theme.of(context).textTheme.title)),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),
@@ -39,9 +38,11 @@ class CollectionItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.favorite),
+                    icon: item.isFavoriate
+                        ? Icon(Icons.favorite)
+                        : Icon(Icons.favorite_border),
                     iconSize: 17,
-                    onPressed: () {},
+                    onPressed: item.selectFavoriate,
                   ),
                   IconButton(
                     icon: Icon(Icons.add_circle),

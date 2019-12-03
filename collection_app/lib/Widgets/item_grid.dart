@@ -13,8 +13,10 @@ class ItemGrid extends StatelessWidget {
       padding: const EdgeInsets.all(3),
       crossAxisCount: 4,
       itemCount: items.length,
-      itemBuilder: (context, i) => CollectionItem(
-          items[i].imageUrl, items[i].id, items[i].title, items[i].description),
+      itemBuilder: (context, i) => ChangeNotifierProvider(
+        builder: (c) => items[i],
+        child: CollectionItem(),
+      ),
       staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
       mainAxisSpacing: 3,
       crossAxisSpacing: 3,
