@@ -13,8 +13,8 @@ class ItemGrid extends StatelessWidget {
       padding: const EdgeInsets.all(3),
       crossAxisCount: 4,
       itemCount: items.length,
-      itemBuilder: (context, i) => ChangeNotifierProvider(
-        builder: (c) => items[i],
+      itemBuilder: (context, i) => ChangeNotifierProvider.value(
+        value: items[i],
         child: CollectionItem(),
       ),
       staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
