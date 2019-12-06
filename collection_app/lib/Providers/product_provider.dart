@@ -35,16 +35,19 @@ class ProductProvider with ChangeNotifier {
     ),
   ];
 
+  var isFavoriate = false;
+
   List<Collection> get items{
-    return [..._items];
+
+      return [..._items];
+  }
+
+  List<Collection> get favoriateItem{
+    return _items.where((i) => i.isFavoriate).toList();
   }
 
   Collection findById (String id){
      return items.firstWhere((index) => index.id == id);
   }
 
-
-  void addProduct(){
-    notifyListeners();
-  }
 }

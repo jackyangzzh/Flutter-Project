@@ -5,10 +5,14 @@ import './collection_item.dart';
 import '../Providers/product_provider.dart';
 
 class ItemGrid extends StatelessWidget {
+  final _showFavoriate;
+
+  ItemGrid(this._showFavoriate);
+
   @override
   Widget build(BuildContext context) {
     final itemsData = Provider.of<ProductProvider>(context);
-    final items = itemsData.items;
+    final items = _showFavoriate ? itemsData.favoriateItem : itemsData.items;
     return StaggeredGridView.countBuilder(
       padding: const EdgeInsets.all(3),
       crossAxisCount: 4,
