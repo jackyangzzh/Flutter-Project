@@ -1,3 +1,4 @@
+import 'package:collection_app/Providers/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/collect_overview_screen.dart';
@@ -9,9 +10,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
-    return ChangeNotifierProvider.value(
-      value: ProductProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: ProductProvider()),
+        ChangeNotifierProvider.value(value: Profolio(),)
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Collection App',
@@ -24,8 +27,9 @@ class MyApp extends StatelessWidget {
                 body1: TextStyle(fontSize: 15, color: Colors.black),
                 body2: TextStyle(color: Colors.black),
                 title: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Montserrat',),
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                ),
                 subtitle: TextStyle(
                   fontSize: 14,
                   fontFamily: 'Montserrat',
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
                 caption: TextStyle(fontSize: 13))),
         home: CollectOverviewScreen(),
         routes: {
-           ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),  
+          ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
         },
       ),
     );
