@@ -1,5 +1,8 @@
+import '../Providers/profolio.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/item_grid.dart';
+import '../Widgets/badge.dart';
+import 'package:provider/provider.dart';
 
 enum FilterOption {
   Favoriate,
@@ -44,6 +47,16 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
                       value: FilterOption.All,
                     )
                   ]),
+          Consumer<Profolio>(
+            builder: (_, profolio, ch) => Badge(
+              child: ch,
+              value: profolio.profolioSize.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.photo_album),
+              onPressed: () {},
+            ),
+          )
         ],
       ),
       body: ItemGrid(_showFavoriate),

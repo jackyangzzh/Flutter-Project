@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import '../Screens/item_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/collection.dart';
+import '../Providers/profolio.dart';
 
 class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final profolio = Provider.of<Profolio>(context);
 
     return Consumer<Collection>(
       builder: (ctx, item, child) => Card(
@@ -27,8 +29,8 @@ class CollectionItem extends StatelessWidget {
               ),
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 3),
-                  child:
-                      Text(item.title, style: Theme.of(context).textTheme.title)),
+                  child: Text(item.title,
+                      style: Theme.of(context).textTheme.title)),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
@@ -47,7 +49,9 @@ class CollectionItem extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.add_circle),
                       iconSize: 17,
-                      onPressed: () {},
+                      onPressed: () {
+                        profolio.addItem(item.id, item.title);
+                      },
                     )
                   ],
                 ),

@@ -1,4 +1,4 @@
-import 'package:collection_app/Providers/cart.dart';
+import './Providers/profolio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/collect_overview_screen.dart';
