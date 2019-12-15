@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './Screens/collect_overview_screen.dart';
 import './Screens/item_detail_screen.dart';
 import './Providers/product_provider.dart';
+import './Screens/profolio_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         home: CollectOverviewScreen(),
         routes: {
           ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
+          ProfolioCart.routeName: (ctx) => ProfolioCart(),
         },
       ),
     );

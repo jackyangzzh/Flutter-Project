@@ -51,7 +51,7 @@ class CollectionItem extends StatelessWidget {
                       iconSize: 17,
                       onPressed: () {
                         profolio.addItem(item.id, item.title);
-                      },
+                       },
                     )
                   ],
                 ),

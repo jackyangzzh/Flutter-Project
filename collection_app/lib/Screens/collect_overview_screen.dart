@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Widgets/item_grid.dart';
 import '../Widgets/badge.dart';
 import 'package:provider/provider.dart';
+import '../Screens/profolio_screen.dart';
 
 enum FilterOption {
   Favoriate,
@@ -54,7 +55,9 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
             ),
             child: IconButton(
               icon: Icon(Icons.photo_album),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(ProfolioCart.routeName);
+              },
             ),
           )
         ],
