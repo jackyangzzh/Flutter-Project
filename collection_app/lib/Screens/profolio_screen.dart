@@ -43,7 +43,9 @@ class ProfolioCart extends StatelessWidget {
               itemCount: profolio.profolioSize,
               itemBuilder: (ctx, i) => ProfolioItem(
                   profolio.items.values.toList()[i].id,
-                  profolio.items.values.toList()[i].title),
+                  profolio.items.keys.toList()[i],
+                  profolio.items.values.toList()[i].title,
+                  profolio.items.values.toList()[i].imageUrl),
             ),
           )
         ],

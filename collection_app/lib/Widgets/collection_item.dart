@@ -50,8 +50,8 @@ class CollectionItem extends StatelessWidget {
                       icon: Icon(Icons.add_circle),
                       iconSize: 17,
                       onPressed: () {
-                        profolio.addItem(item.id, item.title);
-                       },
+                        profolio.addItem(item.id, item.title, item.imageUrl);
+                      },
                     )
                   ],
                 ),
