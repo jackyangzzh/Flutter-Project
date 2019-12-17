@@ -5,7 +5,8 @@ class ProfolioItem {
   final String title;
   final String imageUrl;
 
-  ProfolioItem({@required this.id, @required this.title, @required this.imageUrl});
+  ProfolioItem(
+      {@required this.id, @required this.title, @required this.imageUrl});
 }
 
 class Profolio with ChangeNotifier {
@@ -21,12 +22,19 @@ class Profolio with ChangeNotifier {
 
   void addItem(String id, String title, String imageUrl) {
     _items.putIfAbsent(
-        id, () => ProfolioItem(id: DateTime.now().toString(), title: title, imageUrl: imageUrl));
+        id,
+        () => ProfolioItem(
+            id: DateTime.now().toString(), title: title, imageUrl: imageUrl));
     notifyListeners();
   }
 
-  void removeItem(String id){
+  void removeItem(String id) {
     _items.remove(id);
+    notifyListeners();
+  }
+
+  void clearProfolio() {
+    _items = {};
     notifyListeners();
   }
 }

@@ -5,6 +5,7 @@ import './Screens/collect_overview_screen.dart';
 import './Screens/item_detail_screen.dart';
 import './Providers/product_provider.dart';
 import './Screens/profolio_screen.dart';
+import './Providers/history.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +15,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: ProductProvider()),
-        ChangeNotifierProvider.value(value: Profolio(),)
+        ChangeNotifierProvider.value(
+          value: Profolio(),
+        ),
+        ChangeNotifierProvider.value(
+          value: History(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -28,14 +34,15 @@ class MyApp extends StatelessWidget {
                 body1: TextStyle(fontSize: 15, color: Colors.black),
                 body2: TextStyle(color: Colors.black),
                 title: TextStyle(
-                  fontSize: 14,
+                  fontSize: 17,
                   fontFamily: 'Montserrat',
                 ),
                 subtitle: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
                   fontFamily: 'Montserrat',
                   color: Colors.grey,
                 ),
+                display1: TextStyle(fontSize: 15, fontFamily: 'Monteserrat'),
                 caption: TextStyle(fontSize: 13))),
         home: CollectOverviewScreen(),
         routes: {

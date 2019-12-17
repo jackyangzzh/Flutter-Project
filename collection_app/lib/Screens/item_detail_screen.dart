@@ -29,7 +29,7 @@ class ItemDetailScreen extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.topLeft,
-                margin: EdgeInsets.only(top: 25, bottom: 15, left: 8, right: 8),
+                margin: EdgeInsets.only(top: 20, bottom: 15, left: 8, right: 8),
                 child: Text(
                   '${(item.title)}',
                   style: Theme.of(context).textTheme.title,

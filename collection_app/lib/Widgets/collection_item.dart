@@ -30,7 +30,7 @@ class CollectionItem extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 3),
                   child: Text(item.title,
-                      style: Theme.of(context).textTheme.title)),
+                      style: Theme.of(context).textTheme.display1)),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
