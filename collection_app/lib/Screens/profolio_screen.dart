@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Providers/profolio.dart' show Profolio;
 import 'package:provider/provider.dart';
 import '../Widgets/profolio_item.dart';
+import '../Providers/history.dart';
 
 class ProfolioCart extends StatelessWidget {
   static const routeName = "/profolio";
@@ -11,12 +12,12 @@ class ProfolioCart extends StatelessWidget {
     final profolio = Provider.of<Profolio>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profolio Screen'),
+        title: Text('Your Profolio'),
       ),
       body: Column(
         children: <Widget>[
           Card(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.all(8),
             child: Padding(
               padding: EdgeInsets.all(8),
               child: Row(
@@ -27,12 +28,18 @@ class ProfolioCart extends StatelessWidget {
                     style: TextStyle(fontSize: 15),
                   ),
                   Spacer(),
-                  FlatButton(
-                    child: Text(
-                      "START CHALLENGE",
+                  FlatButton.icon(
+                    icon: Icon(Icons.cloud_upload),
+                    label: Text(
+                      "UPLOAD",
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<History>(context).addHistory(
+                          profolio.items.values.toList(),
+                          profolio.profolioSize);
+                      profolio.clearProfolio();
+                    },
                   ),
                 ],
               ),
