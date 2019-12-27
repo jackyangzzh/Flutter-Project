@@ -36,7 +36,7 @@ class ProfolioItem extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            title: Text(title, style: Theme.of(context).textTheme.title),
+            title: Text(title, style: Theme.of(context).textTheme.display1),
           ),
         ),
       ),
