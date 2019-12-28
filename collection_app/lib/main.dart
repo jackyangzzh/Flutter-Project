@@ -6,6 +6,7 @@ import './Screens/item_detail_screen.dart';
 import './Providers/product_provider.dart';
 import './Screens/profolio_screen.dart';
 import './Providers/history.dart';
+import './Screens/past_collection_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         routes: {
           ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
           ProfolioCart.routeName: (ctx) => ProfolioCart(),
+          PastCollectionScreen.routeName: (ctx) => PastCollectionScreen(),
         },
       ),
     );
