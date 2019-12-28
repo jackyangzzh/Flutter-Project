@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import './collection.dart';
 
 class ProductProvider with ChangeNotifier {
-    List<Collection> _items = [
+  List<Collection> _items = [
     Collection(
       id: 'p1',
       title: 'Date night at 95th floor',
       location: 'Chicago',
       imageUrl:
-          'https://i.pinimg.com/originals/34/98/cf/3498cf701a8138011a5faac8f58ef48f.jpg',
+          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577550045811&di=e8091726c3e775bf530a4c76392dc589&imgtype=0&src=http%3A%2F%2Fapp.chuanbudsp.com%2Fueditor%2Fphp%2Fupload%2Fimage%2F20180517%2F1526540559692924.png',
       description:
           'A great date place in Chicago. The view was breathtaking. The food is average tho',
       mood: Mood.Amazing,
@@ -18,7 +18,7 @@ class ProductProvider with ChangeNotifier {
       title: 'Catching fall color',
       location: 'Devil\'s Lake',
       imageUrl:
-          'https://i0.wp.com/www.devilslakewisconsin.com/wp-content/uploads/2019/01/DevilsDoorWay-Sunset.jpg?fit=1200%2C800&ssl=1',
+          'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2445517187,3248153313&fm=26&gp=0.jpg',
       description:
           'I was able to watch sunset on Devil\'s Lake. It was absolutely beautiful',
       mood: Mood.Amazing,
@@ -28,7 +28,7 @@ class ProductProvider with ChangeNotifier {
       title: 'Brunch at top of Chicago Athletic Association!',
       location: 'Chicago',
       imageUrl:
-          'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2F1445637410%2Fcindys-rooftop-chicago-ch1015.jpg%3Fitok%3Dj-1yTb04&c=sc&poi=face&q=85',
+          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578144808&di=0133bccc6e86ae98da280064c6e4e23e&imgtype=jpg&er=1&src=http%3A%2F%2Fp1.meituan.net%2Fpoicontent%2F19581e55aff2634551bd5a6bdbe62912168555.jpg',
       description:
           'So hard to get a spot, but it totally lives up to the hype!',
       mood: Mood.Amazing,
@@ -37,17 +37,15 @@ class ProductProvider with ChangeNotifier {
 
   var isFavoriate = false;
 
-  List<Collection> get items{
-
-      return [..._items];
+  List<Collection> get items {
+    return [..._items];
   }
 
-  List<Collection> get favoriateItem{
+  List<Collection> get favoriateItem {
     return _items.where((i) => i.isFavoriate).toList();
   }
 
-  Collection findById (String id){
-     return items.firstWhere((index) => index.id == id);
+  Collection findById(String id) {
+    return items.firstWhere((index) => index.id == id);
   }
-
 }
