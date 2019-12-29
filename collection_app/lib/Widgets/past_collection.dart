@@ -36,7 +36,7 @@ class _PastCollectionState extends State<PastCollection> {
             Container(
               height: min(
                   widget.pastCollection.items.length * 20.0 +
-                      MediaQuery.of(context).size.height * 0.1,
+                      MediaQuery.of(context).size.height * 0.2,
                   MediaQuery.of(context).size.height * 0.5),
               child: ListView(
                 children: widget.pastCollection.items

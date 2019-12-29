@@ -50,6 +50,19 @@ class CollectionItem extends StatelessWidget {
                       icon: Icon(Icons.add_circle),
                       iconSize: 17,
                       onPressed: () {
+                        Scaffold.of(context).hideCurrentSnackBar();
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          content: profolio.hasItem(item.id)
+                              ? Text("Item Already Added!")
+                              : Text("New Item Added!"),
+                          duration: Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: "Undo",
+                            onPressed: () {
+                              profolio.removeSingleItem(item.id);
+                            },
+                          ),
+                        ));
                         profolio.addItem(item.id, item.title, item.imageUrl);
                       },
                     )
