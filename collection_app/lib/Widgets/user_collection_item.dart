@@ -33,7 +33,20 @@ class UserCollectionItem extends StatelessWidget {
             height: 30,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[],
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  color: Theme.of(context).primaryColor,
+                  iconSize: 17,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  color: Theme.of(context).errorColor,
+                  iconSize: 17,
+                  onPressed: () {},
+                )
+              ],
             ),
           )
         ],

@@ -36,10 +36,10 @@ class ProfolioItem extends StatelessWidget {
                       },
                     ),
                     FlatButton(
-                      child: Text("Yes"),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(true);
-                    ),
+                        child: Text("Yes"),
+                        onPressed: () {
+                          Navigator.of(ctx).pop(true);
+                        }),
                   ],
                 ));
       },
