@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../Providers/product_provider.dart';
 import '../Widgets/user_collection_item.dart';
 import '../Widgets/app_drawer.dart';
+import './edit_collection_screen.dart';
 
 class UserCollectionScreen extends StatelessWidget {
   static const routeName = '/userCollection';
@@ -18,7 +19,9 @@ class UserCollectionScreen extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditCollectionScreen.routeName);
+              },
             )
           ],
         ),

@@ -1,4 +1,6 @@
-import 'package:collection_app/Widgets/user_collection_item.dart';
+import 'package:collection_app/Screens/edit_collection_screen.dart';
+
+import './Widgets/user_collection_item.dart';
 
 import './Providers/profolio.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
           ProfolioCart.routeName: (ctx) => ProfolioCart(),
           PastCollectionScreen.routeName: (ctx) => PastCollectionScreen(),
           UserCollectionScreen.routeName: (ctx) => UserCollectionScreen(),
+          EditCollectionScreen.routeName: (ctx) => EditCollectionScreen(),
         },
       ),
     );
