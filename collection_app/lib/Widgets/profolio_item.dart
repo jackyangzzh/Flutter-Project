@@ -39,7 +39,6 @@ class ProfolioItem extends StatelessWidget {
                       child: Text("Yes"),
                       onPressed: () {
                         Navigator.of(ctx).pop(true);
-                      },
                     ),
                   ],
                 ));
