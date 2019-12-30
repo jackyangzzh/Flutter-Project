@@ -1,3 +1,5 @@
+import 'package:collection_app/Widgets/user_collection_item.dart';
+
 import './Providers/profolio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +9,7 @@ import './Providers/product_provider.dart';
 import './Screens/profolio_screen.dart';
 import './Providers/history.dart';
 import './Screens/past_collection_screen.dart';
+import './Screens/user_collection_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
           ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
           ProfolioCart.routeName: (ctx) => ProfolioCart(),
           PastCollectionScreen.routeName: (ctx) => PastCollectionScreen(),
+          UserCollectionScreen.routeName: (ctx) => UserCollectionScreen(),
         },
       ),
     );

@@ -22,6 +22,27 @@ class ProfolioItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text("Deleting"),
+                  content: Text("Are you sure you want to delete this?"),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("No"),
+                      onPressed: () {
+                        Navigator.of(ctx).pop(false);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text("Yes"),
+                      onPressed: () {
+                        Navigator.of(ctx).pop(true);
+                    ),
+                  ],
+                ));
+      },
       onDismissed: (direction) {
         Provider.of<Profolio>(context, listen: false).removeItem(productId);
       },

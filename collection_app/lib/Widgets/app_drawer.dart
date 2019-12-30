@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Screens/past_collection_screen.dart';
+import '../Screens/user_collection_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -11,7 +12,6 @@ class AppDrawer extends StatelessWidget {
             title: Text('Welcome'),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.photo_library),
             title: Text("Browse"),
@@ -19,13 +19,20 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/');
             },
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.history),
             title: Text('History'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(PastCollectionScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.mode_edit),
+            title: Text('Edit'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(UserCollectionScreen.routeName);
             },
           )
         ],

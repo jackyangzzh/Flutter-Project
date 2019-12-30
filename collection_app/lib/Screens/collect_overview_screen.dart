@@ -1,5 +1,4 @@
-import 'package:collection_app/Widgets/app_drawer.dart';
-
+import '../Widgets/app_drawer.dart';
 import '../Providers/profolio.dart';
 import 'package:flutter/material.dart';
 import '../Widgets/item_grid.dart';
@@ -27,7 +26,7 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
 
     var scaffold = Scaffold(
       appBar: AppBar(
-        title: Text('Collections'),
+        title: Text('Home'),
         actions: <Widget>[
           PopupMenuButton(
               onSelected: (FilterOption selectedValue) {
