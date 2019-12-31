@@ -10,11 +10,29 @@ class EditCollectionScreen extends StatefulWidget {
 class _EditCollectionScreenState extends State<EditCollectionScreen> {
   final _locationFocus = FocusNode();
   final _descriptionFocus = FocusNode();
+  final _imageFocus = FocusNode();
+  final _imageController = TextEditingController();
+
+  @override
+  void initState() {
+    _imageFocus.addListener(_updateImageUrl);
+    super.initState();
+  }
+
+  void _updateImageUrl() {
+    if(!_imageFocus.hasFocus){
+      setState(() {
+         
+      });
+    }
+  }
 
   @override
   void dispose() {
+    _imageFocus.removeListener(_updateImageUrl);
     _locationFocus.dispose();
     _descriptionFocus.dispose();
+    _imageController.dispose();
     super.dispose();
   }
 
@@ -49,6 +67,33 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocus,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(top: 5, right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                    ),
+                    child: _imageController.text.isEmpty
+                        ? Text("Enter URL")
+                        : FittedBox(
+                            child: Image.network(_imageController.text),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageController,
+                    ),
+                  )
+                ],
               )
             ],
           ),
