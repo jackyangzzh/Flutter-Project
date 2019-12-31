@@ -20,10 +20,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
   }
 
   void _updateImageUrl() {
-    if(!_imageFocus.hasFocus){
-      setState(() {
-         
-      });
+    if (!_imageFocus.hasFocus) {
+      setState(() {});
     }
   }
 
@@ -91,6 +89,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
                       controller: _imageController,
+                      focusNode: _imageFocus,
                     ),
                   )
                 ],
