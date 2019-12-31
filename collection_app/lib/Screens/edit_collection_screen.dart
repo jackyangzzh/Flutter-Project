@@ -9,6 +9,14 @@ class EditCollectionScreen extends StatefulWidget {
 
 class _EditCollectionScreenState extends State<EditCollectionScreen> {
   final _locationFocus = FocusNode();
+  final _descriptionFocus = FocusNode();
+
+  @override
+  void dispose() {
+    _locationFocus.dispose();
+    _descriptionFocus.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +40,16 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 decoration: InputDecoration(labelText: 'Location'),
                 textInputAction: TextInputAction.next,
                 focusNode: _locationFocus,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_descriptionFocus);
+                },
               ),
-              
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Description'),
+                maxLines: 3,
+                keyboardType: TextInputType.multiline,
+                focusNode: _descriptionFocus,
+              )
             ],
           ),
         ),
