@@ -1,4 +1,6 @@
+import 'package:collection_app/Widgets/collection_item.dart';
 import 'package:flutter/material.dart';
+import '../Providers/collection.dart';
 
 class EditCollectionScreen extends StatefulWidget {
   static const routeName = '/editCollection';
@@ -12,6 +14,9 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
   final _descriptionFocus = FocusNode();
   final _imageFocus = FocusNode();
   final _imageController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+  var _editCollection =
+      new Collection(id: null, title: '', description: '', imageUrl: '');
 
   @override
   void initState() {
@@ -34,15 +39,30 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
     super.dispose();
   }
 
+  void _saveForm() {
+    _form.currentState.save();
+    print(_editCollection.title);
+    print(_editCollection.description);
+    print(_editCollection.imageUrl);
+    print(_editCollection.location);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Editing"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: _saveForm,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Form(
+          key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
@@ -50,6 +70,14 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_locationFocus);
+                },
+                onSaved: (_value) {
+                  _editCollection = Collection(
+                      id: _editCollection.id,
+                      title: _value,
+                      description: _editCollection.description,
+                      location: _editCollection.location,
+                      imageUrl: _editCollection.imageUrl);
                 },
               ),
               TextFormField(
@@ -59,41 +87,61 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocus);
                 },
+                onSaved: (_value) {
+                  _editCollection = Collection(
+                      id: _editCollection.id,
+                      title: _editCollection.title,
+                      description: _editCollection.description,
+                      location: _value,
+                      imageUrl: _editCollection.imageUrl);
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocus,
+                onSaved: (_value) {
+                  _editCollection = Collection(
+                      id: _editCollection.id,
+                      title: _editCollection.title,
+                      description: _value,
+                      location: _editCollection.location,
+                      imageUrl: _editCollection.imageUrl);
+                },
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(top: 5, right: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey),
-                    ),
-                    child: _imageController.text.isEmpty
-                        ? Text("Enter URL")
-                        : FittedBox(
-                            child: Image.network(_imageController.text),
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Image URL'),
-                      keyboardType: TextInputType.url,
-                      textInputAction: TextInputAction.done,
-                      controller: _imageController,
-                      focusNode: _imageFocus,
-                    ),
-                  )
-                ],
-              )
+              TextFormField(
+                decoration: InputDecoration(labelText: 'Image URL'),
+                keyboardType: TextInputType.url,
+                textInputAction: TextInputAction.done,
+                controller: _imageController,
+                focusNode: _imageFocus,
+                onFieldSubmitted: (_) {
+                  _saveForm();
+                },
+                onSaved: (_value) {
+                  _editCollection = Collection(
+                      id: _editCollection.id,
+                      title: _editCollection.title,
+                      description: _editCollection.description,
+                      location: _editCollection.location,
+                      imageUrl: _value);
+                },
+              ),
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.3,
+                margin: EdgeInsets.only(top: 5, right: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey),
+                ),
+                child: _imageController.text.isEmpty
+                    ? Text("Enter URL")
+                    : FittedBox(
+                        child: Image.network(_imageController.text),
+                        fit: BoxFit.cover,
+                      ),
+              ),
             ],
           ),
         ),
