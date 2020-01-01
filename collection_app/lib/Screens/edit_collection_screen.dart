@@ -40,6 +40,10 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
   }
 
   void _saveForm() {
+    final _isValid = _form.currentState.validate();
+    if (!_isValid) {
+      return;
+    }
     _form.currentState.save();
     print(_editCollection.title);
     print(_editCollection.description);
@@ -79,6 +83,12 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       location: _editCollection.location,
                       imageUrl: _editCollection.imageUrl);
                 },
+                validator: (_value) {
+                  if (_value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Location'),
@@ -109,6 +119,15 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       location: _editCollection.location,
                       imageUrl: _editCollection.imageUrl);
                 },
+                validator: (_value) {
+                  if (_value.isEmpty) {
+                    return 'Please enter some description';
+                  }
+                  if (_value.length < 10) {
+                    return 'Please describe a bit more!';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Image URL'),
@@ -127,16 +146,23 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       location: _editCollection.location,
                       imageUrl: _value);
                 },
+                validator: (_value) {
+                  if (_value.isEmpty) {
+                    return 'Please add an image!';
+                  }
+                  if (!_value.startsWith('http') ||
+                      !_value.startsWith('https')) {
+                    return 'Please enter a valid URL';
+                  }
+                  return null;
+                },
               ),
               Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.3,
                 margin: EdgeInsets.only(top: 5, right: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey),
-                ),
                 child: _imageController.text.isEmpty
-                    ? Text("Enter URL")
+                    ? Container()
                     : FittedBox(
                         child: Image.network(_imageController.text),
                         fit: BoxFit.cover,
