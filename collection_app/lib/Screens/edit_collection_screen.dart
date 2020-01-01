@@ -1,6 +1,7 @@
-import 'package:collection_app/Widgets/collection_item.dart';
+import '../Providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import '../Providers/collection.dart';
+import 'package:provider/provider.dart';
 
 class EditCollectionScreen extends StatefulWidget {
   static const routeName = '/editCollection';
@@ -45,10 +46,9 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       return;
     }
     _form.currentState.save();
-    print(_editCollection.title);
-    print(_editCollection.description);
-    print(_editCollection.imageUrl);
-    print(_editCollection.location);
+    Provider.of<ProductProvider>(context, listen: false)
+        .addItem(_editCollection);
+    Navigator.of(context).pop(); 
   }
 
   @override

@@ -1,3 +1,4 @@
+import '../Providers/collection.dart';
 import 'package:flutter/material.dart';
 import './collection.dart';
 
@@ -44,5 +45,17 @@ class ProductProvider with ChangeNotifier {
 
   Collection findById(String id) {
     return items.firstWhere((index) => index.id == id);
+  }
+
+  void addItem(Collection item) {
+    final newItem = Collection(
+        id: DateTime.now().toString(),
+        title: item.title,
+        description: item.description,
+        imageUrl: item.imageUrl,
+        location: item.location);
+    _items.insert(0, newItem);
+    print("Added");
+    notifyListeners();
   }
 }
