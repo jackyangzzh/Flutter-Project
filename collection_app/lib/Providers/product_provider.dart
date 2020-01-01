@@ -55,7 +55,6 @@ class ProductProvider with ChangeNotifier {
         imageUrl: item.imageUrl,
         location: item.location);
     _items.insert(0, newItem);
-    print("Added");
     notifyListeners();
   }
 }

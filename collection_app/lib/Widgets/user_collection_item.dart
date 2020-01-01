@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import '../Screens/edit_collection_screen.dart';
 
 class UserCollectionItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   final String location;
   final String description;
 
   UserCollectionItem(
-      this.title, this.imageUrl, this.location, this.description);
+      this.id, this.title, this.imageUrl, this.location, this.description);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,10 @@ class UserCollectionItem extends StatelessWidget {
                   icon: Icon(Icons.edit),
                   color: Theme.of(context).primaryColor,
                   iconSize: 17,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(EditCollectionScreen.routeName, arguments: id);
+                  },
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),

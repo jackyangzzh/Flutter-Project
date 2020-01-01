@@ -31,6 +31,7 @@ class UserCollectionScreen extends StatelessWidget {
           crossAxisCount: 4,
           itemCount: productData.items.length,
           itemBuilder: (_, i) => UserCollectionItem(
+            productData.items[i].id,
             productData.items[i].title,
             productData.items[i].imageUrl,
             productData.items[i].location,

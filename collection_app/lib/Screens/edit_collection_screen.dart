@@ -18,6 +18,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
   final _form = GlobalKey<FormState>();
   var _editCollection =
       new Collection(id: null, title: '', description: '', imageUrl: '');
+  var _isInit = true;
+  var _initValue = {'title': '', 'description': '', 'imageUrl': ''};
 
   @override
   void initState() {
@@ -46,9 +48,32 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       return;
     }
     _form.currentState.save();
+    if(_editCollection.id != null) {
+
+    }
     Provider.of<ProductProvider>(context, listen: false)
         .addItem(_editCollection);
-    Navigator.of(context).pop(); 
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final itemId = ModalRoute.of(context).settings.arguments as String;
+      if (itemId != null) {
+        _editCollection = Provider.of<ProductProvider>(context, listen: false)
+            .findById(itemId);
+        _initValue = {
+          'title': _editCollection.title,
+          'location': _editCollection.location,
+          'description': _editCollection.description,
+          'imageUrl': '' 
+        };
+        _imageController.text = _editCollection.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -70,6 +95,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _initValue['title'],
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -91,6 +117,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValue['location'],
                 decoration: InputDecoration(labelText: 'Location'),
                 textInputAction: TextInputAction.next,
                 focusNode: _locationFocus,
@@ -107,6 +134,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValue['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
