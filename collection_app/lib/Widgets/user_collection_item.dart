@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Screens/edit_collection_screen.dart';
+import 'package:provider/provider.dart';
+import '../Providers/product_provider.dart';
 
 class UserCollectionItem extends StatelessWidget {
   final String id;
@@ -41,15 +43,19 @@ class UserCollectionItem extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   iconSize: 17,
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(EditCollectionScreen.routeName, arguments: id);
+                    Navigator.of(context).pushNamed(
+                        EditCollectionScreen.routeName,
+                        arguments: id);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.delete),
                   color: Theme.of(context).errorColor,
                   iconSize: 17,
-                  onPressed: () {},
+                  onPressed: () {
+                    Provider.of<ProductProvider>(context, listen: false)
+                        .deleteItem(id);
+                  },
                 )
               ],
             ),

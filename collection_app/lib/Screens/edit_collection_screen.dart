@@ -48,11 +48,14 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       return;
     }
     _form.currentState.save();
-    if(_editCollection.id != null) {
-
+    if (_editCollection.id != null) {
+      Provider.of<ProductProvider>(context, listen: false)
+          .updateItem(_editCollection.id, _editCollection);
+    } else {
+      Provider.of<ProductProvider>(context, listen: false)
+          .addItem(_editCollection);
     }
-    Provider.of<ProductProvider>(context, listen: false)
-        .addItem(_editCollection);
+
     Navigator.of(context).pop();
   }
 
@@ -67,7 +70,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
           'title': _editCollection.title,
           'location': _editCollection.location,
           'description': _editCollection.description,
-          'imageUrl': '' 
+          'imageUrl': ''
         };
         _imageController.text = _editCollection.imageUrl;
       }
@@ -107,7 +110,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       title: _value,
                       description: _editCollection.description,
                       location: _editCollection.location,
-                      imageUrl: _editCollection.imageUrl);
+                      imageUrl: _editCollection.imageUrl,
+                      isFavoriate: _editCollection.isFavoriate);
                 },
                 validator: (_value) {
                   if (_value.isEmpty) {
@@ -130,7 +134,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       title: _editCollection.title,
                       description: _editCollection.description,
                       location: _value,
-                      imageUrl: _editCollection.imageUrl);
+                      imageUrl: _editCollection.imageUrl,
+                      isFavoriate: _editCollection.isFavoriate);
                 },
               ),
               TextFormField(
@@ -145,7 +150,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       title: _editCollection.title,
                       description: _value,
                       location: _editCollection.location,
-                      imageUrl: _editCollection.imageUrl);
+                      imageUrl: _editCollection.imageUrl,
+                      isFavoriate: _editCollection.isFavoriate);
                 },
                 validator: (_value) {
                   if (_value.isEmpty) {
@@ -172,7 +178,8 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                       title: _editCollection.title,
                       description: _editCollection.description,
                       location: _editCollection.location,
-                      imageUrl: _value);
+                      imageUrl: _value,
+                      isFavoriate: _editCollection.isFavoriate);
                 },
                 validator: (_value) {
                   if (_value.isEmpty) {

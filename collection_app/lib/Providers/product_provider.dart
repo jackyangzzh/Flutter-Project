@@ -1,6 +1,7 @@
 import '../Providers/collection.dart';
 import 'package:flutter/material.dart';
 import './collection.dart';
+import 'package:http/http.dart' as http;
 
 class ProductProvider with ChangeNotifier {
   List<Collection> _items = [
@@ -56,5 +57,16 @@ class ProductProvider with ChangeNotifier {
         location: item.location);
     _items.insert(0, newItem);
     notifyListeners();
+  }
+
+  void updateItem(String id, Collection newItem) {
+    final index = _items.indexWhere((i) => i.id == id);
+    _items[index] = newItem;
+    notifyListeners();
+  }
+
+  void deleteItem(String id){
+    _items.removeWhere((i) => i.id == id);
+    notifyListeners(); 
   }
 }
