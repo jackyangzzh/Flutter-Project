@@ -20,6 +20,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       new Collection(id: null, title: '', description: '', imageUrl: '');
   var _isInit = true;
   var _initValue = {'title': '', 'description': '', 'imageUrl': ''};
+  var _loading = false;
 
   @override
   void initState() {
@@ -48,15 +49,27 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       return;
     }
     _form.currentState.save();
+    setState(() {
+      _loading = true;
+    });
+
     if (_editCollection.id != null) {
       Provider.of<ProductProvider>(context, listen: false)
           .updateItem(_editCollection.id, _editCollection);
+      setState(() {
+        _loading = false;
+      });
+      Navigator.of(context).pop();
     } else {
       Provider.of<ProductProvider>(context, listen: false)
-          .addItem(_editCollection);
+          .addItem(_editCollection)
+          .then((_) {
+        setState(() {
+          _loading = false;
+        });
+        Navigator.of(context).pop();
+      });
     }
-
-    Navigator.of(context).pop();
   }
 
   @override
@@ -93,119 +106,126 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _form,
-          child: ListView(
-            children: <Widget>[
-              TextFormField(
-                initialValue: _initValue['title'],
-                decoration: InputDecoration(labelText: 'Title'),
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_locationFocus);
-                },
-                onSaved: (_value) {
-                  _editCollection = Collection(
-                      id: _editCollection.id,
-                      title: _value,
-                      description: _editCollection.description,
-                      location: _editCollection.location,
-                      imageUrl: _editCollection.imageUrl,
-                      isFavoriate: _editCollection.isFavoriate);
-                },
-                validator: (_value) {
-                  if (_value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
-                },
+        child: _loading
+            ? Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+              )
+            : Form(
+                key: _form,
+                child: ListView(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: _initValue['title'],
+                      decoration: InputDecoration(labelText: 'Title'),
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_locationFocus);
+                      },
+                      onSaved: (_value) {
+                        _editCollection = Collection(
+                            id: _editCollection.id,
+                            title: _value,
+                            description: _editCollection.description,
+                            location: _editCollection.location,
+                            imageUrl: _editCollection.imageUrl,
+                            isFavoriate: _editCollection.isFavoriate);
+                      },
+                      validator: (_value) {
+                        if (_value.isEmpty) {
+                          return 'Please enter a title';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValue['location'],
+                      decoration: InputDecoration(labelText: 'Location'),
+                      textInputAction: TextInputAction.next,
+                      focusNode: _locationFocus,
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_descriptionFocus);
+                      },
+                      onSaved: (_value) {
+                        _editCollection = Collection(
+                            id: _editCollection.id,
+                            title: _editCollection.title,
+                            description: _editCollection.description,
+                            location: _value,
+                            imageUrl: _editCollection.imageUrl,
+                            isFavoriate: _editCollection.isFavoriate);
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _initValue['description'],
+                      decoration: InputDecoration(labelText: 'Description'),
+                      maxLines: 3,
+                      keyboardType: TextInputType.multiline,
+                      focusNode: _descriptionFocus,
+                      onSaved: (_value) {
+                        _editCollection = Collection(
+                            id: _editCollection.id,
+                            title: _editCollection.title,
+                            description: _value,
+                            location: _editCollection.location,
+                            imageUrl: _editCollection.imageUrl,
+                            isFavoriate: _editCollection.isFavoriate);
+                      },
+                      validator: (_value) {
+                        if (_value.isEmpty) {
+                          return 'Please enter some description';
+                        }
+                        if (_value.length < 10) {
+                          return 'Please describe a bit more!';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageController,
+                      focusNode: _imageFocus,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
+                      onSaved: (_value) {
+                        _editCollection = Collection(
+                            id: _editCollection.id,
+                            title: _editCollection.title,
+                            description: _editCollection.description,
+                            location: _editCollection.location,
+                            imageUrl: _value,
+                            isFavoriate: _editCollection.isFavoriate);
+                      },
+                      validator: (_value) {
+                        if (_value.isEmpty) {
+                          return 'Please add an image!';
+                        }
+                        if (!_value.startsWith('http') ||
+                            !_value.startsWith('https')) {
+                          print('Start with http');
+                          return 'Please enter a valid URL';
+                        }
+                        return null;
+                      },
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      margin: EdgeInsets.only(top: 5, right: 10),
+                      child: _imageController.text.isEmpty
+                          ? Container()
+                          : FittedBox(
+                              child: Image.network(_imageController.text),
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ],
+                ),
               ),
-              TextFormField(
-                initialValue: _initValue['location'],
-                decoration: InputDecoration(labelText: 'Location'),
-                textInputAction: TextInputAction.next,
-                focusNode: _locationFocus,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_descriptionFocus);
-                },
-                onSaved: (_value) {
-                  _editCollection = Collection(
-                      id: _editCollection.id,
-                      title: _editCollection.title,
-                      description: _editCollection.description,
-                      location: _value,
-                      imageUrl: _editCollection.imageUrl,
-                      isFavoriate: _editCollection.isFavoriate);
-                },
-              ),
-              TextFormField(
-                initialValue: _initValue['description'],
-                decoration: InputDecoration(labelText: 'Description'),
-                maxLines: 3,
-                keyboardType: TextInputType.multiline,
-                focusNode: _descriptionFocus,
-                onSaved: (_value) {
-                  _editCollection = Collection(
-                      id: _editCollection.id,
-                      title: _editCollection.title,
-                      description: _value,
-                      location: _editCollection.location,
-                      imageUrl: _editCollection.imageUrl,
-                      isFavoriate: _editCollection.isFavoriate);
-                },
-                validator: (_value) {
-                  if (_value.isEmpty) {
-                    return 'Please enter some description';
-                  }
-                  if (_value.length < 10) {
-                    return 'Please describe a bit more!';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Image URL'),
-                keyboardType: TextInputType.url,
-                textInputAction: TextInputAction.done,
-                controller: _imageController,
-                focusNode: _imageFocus,
-                onFieldSubmitted: (_) {
-                  _saveForm();
-                },
-                onSaved: (_value) {
-                  _editCollection = Collection(
-                      id: _editCollection.id,
-                      title: _editCollection.title,
-                      description: _editCollection.description,
-                      location: _editCollection.location,
-                      imageUrl: _value,
-                      isFavoriate: _editCollection.isFavoriate);
-                },
-                validator: (_value) {
-                  if (_value.isEmpty) {
-                    return 'Please add an image!';
-                  }
-                  if (!_value.startsWith('http') ||
-                      !_value.startsWith('https')) {
-                    return 'Please enter a valid URL';
-                  }
-                  return null;
-                },
-              ),
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.3,
-                margin: EdgeInsets.only(top: 5, right: 10),
-                child: _imageController.text.isEmpty
-                    ? Container()
-                    : FittedBox(
-                        child: Image.network(_imageController.text),
-                        fit: BoxFit.cover,
-                      ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

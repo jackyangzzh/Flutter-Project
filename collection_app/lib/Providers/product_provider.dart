@@ -2,6 +2,7 @@ import '../Providers/collection.dart';
 import 'package:flutter/material.dart';
 import './collection.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProductProvider with ChangeNotifier {
   List<Collection> _items = [
@@ -48,15 +49,27 @@ class ProductProvider with ChangeNotifier {
     return items.firstWhere((index) => index.id == id);
   }
 
-  void addItem(Collection item) {
-    final newItem = Collection(
-        id: DateTime.now().toString(),
-        title: item.title,
-        description: item.description,
-        imageUrl: item.imageUrl,
-        location: item.location);
-    _items.insert(0, newItem);
-    notifyListeners();
+  Future<void> addItem(Collection item) {
+    const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
+    return http
+        .post(url,
+            body: json.encode({
+              'title': item.title,
+              'location': item.location,
+              'description': item.description,
+              'imageUrl': item.imageUrl,
+              'isFavoriate': item.isFavoriate,
+            }))
+        .then((response) {
+      final newItem = Collection(
+          id: DateTime.now().toString(),
+          title: item.title,
+          description: item.description,
+          imageUrl: item.imageUrl,
+          location: item.location);
+      _items.insert(0, newItem);
+      notifyListeners();
+    });
   }
 
   void updateItem(String id, Collection newItem) {
@@ -65,8 +78,8 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteItem(String id){
+  void deleteItem(String id) {
     _items.removeWhere((i) => i.id == id);
-    notifyListeners(); 
+    notifyListeners();
   }
 }
