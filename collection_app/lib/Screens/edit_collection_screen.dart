@@ -43,7 +43,7 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
     super.dispose();
   }
 
-  Future<void> _saveForm() async {
+  void _saveForm() {
     final _isValid = _form.currentState.validate();
     if (!_isValid) {
       return;
@@ -61,10 +61,9 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      try {
-        await Provider.of<ProductProvider>(context, listen: false)
-            .addItem(_editCollection);
-      } catch (error) {
+      Provider.of<ProductProvider>(context, listen: false)
+          .addItem(_editCollection)
+          .catchError((error) {
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
@@ -78,12 +77,12 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                     )
                   ],
                 ));
-      } finally {
+      }).then((_) {
         setState(() {
           _loading = false;
         });
         Navigator.of(context).pop();
-      }
+      });
     }
   }
 
