@@ -49,18 +49,17 @@ class ProductProvider with ChangeNotifier {
     return items.firstWhere((index) => index.id == id);
   }
 
-  Future<void> addItem(Collection item) {
+  Future<void> addItem(Collection item) async {
     const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
-    return http
-        .post(url,
-            body: json.encode({
-              'title': item.title,
-              'location': item.location,
-              'description': item.description,
-              'imageUrl': item.imageUrl,
-              'isFavoriate': item.isFavoriate,
-            }))
-        .then((response) {
+    try {
+      final response = await http.post(url,
+          body: json.encode({
+            'title': item.title,
+            'location': item.location,
+            'description': item.description,
+            'imageUrl': item.imageUrl,
+            'isFavoriate': item.isFavoriate,
+          }));
       final newItem = Collection(
           id: DateTime.now().toString(),
           title: item.title,
@@ -69,9 +68,9 @@ class ProductProvider with ChangeNotifier {
           location: item.location);
       _items.insert(0, newItem);
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       throw (error);
-    });
+    }
   }
 
   void updateItem(String id, Collection newItem) {
