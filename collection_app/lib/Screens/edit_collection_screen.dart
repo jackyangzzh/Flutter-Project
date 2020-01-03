@@ -63,7 +63,21 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
     } else {
       Provider.of<ProductProvider>(context, listen: false)
           .addItem(_editCollection)
-          .then((_) {
+          .catchError((error) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text('Something went wrong'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('Okay'),
+                      onPressed: () {
+                        Navigator.of(_).pop();
+                      },
+                    )
+                  ],
+                ));
+      }).then((_) {
         setState(() {
           _loading = false;
         });
@@ -206,7 +220,6 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                         }
                         if (!_value.startsWith('http') ||
                             !_value.startsWith('https')) {
-                          print('Start with http');
                           return 'Please enter a valid URL';
                         }
                         return null;
