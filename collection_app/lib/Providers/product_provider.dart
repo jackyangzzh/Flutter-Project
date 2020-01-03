@@ -11,7 +11,7 @@ class ProductProvider with ChangeNotifier {
       title: 'Date night at 95th floor',
       location: 'Chicago',
       imageUrl:
-          'https://i.pinimg.com/originals/e9/24/04/e924041a661fcc6edcc87998dc8443bd.jpg',
+          'https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/10/The-Signature-Room-at-the-95th.jpg',
       description:
           'A great date place in Chicago. The view was breathtaking. The food is average tho',
     ),
@@ -20,7 +20,7 @@ class ProductProvider with ChangeNotifier {
       title: 'Catching fall color',
       location: 'Devil\'s Lake',
       imageUrl:
-          'https://dnr.wi.gov/topic/Parks/name/devilslake/images/tourism-balance-rock700x300.jpg',
+          'https://www.wisdells.com/member-media/attr/devils_lake_state_park_01.jpg',
       description:
           'I was able to watch sunset on Devil\'s Lake. It was absolutely beautiful',
     ),
