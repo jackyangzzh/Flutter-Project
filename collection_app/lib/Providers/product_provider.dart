@@ -49,6 +49,31 @@ class ProductProvider with ChangeNotifier {
     return items.firstWhere((index) => index.id == id);
   }
 
+  Future<void> fetchData() async {
+    const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
+
+    try {
+      final response = await http.get(url);
+      final data = json.decode(response.body) as Map<String, dynamic>;
+      final List<Collection> loadedData = [];
+      data.forEach((id, info) {
+        loadedData.insert(
+            0,
+            Collection(
+                id: id,
+                title: info['title'],
+                description: info['description'],
+                location: info['location'],
+                imageUrl: info['imageUrl'],
+                isFavoriate: info['isFavoriate']));
+      });
+      _items = loadedData;
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> addItem(Collection item) async {
     const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
     try {

@@ -29,7 +29,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.mode_edit),
-            title: Text('Edit'),
+            title: Text('Your Collection'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserCollectionScreen.routeName);

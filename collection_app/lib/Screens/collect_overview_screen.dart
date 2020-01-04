@@ -5,6 +5,7 @@ import '../Widgets/item_grid.dart';
 import '../Widgets/badge.dart';
 import 'package:provider/provider.dart';
 import '../Screens/profolio_screen.dart';
+import '../Providers/product_provider.dart';
 
 enum FilterOption {
   Favoriate,
@@ -19,6 +20,21 @@ class CollectOverviewScreen extends StatefulWidget {
 class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
   final String routeName = '/collect-overview';
   bool _showFavoriate = false;
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<ProductProvider>(context, listen: false).fetchData().then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +80,13 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ItemGrid(_showFavoriate),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+            )
+          : ItemGrid(_showFavoriate),
     );
     return scaffold;
   }

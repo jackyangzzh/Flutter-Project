@@ -19,9 +19,7 @@ class ItemDetailScreen extends StatelessWidget {
        body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                width: double.infinity,
+              SizedBox(
                 child: Image.network(
                   item.imageUrl,
                   fit: BoxFit.cover,
