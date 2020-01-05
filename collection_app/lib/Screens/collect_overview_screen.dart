@@ -22,6 +22,10 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
   bool _showFavoriate = false;
   bool _isLoading = false;
 
+  Future<void> _refresh(BuildContext context) async {
+    Provider.of<ProductProvider>(context).fetchData();
+  }
+
   @override
   void initState() {
     setState(() {
@@ -86,7 +90,9 @@ class _CollectOverviewScreenState extends State<CollectOverviewScreen> {
                 backgroundColor: Theme.of(context).primaryColor,
               ),
             )
-          : ItemGrid(_showFavoriate),
+          : RefreshIndicator(
+              onRefresh: () => _refresh(context),
+              child: ItemGrid(_showFavoriate)),
     );
     return scaffold;
   }

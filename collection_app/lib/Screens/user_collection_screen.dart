@@ -9,6 +9,10 @@ import './edit_collection_screen.dart';
 class UserCollectionScreen extends StatelessWidget {
   static const routeName = '/userCollection';
 
+  Future<void> _refresh(BuildContext context) async {
+    Provider.of<ProductProvider>(context).fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<ProductProvider>(context);
@@ -26,20 +30,23 @@ class UserCollectionScreen extends StatelessWidget {
           ],
         ),
         drawer: AppDrawer(),
-        body: StaggeredGridView.countBuilder(
-          padding: const EdgeInsets.all(3),
-          crossAxisCount: 4,
-          itemCount: productData.items.length,
-          itemBuilder: (_, i) => UserCollectionItem(
-            productData.items[i].id,
-            productData.items[i].title,
-            productData.items[i].imageUrl,
-            productData.items[i].location,
-            productData.items[i].description,
+        body: RefreshIndicator(
+          onRefresh: () => _refresh(context),
+          child: StaggeredGridView.countBuilder(
+            padding: const EdgeInsets.all(3),
+            crossAxisCount: 4,
+            itemCount: productData.items.length,
+            itemBuilder: (_, i) => UserCollectionItem(
+              productData.items[i].id,
+              productData.items[i].title,
+              productData.items[i].imageUrl,
+              productData.items[i].location,
+              productData.items[i].description,
+            ),
+            staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
           ),
-          staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
-          mainAxisSpacing: 3,
-          crossAxisSpacing: 3,
         ));
   }
 }
