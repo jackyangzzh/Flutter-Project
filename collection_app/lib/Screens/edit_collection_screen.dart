@@ -151,6 +151,9 @@ class _EditCollectionScreenState extends State<EditCollectionScreen> {
                         if (_value.isEmpty) {
                           return 'Please enter a title';
                         }
+                        if (_value.length > 60){
+                          return 'Please keep the title short (less than 60 characters)';
+                        }
                         return null;
                       },
                     ),
