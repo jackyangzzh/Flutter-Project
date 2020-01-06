@@ -15,6 +15,7 @@ class UserCollectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Column(
@@ -52,9 +53,14 @@ class UserCollectionItem extends StatelessWidget {
                   icon: Icon(Icons.delete),
                   color: Theme.of(context).errorColor,
                   iconSize: 17,
-                  onPressed: () {
-                    Provider.of<ProductProvider>(context, listen: false)
-                        .deleteItem(id);
+                  onPressed: () async {
+                    try {
+                      await Provider.of<ProductProvider>(context, listen: false)
+                          .deleteItem(id);
+                    } catch (error) {
+                      scaffold.showSnackBar(
+                          SnackBar(content: Text('Failed to delete')));
+                    }
                   },
                 )
               ],

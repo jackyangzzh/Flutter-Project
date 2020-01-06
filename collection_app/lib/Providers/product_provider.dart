@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './collection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../Models/httpException.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Collection> _items = [
@@ -113,8 +114,18 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteItem(String id) {
-    _items.removeWhere((i) => i.id == id);
+  Future<void> deleteItem(String id) async {
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/collection/$id.json';
+    final deleteIndex = _items.indexWhere((i) => i.id == id);
+    var deleteItem = _items[deleteIndex];
+    _items.removeAt(deleteIndex);
     notifyListeners();
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
+      _items.insert(deleteIndex, deleteItem);
+      throw (httpException('Could not delete'));
+    }
+    deleteItem = null;
   }
 }
