@@ -1,4 +1,7 @@
+import 'package:collection_app/Models/httpException.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 enum Mood {
   Miserable,
@@ -14,7 +17,6 @@ class Collection with ChangeNotifier {
   final String description;
   final String location;
   final String imageUrl;
-  final Mood mood;
   bool isFavoriate;
 
   Collection(
@@ -22,12 +24,28 @@ class Collection with ChangeNotifier {
       @required this.title,
       @required this.description,
       this.location,
-      @required this.mood,
       @required this.imageUrl,
       this.isFavoriate = false});
 
-  void selectFavoriate() {
+  Future<void> selectFavoriate() async {
+    final oldStatus = isFavoriate;
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/collection/$id.json';
     isFavoriate = !isFavoriate;
     notifyListeners();
+    try {
+      final response = await http.patch(
+        url,
+        body: json.encode({'isFavoriate': isFavoriate}),
+      );
+      if (response.statusCode >= 400) {
+        isFavoriate = oldStatus;
+        notifyListeners();
+      }
+    } catch (error) {
+      isFavoriate = oldStatus;
+      notifyListeners();
+      throw httpException('Cannot favoriate');
+    }
   }
 }

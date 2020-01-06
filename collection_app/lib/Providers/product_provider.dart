@@ -124,6 +124,7 @@ class ProductProvider with ChangeNotifier {
     final response = await http.delete(url);
     if (response.statusCode >= 400) {
       _items.insert(deleteIndex, deleteItem);
+      notifyListeners();
       throw (httpException('Could not delete'));
     }
     deleteItem = null;
