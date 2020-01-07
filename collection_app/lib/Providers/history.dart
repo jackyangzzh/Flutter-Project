@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import './profolio.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HistoryItem {
   final String id;
@@ -21,14 +23,28 @@ class History with ChangeNotifier {
     return [..._items];
   }
 
-  void addHistory(List<ProfolioItem> profolioItem, int amount) {
+  void addHistory(List<ProfolioItem> profolioItem, int amount) async {
+    final url = 'https://collectionapp1-84046.firebaseio.com/history.json';
+    final timeStamp = DateTime.now();
+    final response = await http.post(url,
+        body: json.encode({
+          'amount': amount,
+          'dateTime': timeStamp.toIso8601String(),
+          'items': profolioItem
+              .map((i) => {
+                    'id': i.id,
+                    'title': i.title,
+                    'imageUrl': i.imageUrl,
+                  })
+              .toList()
+        }));
     _items.insert(
         0,
         HistoryItem(
-            id: DateTime.now().toString(),
+            id: json.decode(response.body)['name'],
             amount: amount,
             items: profolioItem,
-            dateTime: DateTime.now()));
+            dateTime: timeStamp));
     notifyListeners();
   }
 }

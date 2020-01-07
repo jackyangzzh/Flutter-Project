@@ -3,7 +3,6 @@ import '../Providers/profolio.dart' show Profolio;
 import 'package:provider/provider.dart';
 import '../Widgets/profolio_item.dart';
 import '../Providers/history.dart';
-import '../Widgets/app_drawer.dart';
 
 class ProfolioCart extends StatelessWidget {
   static const routeName = "/profolio";
@@ -35,12 +34,14 @@ class ProfolioCart extends StatelessWidget {
                       "UPLOAD",
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
-                    onPressed: () {
-                      Provider.of<History>(context).addHistory(
-                          profolio.items.values.toList(),
-                          profolio.profolioSize);
-                      profolio.clearProfolio();
-                    },
+                    onPressed: profolio.profolioSize <= 0
+                        ? null
+                        : () {
+                            Provider.of<History>(context).addHistory(
+                                profolio.items.values.toList(),
+                                profolio.profolioSize);
+                            profolio.clearProfolio();
+                          },
                   ),
                 ],
               ),
