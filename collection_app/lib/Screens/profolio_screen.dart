@@ -28,21 +28,7 @@ class ProfolioCart extends StatelessWidget {
                     style: TextStyle(fontSize: 15),
                   ),
                   Spacer(),
-                  FlatButton.icon(
-                    icon: Icon(Icons.cloud_upload),
-                    label: Text(
-                      "UPLOAD",
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                    onPressed: profolio.profolioSize <= 0
-                        ? null
-                        : () {
-                            Provider.of<History>(context).addHistory(
-                                profolio.items.values.toList(),
-                                profolio.profolioSize);
-                            profolio.clearProfolio();
-                          },
-                  ),
+                  UploadButton(profolio: profolio),
                 ],
               ),
             ),
@@ -59,6 +45,51 @@ class ProfolioCart extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class UploadButton extends StatefulWidget {
+  const UploadButton({
+    Key key,
+    @required this.profolio,
+  }) : super(key: key);
+
+  final Profolio profolio;
+
+  @override
+  _UploadButtonState createState() => _UploadButtonState();
+}
+
+class _UploadButtonState extends State<UploadButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton.icon(
+      icon: Icon(Icons.cloud_upload),
+      label: Text(
+        "UPLOAD",
+        style: TextStyle(color: Theme.of(context).primaryColor),
+      ),
+      onPressed: (widget.profolio.profolioSize <= 0 || _isLoading)
+          ? Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+            )
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+              await Provider.of<History>(context, listen: false).addHistory(
+                  widget.profolio.items.values.toList(),
+                  widget.profolio.profolioSize);
+              setState(() {
+                _isLoading = false;
+              });
+              widget.profolio.clearProfolio();
+            },
     );
   }
 }
