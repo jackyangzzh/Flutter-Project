@@ -23,6 +23,30 @@ class History with ChangeNotifier {
     return [..._items];
   }
 
+  Future<void> fetchData() async {
+    final url = 'https://collectionapp1-84046.firebaseio.com/history.json';
+    final response = await http.get(url);
+    final List<HistoryItem> loadedHistory = [];
+    final data = json.decode(response.body) as Map<String, dynamic>;
+    if (data == null) {
+      return;
+    }
+    data.forEach((id, item) {
+      loadedHistory.add(HistoryItem(
+          id: id,
+          amount: item['amount'],
+          dateTime: DateTime.parse(item['dateTime']),
+          items: (item['items'] as List<dynamic>)
+              .map((i) => ProfolioItem(
+                  id: item['id'],
+                  title: item['title'],
+                  imageUrl: item['imageUrl']))
+              .toList()));
+    });
+    _items = loadedHistory;
+    notifyListeners();
+  }
+
   void addHistory(List<ProfolioItem> profolioItem, int amount) async {
     final url = 'https://collectionapp1-84046.firebaseio.com/history.json';
     final timeStamp = DateTime.now();
