@@ -52,6 +52,8 @@ class ProfolioItem extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: ListTile(
             leading: Container(
+              width: 100,
+              height: 100,
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,

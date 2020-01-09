@@ -47,6 +47,8 @@ class _PastCollectionState extends State<PastCollection> {
                             padding: EdgeInsets.all(5),
                             child: ListTile(
                               leading: Container(
+                                width: 100,
+                                height: 100,
                                 child: Image.network(
                                   i.imageUrl,
                                   fit: BoxFit.cover,

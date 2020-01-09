@@ -73,11 +73,7 @@ class _UploadButtonState extends State<UploadButton> {
         style: TextStyle(color: Theme.of(context).primaryColor),
       ),
       onPressed: (widget.profolio.profolioSize <= 0 || _isLoading)
-          ? Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Theme.of(context).primaryColor,
-              ),
-            )
+          ? null
           : () async {
               setState(() {
                 _isLoading = true;

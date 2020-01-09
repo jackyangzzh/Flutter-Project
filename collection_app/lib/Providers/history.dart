@@ -38,12 +38,12 @@ class History with ChangeNotifier {
           dateTime: DateTime.parse(item['dateTime']),
           items: (item['items'] as List<dynamic>)
               .map((i) => ProfolioItem(
-                  id: item['id'],
-                  title: item['title'],
-                  imageUrl: item['imageUrl']))
+                  id: i['id'],
+                  title: i['title'],
+                  imageUrl: i['imageUrl']))
               .toList()));
     });
-    _items = loadedHistory;
+    _items = loadedHistory.reversed.toList();
     notifyListeners();
   }
 
