@@ -17,8 +17,8 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 gradient: LinearGradient(
               colors: [
-                Color.fromRGBO(255, 255, 102, 1).withOpacity(0.5),
-                Color.fromRGBO(102, 255, 102, 1).withOpacity(0.9)
+                Color.fromRGBO(255, 255, 102, 1).withOpacity(0.4),
+                Color.fromRGBO(102, 255, 102, 1).withOpacity(0.7),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -33,30 +33,24 @@ class AuthScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 90),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(0),
-                          color: Colors.green.shade900,
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 10,
-                                color: Colors.black26,
-                                offset: Offset(0, 2))
-                          ]),
-                      child: Text('Collect',
-                          style: TextStyle(
-                              color:
-                                  Theme.of(context).accentTextTheme.title.color,
-                              fontSize: 50,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.normal)),
-                    ),
+                  Container(
+                    child: Text('Collect',
+                        style: TextStyle(
+                            color: Theme.of(context).textTheme.title.color,
+                            fontSize: 50,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600)),
+                  ),
+                  Container(
+                    child: Text('Own your experience',
+                        style: TextStyle(
+                            color: Theme.of(context).textTheme.title.color,
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.normal)),
+                  ),
+                  SizedBox(
+                    height: deviceSize.height * 0.05,
                   ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,

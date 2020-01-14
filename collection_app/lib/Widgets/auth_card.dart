@@ -50,10 +50,8 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
-      ),
-      elevation: 5,
+      color: Colors.transparent,
+      elevation: 0,
       child: Container(
         height: _authMode == AuthMode.Signup ? 320 : 260,
         constraints:
@@ -111,19 +109,19 @@ class _AuthCardState extends State<AuthCard> {
                     backgroundColor: Theme.of(context).primaryColor,
                   )
                 else
-                  RaisedButton(
-                    child:
-                        Text(_authMode == AuthMode.Login ? 'Login' : 'Sign up'),
+                  FlatButton(
+                    child: Text(
+                        _authMode == AuthMode.Login ? 'Login' : 'Sign up',
+                        style: TextStyle(fontFamily: 'Raleway', fontSize: 15)),
                     onPressed: _submit,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
                     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                     color: Theme.of(context).primaryColor,
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 FlatButton(
                   child: Text(
-                      '${_authMode == AuthMode.Login ? 'Sign up' : 'Login'}'),
+                      '${_authMode == AuthMode.Login ? 'Sign up' : 'Login'}',
+                      style: TextStyle(fontFamily: 'Raleway', fontSize: 15)),
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
