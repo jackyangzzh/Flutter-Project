@@ -10,6 +10,7 @@ import './Providers/history.dart';
 import './Screens/past_collection_screen.dart';
 import './Screens/user_collection_screen.dart';
 import './Screens/auth_screen.dart';
+import './Providers/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider.value(value: ProductProvider()),
         ChangeNotifierProvider.value(
           value: Profolio(),

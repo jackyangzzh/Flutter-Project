@@ -1,5 +1,7 @@
 import '../Screens/auth_screen.dart';
 import 'package:flutter/material.dart';
+import '../Providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class AuthCard extends StatefulWidget {
   const AuthCard({
@@ -19,16 +21,22 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  void _submit() {
-    if (_formKey.currentState.validate()) {
+  void _submit() async {
+        print('State saved');
+    if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
+
     setState(() {
       _isLoading = true;
     });
     if (_authMode == AuthMode.Login) {
-    } else {}
+    } else {
+      print("called");
+      await Provider.of<Auth>(context, listen: false)
+          .signUp(_authData['email'], _authData['password']);
+    }
     setState(() {
       _isLoading = false;
     });
