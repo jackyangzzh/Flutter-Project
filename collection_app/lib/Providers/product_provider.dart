@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './collection.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../Models/httpException.dart';
+import '../Models/HttpException.dart';
 
 class ProductProvider with ChangeNotifier {
   List<Collection> _items = [
@@ -128,7 +128,7 @@ class ProductProvider with ChangeNotifier {
     if (response.statusCode >= 400) {
       _items.insert(deleteIndex, deleteItem);
       notifyListeners();
-      throw (httpException('Could not delete'));
+      throw (HttpException('Could not delete'));
     }
     deleteItem = null;
   }

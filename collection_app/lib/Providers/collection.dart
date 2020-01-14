@@ -1,4 +1,4 @@
-import 'package:collection_app/Models/httpException.dart';
+import '../Models/HttpException.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -45,7 +45,7 @@ class Collection with ChangeNotifier {
     } catch (error) {
       isFavoriate = oldStatus;
       notifyListeners();
-      throw httpException('Cannot favoriate');
+      throw HttpException('Cannot favoriate');
     }
   }
 }
