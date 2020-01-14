@@ -22,7 +22,6 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
 
   void _submit() async {
-        print('State saved');
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -32,8 +31,9 @@ class _AuthCardState extends State<AuthCard> {
       _isLoading = true;
     });
     if (_authMode == AuthMode.Login) {
+      await Provider.of<Auth>(context, listen: false)
+          .login(_authData['email'], _authData['password']);
     } else {
-      print("called");
       await Provider.of<Auth>(context, listen: false)
           .signUp(_authData['email'], _authData['password']);
     }
