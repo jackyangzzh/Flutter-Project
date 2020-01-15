@@ -7,8 +7,21 @@ import '../Models/HttpException.dart';
 
 class Auth with ChangeNotifier {
   String _token;
-  String _expirationDate;
+  DateTime _expirationDate;
   String _userId;
+
+  bool get isAuth {
+    return _token != null;
+  }
+
+  String get getToken {
+    if (_expirationDate != null &&
+        _expirationDate.isAfter(DateTime.now()) &&
+        _token != null) {
+      return _token;
+    }
+    return null;
+  }
 
   Future<void> _authenticate(String url, String email, String password) async {
     try {
@@ -18,10 +31,15 @@ class Auth with ChangeNotifier {
             'password': password,
             'returnSecureToken': true
           }));
-      final responseData = json.decode(response.body)['error']['message'];
+      final responseData = json.decode(response.body);
       if (responseData != null) {
-        throw HttpException(responseData);
+        throw HttpException(responseData['error']['message']);
       }
+      _token = responseData['idToken'];
+      _userId = responseData['localId'];
+      _expirationDate = DateTime.now()
+          .add(Duration(seconds: int.parse(responseData['expireIn'])));
+      notifyListeners();
     } catch (error) {
       throw error;
     }

@@ -18,50 +18,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
-        ),
-        ChangeNotifierProvider.value(value: ProductProvider()),
-        ChangeNotifierProvider.value(
-          value: Profolio(),
-        ),
-        ChangeNotifierProvider.value(
-          value: History(),
-        )
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Collection App',
-        theme: ThemeData(
-            primarySwatch: Colors.lightGreen,
-            accentColor: Colors.yellowAccent,
-            canvasColor: Colors.lightGreen[50],
-            fontFamily: 'Raleway',
-            textTheme: ThemeData.light().textTheme.copyWith(
-                body1: TextStyle(fontSize: 15, color: Colors.black),
-                body2: TextStyle(color: Colors.black),
-                title: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'Montserrat',
-                ),
-                subtitle: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Montserrat',
-                  color: Colors.grey,
-                ),
-                display1: TextStyle(fontSize: 15, fontFamily: 'Monteserrat'),
-                caption: TextStyle(fontSize: 13))),
-        home: AuthScreen(),
-        routes: {
-          ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
-          ProfolioCart.routeName: (ctx) => ProfolioCart(),
-          PastCollectionScreen.routeName: (ctx) => PastCollectionScreen(),
-          UserCollectionScreen.routeName: (ctx) => UserCollectionScreen(),
-          EditCollectionScreen.routeName: (ctx) => EditCollectionScreen(),
-        },
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider.value(
+            value: Auth(),
+          ),
+          ChangeNotifierProvider.value(value: ProductProvider()),
+          ChangeNotifierProvider.value(
+            value: Profolio(),
+          ),
+          ChangeNotifierProvider.value(
+            value: History(),
+          )
+        ],
+        child: Consumer<Auth>(
+          builder: (ctx, authData, _) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Collection App',
+            theme: ThemeData(
+                primarySwatch: Colors.lightGreen,
+                accentColor: Colors.yellowAccent,
+                canvasColor: Colors.lightGreen[50],
+                fontFamily: 'Raleway',
+                textTheme: ThemeData.light().textTheme.copyWith(
+                    body1: TextStyle(fontSize: 15, color: Colors.black),
+                    body2: TextStyle(color: Colors.black),
+                    title: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Montserrat',
+                    ),
+                    subtitle: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Montserrat',
+                      color: Colors.grey,
+                    ),
+                    display1:
+                        TextStyle(fontSize: 15, fontFamily: 'Monteserrat'),
+                    caption: TextStyle(fontSize: 13))),
+            home: authData.isAuth ? CollectOverviewScreen() : AuthScreen(),
+            routes: {
+              ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
+              ProfolioCart.routeName: (ctx) => ProfolioCart(),
+              PastCollectionScreen.routeName: (ctx) => PastCollectionScreen(),
+              UserCollectionScreen.routeName: (ctx) => UserCollectionScreen(),
+              EditCollectionScreen.routeName: (ctx) => EditCollectionScreen(),
+            },
+          ),
+        ));
   }
 }
 

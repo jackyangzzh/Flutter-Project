@@ -71,6 +71,7 @@ class _AuthCardState extends State<AuthCard> {
         errorMsg = 'Wrong password';
       }
       _showErrorDialog(errorMsg);
+      
     } catch (error) {
       const errorMsg = 'Could not authenticate';
       _showErrorDialog(errorMsg);
