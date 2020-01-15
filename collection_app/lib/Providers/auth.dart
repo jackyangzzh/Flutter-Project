@@ -18,9 +18,9 @@ class Auth with ChangeNotifier {
             'password': password,
             'returnSecureToken': true
           }));
-      final responseData = json.decode(response.body)['error'];
+      final responseData = json.decode(response.body)['error']['message'];
       if (responseData != null) {
-        throw HttpException(responseData['error']['message']);
+        throw HttpException(responseData);
       }
     } catch (error) {
       throw error;

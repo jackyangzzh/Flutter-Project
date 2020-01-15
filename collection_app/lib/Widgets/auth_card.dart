@@ -58,7 +58,7 @@ class _AuthCardState extends State<AuthCard> {
             .signUp(_authData['email'], _authData['password']);
       }
     } on HttpException catch (error) {
-      var errorMsg;
+      var errorMsg = 'Authenticatioin failed';
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMsg = 'This email is already used.';
       } else if (error.toString().contains('INVALID_EMAIL')) {
@@ -72,7 +72,7 @@ class _AuthCardState extends State<AuthCard> {
       }
       _showErrorDialog(errorMsg);
     } catch (error) {
-      const errorMsg = 'Could not authenticate =(';
+      const errorMsg = 'Could not authenticate';
       _showErrorDialog(errorMsg);
     }
 
