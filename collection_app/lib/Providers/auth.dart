@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -25,20 +23,29 @@ class Auth with ChangeNotifier {
 
   Future<void> _authenticate(String url, String email, String password) async {
     try {
-      final response = await http.post(url,
-          body: json.encode({
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
             'email': email,
             'password': password,
-            'returnSecureToken': true
-          }));
+            'returnSecureToken': true,
+          },
+        ),
+      );
       final responseData = json.decode(response.body);
-      if (responseData != null) {
+      if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
       }
       _token = responseData['idToken'];
       _userId = responseData['localId'];
-      _expirationDate = DateTime.now()
-          .add(Duration(seconds: int.parse(responseData['expireIn'])));
+      _expirationDate = DateTime.now().add(
+        Duration(
+          seconds: int.parse(
+            responseData['expiresIn'],
+          ),
+        ),
+      );
       notifyListeners();
     } catch (error) {
       throw error;
