@@ -37,10 +37,10 @@ class ProductProvider with ChangeNotifier {
   ];
 
   var isFavoriate = false;
-
+  final String userId;
   final String authToken;
 
-  ProductProvider(this.authToken, this._items);
+  ProductProvider(this.authToken, this.userId, this._items);
 
   List<Collection> get items {
     return [..._items];
@@ -65,6 +65,11 @@ class ProductProvider with ChangeNotifier {
       if (data == null) {
         return;
       }
+
+      final userUrl =
+          'https://collectionapp1-84046.firebaseio.com/userFavoriate/$userId.json?auth=$authToken';
+      final favoriateResponse = await http.get(userUrl);
+      final favoriateData = json.decode(favoriateResponse.body);
       data.forEach((id, info) {
         loadedData.insert(
             0,
@@ -74,7 +79,9 @@ class ProductProvider with ChangeNotifier {
                 description: info['description'],
                 location: info['location'],
                 imageUrl: info['imageUrl'],
-                isFavoriate: info['isFavoriate']));
+                isFavoriate: favoriateData == null
+                    ? false
+                    : favoriateData[id] ?? false));
       });
       _items = loadedData;
       notifyListeners();
@@ -93,7 +100,6 @@ class ProductProvider with ChangeNotifier {
             'location': item.location,
             'description': item.description,
             'imageUrl': item.imageUrl,
-            'isFavoriate': item.isFavoriate,
           }));
       final newItem = Collection(
           id: DateTime.now().toString(),

@@ -47,7 +47,8 @@ class CollectionItem extends StatelessWidget {
                           : Icon(Icons.favorite_border),
                       iconSize: 17,
                       onPressed: () {
-                        item.selectFavoriate(authData.getToken);
+                        item.selectFavoriate(
+                            authData.getToken, authData.getUserId);
                       },
                     ),
                     IconButton(
