@@ -3,11 +3,13 @@ import '../Screens/item_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../Providers/collection.dart';
 import '../Providers/profolio.dart';
+import '../Providers/auth.dart';
 
 class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profolio = Provider.of<Profolio>(context);
+    final authData = Provider.of<Auth>(context, listen: false);
 
     return Consumer<Collection>(
       builder: (ctx, item, child) => Card(
@@ -44,7 +46,9 @@ class CollectionItem extends StatelessWidget {
                           ? Icon(Icons.favorite)
                           : Icon(Icons.favorite_border),
                       iconSize: 17,
-                      onPressed: item.selectFavoriate,
+                      onPressed: () {
+                        item.selectFavoriate(authData.getToken);
+                      },
                     ),
                     IconButton(
                       icon: Icon(Icons.add_circle),

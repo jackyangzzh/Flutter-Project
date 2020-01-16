@@ -38,6 +38,10 @@ class ProductProvider with ChangeNotifier {
 
   var isFavoriate = false;
 
+  final String authToken;
+
+  ProductProvider(this.authToken, this._items);
+
   List<Collection> get items {
     return [..._items];
   }
@@ -51,7 +55,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/collection.json?auth=$authToken';
 
     try {
       final response = await http.get(url);
@@ -79,7 +84,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> addItem(Collection item) async {
-    const url = 'https://collectionapp1-84046.firebaseio.com/collection.json';
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/collection.json?auth=$authToken';
     try {
       final response = await http.post(url,
           body: json.encode({
@@ -105,7 +111,7 @@ class ProductProvider with ChangeNotifier {
   Future<void> updateItem(String id, Collection newItem) async {
     final index = _items.indexWhere((i) => i.id == id);
     final url =
-        'https://collectionapp1-84046.firebaseio.com/collection/$id.json';
+        'https://collectionapp1-84046.firebaseio.com/collection/$id.json?auth=$authToken';
     await http.patch(url,
         body: json.encode({
           'title': newItem.title,
@@ -119,7 +125,7 @@ class ProductProvider with ChangeNotifier {
 
   Future<void> deleteItem(String id) async {
     final url =
-        'https://collectionapp1-84046.firebaseio.com/collection/$id.json';
+        'https://collectionapp1-84046.firebaseio.com/collection/$id.json?auth=$authToken';
     final deleteIndex = _items.indexWhere((i) => i.id == id);
     var deleteItem = _items[deleteIndex];
     _items.removeAt(deleteIndex);

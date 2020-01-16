@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: Auth(),
           ),
-          ChangeNotifierProvider.value(value: ProductProvider()),
+          ChangeNotifierProxyProvider<Auth, ProductProvider>(
+              builder: (_, auth, i) => ProductProvider(
+                  auth.getToken, i == null ? [] : i.items)),
           ChangeNotifierProvider.value(
             value: Profolio(),
           ),
-          ChangeNotifierProvider.value(
-            value: History(),
+          ChangeNotifierProxyProvider<Auth, History>(
+            builder: (_,auth,i) => History(auth.getToken, i == null ? [] : i.getHistory),
           )
         ],
         child: Consumer<Auth>(

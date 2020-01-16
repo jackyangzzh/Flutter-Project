@@ -18,13 +18,17 @@ class HistoryItem {
 
 class History with ChangeNotifier {
   List<HistoryItem> _items = [];
+  final String authToken;
+
+  History(this.authToken, this._items);
 
   List<HistoryItem> get getHistory {
     return [..._items];
   }
 
   Future<void> fetchData() async {
-    final url = 'https://collectionapp1-84046.firebaseio.com/history.json';
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
     final response = await http.get(url);
     final List<HistoryItem> loadedHistory = [];
     final data = json.decode(response.body) as Map<String, dynamic>;
@@ -38,9 +42,7 @@ class History with ChangeNotifier {
           dateTime: DateTime.parse(item['dateTime']),
           items: (item['items'] as List<dynamic>)
               .map((i) => ProfolioItem(
-                  id: i['id'],
-                  title: i['title'],
-                  imageUrl: i['imageUrl']))
+                  id: i['id'], title: i['title'], imageUrl: i['imageUrl']))
               .toList()));
     });
     _items = loadedHistory.reversed.toList();
@@ -48,7 +50,7 @@ class History with ChangeNotifier {
   }
 
   void addHistory(List<ProfolioItem> profolioItem, int amount) async {
-    final url = 'https://collectionapp1-84046.firebaseio.com/history.json';
+    final url = 'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
     final timeStamp = DateTime.now();
     final response = await http.post(url,
         body: json.encode({

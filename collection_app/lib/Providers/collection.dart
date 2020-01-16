@@ -27,10 +27,10 @@ class Collection with ChangeNotifier {
       @required this.imageUrl,
       this.isFavoriate = false});
 
-  Future<void> selectFavoriate() async {
+  Future<void> selectFavoriate(String token) async {
     final oldStatus = isFavoriate;
     final url =
-        'https://collectionapp1-84046.firebaseio.com/collection/$id.json';
+        'https://collectionapp1-84046.firebaseio.com/collection/$id.json?auth=$token';
     isFavoriate = !isFavoriate;
     notifyListeners();
     try {
