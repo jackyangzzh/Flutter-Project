@@ -54,9 +54,11 @@ class ProductProvider with ChangeNotifier {
     return items.firstWhere((index) => index.id == id);
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     final url =
-        'https://collectionapp1-84046.firebaseio.com/collection.json?auth=$authToken';
+        'https://collectionapp1-84046.firebaseio.com/collection.json?auth=$authToken&$filterString';
 
     try {
       final response = await http.get(url);
@@ -86,6 +88,7 @@ class ProductProvider with ChangeNotifier {
       _items = loadedData;
       notifyListeners();
     } catch (error) {
+      print(error);
       throw error;
     }
   }
@@ -100,6 +103,7 @@ class ProductProvider with ChangeNotifier {
             'location': item.location,
             'description': item.description,
             'imageUrl': item.imageUrl,
+            'creatorId': userId
           }));
       final newItem = Collection(
           id: DateTime.now().toString(),
