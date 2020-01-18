@@ -19,8 +19,9 @@ class HistoryItem {
 class History with ChangeNotifier {
   List<HistoryItem> _items = [];
   final String authToken;
+  final String userId;
 
-  History(this.authToken, this._items);
+  History(this.authToken, this.userId, this._items);
 
   List<HistoryItem> get getHistory {
     return [..._items];
@@ -50,7 +51,8 @@ class History with ChangeNotifier {
   }
 
   void addHistory(List<ProfolioItem> profolioItem, int amount) async {
-    final url = 'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
+    final url =
+        'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
     final timeStamp = DateTime.now();
     final response = await http.post(url,
         body: json.encode({
