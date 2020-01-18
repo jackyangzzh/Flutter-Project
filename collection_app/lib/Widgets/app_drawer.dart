@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../Screens/past_collection_screen.dart';
 import '../Screens/user_collection_screen.dart';
+import '../Providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -33,6 +35,15 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserCollectionScreen.routeName);
+            },
+          ),
+          ListTile(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Log Out'),
+            onTap: () {
+              Navigator.of(context).pop();
+              Provider.of<Auth>(context, listen: false).logout();
             },
           )
         ],

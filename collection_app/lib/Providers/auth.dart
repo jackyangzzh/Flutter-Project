@@ -69,4 +69,11 @@ class Auth with ChangeNotifier {
 
     return _authenticate(url, email, password);
   }
+
+  void logout() {
+    _userId = null;
+    _token = null;
+    _expirationDate = null;
+    notifyListeners();
+  }
 }

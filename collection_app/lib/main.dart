@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProxyProvider<Auth, History>(
             builder: (_, auth, i) =>
-                History(auth.getToken, i.userId, i == null ? [] : i.getHistory),
+                History(auth.getToken, auth.getUserId, i == null ? [] : i.getHistory),
           )
         ],
         child: Consumer<Auth>(
