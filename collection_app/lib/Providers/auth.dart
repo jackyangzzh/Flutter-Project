@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../Models/HttpException.dart';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -54,6 +55,12 @@ class Auth with ChangeNotifier {
       );
       _autoLogout();
       notifyListeners();
+      final pref = await SharedPreferences.getInstance();
+      final _userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expireDate': _expirationDate.toIso8601String()
+      });
     } catch (error) {
       throw error;
     }
