@@ -61,6 +61,7 @@ class Auth with ChangeNotifier {
         'userId': _userId,
         'expireDate': _expirationDate.toIso8601String()
       });
+      pref.setString('userData', _userData);
     } catch (error) {
       throw error;
     }
@@ -78,6 +79,27 @@ class Auth with ChangeNotifier {
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB-fLa7XnEd3oQ1LclJdS1KIpc6njhmXf8';
 
     return _authenticate(url, email, password);
+  }
+
+  Future<bool> tryLogin() async {
+    final pref = await SharedPreferences.getInstance();
+    if (!pref.containsKey('userData')) {
+      return false;
+    }
+    final _userData =
+        json.decode(pref.getString('userData')) as Map<String, Object>;
+    final expireDate = DateTime.parse(_userData['expireDate']);
+
+    if (expireDate.isBefore(DateTime.now())) {
+      return false;
+    }
+
+    _token = _userData['token'];
+    _userId = _userData['userId'];
+    _expirationDate = _userData['expireDate'];
+    notifyListeners();
+    _autoLogout();
+    return true;
   }
 
   void logout() {

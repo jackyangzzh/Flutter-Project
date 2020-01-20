@@ -11,6 +11,7 @@ import './Screens/past_collection_screen.dart';
 import './Screens/user_collection_screen.dart';
 import './Screens/auth_screen.dart';
 import './Providers/auth.dart';
+import './Screens/StartScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,8 +30,8 @@ class MyApp extends StatelessWidget {
             value: Profolio(),
           ),
           ChangeNotifierProxyProvider<Auth, History>(
-            builder: (_, auth, i) =>
-                History(auth.getToken, auth.getUserId, i == null ? [] : i.getHistory),
+            builder: (_, auth, i) => History(
+                auth.getToken, auth.getUserId, i == null ? [] : i.getHistory),
           )
         ],
         child: Consumer<Auth>(
@@ -57,7 +58,14 @@ class MyApp extends StatelessWidget {
                     display1:
                         TextStyle(fontSize: 15, fontFamily: 'Monteserrat'),
                     caption: TextStyle(fontSize: 13))),
-            home: authData.isAuth ? CollectOverviewScreen() : AuthScreen(),
+            home: authData.isAuth
+                ? CollectOverviewScreen()
+                : FutureBuilder(
+                    future: authData.tryLogin(),
+                    builder: (ctx, result) =>
+                        result.connectionState == ConnectionState.waiting
+                            ? StartScreen()
+                            : AuthScreen()),
             routes: {
               ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
               ProfolioCart.routeName: (ctx) => ProfolioCart(),
