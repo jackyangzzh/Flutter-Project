@@ -52,7 +52,7 @@ class History with ChangeNotifier {
 
   void addHistory(List<ProfolioItem> profolioItem, int amount) async {
     final url =
-        'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
+        'https://collectionapp1-84046.firebaseio.com/history/$userId.json?auth=$authToken';
     final timeStamp = DateTime.now();
     final response = await http.post(url,
         body: json.encode({

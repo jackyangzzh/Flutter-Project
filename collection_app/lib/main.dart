@@ -65,7 +65,8 @@ class MyApp extends StatelessWidget {
                     builder: (ctx, result) =>
                         result.connectionState == ConnectionState.waiting
                             ? StartScreen()
-                            : AuthScreen()),
+                            : AuthScreen(),
+                  ),
             routes: {
               ItemDetailScreen.routeName: (ctx) => ItemDetailScreen(),
               ProfolioCart.routeName: (ctx) => ProfolioCart(),
