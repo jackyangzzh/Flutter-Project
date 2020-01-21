@@ -38,7 +38,6 @@ class _AuthCardState extends State<AuthCard>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
   }
@@ -123,9 +122,12 @@ class _AuthCardState extends State<AuthCard>
     return Card(
       color: Colors.transparent,
       elevation: 0,
-      child: Container(
-        height: _heightAnimation.value.height,
-        constraints: BoxConstraints(minHeight: _heightAnimation.value.height),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
+        height: _authMode == AuthMode.Signup ? 350 : 300,
+        constraints:
+            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 350 : 300),
         width: deviceSize.width * 0.75,
         padding: EdgeInsets.all(15),
         child: Form(
