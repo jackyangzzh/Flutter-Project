@@ -12,7 +12,8 @@ class AuthCard extends StatefulWidget {
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
@@ -21,6 +22,26 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  AnimationController _animationController;
+  Animation _heightAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = new AnimationController(
+        vsync: this, duration: Duration(milliseconds: 300));
+    _heightAnimation = Tween<Size>(
+            begin: Size(double.infinity, 300), end: Size(double.infinity, 350))
+        .animate(CurvedAnimation(
+            parent: _animationController, curve: Curves.fastOutSlowIn));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _animationController.dispose();
+  }
 
   void _showErrorDialog(String msg) {
     showDialog(
@@ -71,7 +92,6 @@ class _AuthCardState extends State<AuthCard> {
         errorMsg = 'Wrong password';
       }
       _showErrorDialog(errorMsg);
-      
     } catch (error) {
       const errorMsg = 'Could not authenticate';
       _showErrorDialog(errorMsg);
@@ -87,11 +107,14 @@ class _AuthCardState extends State<AuthCard> {
       setState(() {
         _authMode = AuthMode.Signup;
       });
+      _animationController.forward();
     } else {
       setState(() {
         _authMode = AuthMode.Login;
       });
+      _animationController.reverse();
     }
+    _heightAnimation.addListener(() => setState(() {}));
   }
 
   @override
@@ -101,9 +124,8 @@ class _AuthCardState extends State<AuthCard> {
       color: Colors.transparent,
       elevation: 0,
       child: Container(
-        height: _authMode == AuthMode.Signup ? 320 : 260,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+        height: _heightAnimation.value.height,
+        constraints: BoxConstraints(minHeight: _heightAnimation.value.height),
         width: deviceSize.width * 0.75,
         padding: EdgeInsets.all(15),
         child: Form(
