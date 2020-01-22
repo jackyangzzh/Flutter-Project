@@ -22,10 +22,14 @@ class CollectionItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              FadeInImage(
-                placeholder: AssetImage('assets/fonts/Images/placeholder.png'),
-                image: NetworkImage(item.imageUrl),
-                fit: BoxFit.cover,
+              Hero(
+                tag: item.id,
+                child: FadeInImage(
+                  placeholder:
+                      AssetImage('assets/fonts/Images/placeholder.png'),
+                  image: NetworkImage(item.imageUrl),
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
