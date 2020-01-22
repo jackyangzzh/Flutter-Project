@@ -22,8 +22,9 @@ class CollectionItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(
-                item.imageUrl,
+              FadeInImage(
+                placeholder: AssetImage('assets/fonts/Images/placeholder.png'),
+                image: NetworkImage(item.imageUrl),
                 fit: BoxFit.cover,
               ),
               SizedBox(
