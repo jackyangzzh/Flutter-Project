@@ -29,7 +29,7 @@ class History with ChangeNotifier {
 
   Future<void> fetchData() async {
     final url =
-        'https://collectionapp1-84046.firebaseio.com/history.json?auth=$authToken';
+        'https://collectionapp1-84046.firebaseio.com/history/$userId.json?auth=$authToken';
     final response = await http.get(url);
     final List<HistoryItem> loadedHistory = [];
     final data = json.decode(response.body) as Map<String, dynamic>;

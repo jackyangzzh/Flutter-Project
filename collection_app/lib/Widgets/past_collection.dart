@@ -16,31 +16,36 @@ class _PastCollectionState extends State<PastCollection> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text(DateFormat('MM/dd/yyyy')
-                .format(widget.pastCollection.dateTime)),
-            trailing: IconButton(
-              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
-              onPressed: () {
-                setState(() {
-                  _expanded = !_expanded;
-                });
-              },
+    print(widget.pastCollection.items.length);
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _expanded ? widget.pastCollection.items.length * 80.0 + 90 : 80,
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text(DateFormat('MM/dd/yyyy')
+                  .format(widget.pastCollection.dateTime)),
+              trailing: IconButton(
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+              ),
             ),
-          ),
-          if (_expanded)
-            Container(
-              height: min(
-                  widget.pastCollection.items.length * 20.0 +
-                      MediaQuery.of(context).size.height * 0.2,
-                  MediaQuery.of(context).size.height * 0.5),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+              height: _expanded
+                  ? widget.pastCollection.items.length * 80.0 + 10
+                  : 0,
               child: ListView(
                 children: widget.pastCollection.items
                     .map((i) => Card(
+                          elevation: 1,
                           margin:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: Padding(
@@ -62,7 +67,8 @@ class _PastCollectionState extends State<PastCollection> {
                     .toList(),
               ),
             )
-        ],
+          ],
+        ),
       ),
     );
   }
