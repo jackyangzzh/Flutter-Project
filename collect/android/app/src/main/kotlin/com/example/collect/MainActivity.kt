@@ -1,4 +1,4 @@
-package com.example.my_places
+package com.example.collect
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

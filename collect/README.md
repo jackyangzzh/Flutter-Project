@@ -1,4 +1,4 @@
-# my_places
+# collect
 
 A new Flutter project.
 
