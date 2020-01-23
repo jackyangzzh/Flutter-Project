@@ -12,6 +12,7 @@ import './Screens/user_collection_screen.dart';
 import './Screens/auth_screen.dart';
 import './Providers/auth.dart';
 import './Screens/StartScreen.dart';
+import './helpers/custom_route.dart';
 
 void main() => runApp(MyApp());
 
@@ -43,6 +44,10 @@ class MyApp extends StatelessWidget {
                 accentColor: Colors.yellowAccent,
                 canvasColor: Colors.lightGreen[50],
                 fontFamily: 'Raleway',
+                pageTransitionsTheme: PageTransitionsTheme(builders: {
+                  TargetPlatform.android: CustomPageTransitionBuilder(),
+                  TargetPlatform.iOS: CustomPageTransitionBuilder(),
+                }),
                 textTheme: ThemeData.light().textTheme.copyWith(
                     body1: TextStyle(fontSize: 15, color: Colors.black),
                     body2: TextStyle(color: Colors.black),

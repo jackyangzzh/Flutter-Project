@@ -16,7 +16,6 @@ class _PastCollectionState extends State<PastCollection> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.pastCollection.items.length);
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       height: _expanded ? widget.pastCollection.items.length * 80.0 + 90 : 80,
