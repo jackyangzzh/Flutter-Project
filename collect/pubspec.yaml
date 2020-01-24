@@ -89,5 +89,10 @@ flutter:
           weight: 700
         - asset: assets/fonts/Raleway-Black.ttf
           weight: 900
+
+    - family: FunFont
+      fonts:
+        - asset: assets/fonts/funFont.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
