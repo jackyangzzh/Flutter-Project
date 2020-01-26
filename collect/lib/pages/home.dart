@@ -72,7 +72,8 @@ class _HomeState extends State<Home> {
   }
 
   pageChangeTap(int index) {
-    _pageController.jumpToPage(index);
+    _pageController.animateToPage(index,
+        duration: Duration(milliseconds: 300), curve: Curves.linearToEaseOut);
   }
 
   Widget authScreen() {
@@ -89,20 +90,27 @@ class _HomeState extends State<Home> {
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: CupertinoTabBar(
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: _index,
         onTap: pageChangeTap,
-        activeColor: Theme.of(context).primaryColor,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.whatshot), title: Text('Timeline')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), title: Text('Feed')),
           BottomNavigationBarItem(
               icon: Icon(
-            Icons.camera_alt,
-            size: 50,
-          )),
-          BottomNavigationBarItem(icon: Icon(Icons.search)),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle))
+                Icons.camera_alt,
+                size: 45,
+              ),
+              title: Text('Camera')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search), title: Text('Search')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), title: Text('Profile'))
         ],
       ),
     );
