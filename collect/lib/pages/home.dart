@@ -11,6 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final userRef = Firestore.instance.collection('users');
+final DateTime timeStamp = DateTime.now();
 
 class Home extends StatefulWidget {
   @override
@@ -20,7 +21,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool _isAuth = false;
   int _index = 0;
-
   PageController _pageController;
 
   @override
@@ -41,13 +41,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  signInHandler(GoogleSignInAccount account) {
+  void signInHandler(GoogleSignInAccount account) {
     if (account != null) {
       createUser();
       setState(() {
@@ -61,13 +55,22 @@ class _HomeState extends State<Home> {
   }
 
   void createUser() async {
-    final GoogleSignInAccount currentUser = _googleSignIn.currentUser;
-    final DocumentSnapshot userId =
-        await userRef.document(currentUser.id).get();
+    final GoogleSignInAccount user = _googleSignIn.currentUser;
+    final DocumentSnapshot userId = await userRef.document(user.id).get();
 
     if (!userId.exists) {
-      Navigator.push(
+      final username = await Navigator.push(
           context, MaterialPageRoute(builder: (context) => CreateAccount()));
+
+      userRef.document(user.id).setData({
+        "id": user.id,
+        "username": username,
+        "photoUrl": user.photoUrl,
+        "email": user.email,
+        "displayName": user.displayName,
+        "bio": "",
+        "timestamp": timeStamp,
+      });
     }
   }
 
@@ -77,6 +80,12 @@ class _HomeState extends State<Home> {
 
   void signOut() {
     _googleSignIn.signOut();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   void onPageChanged(int index) {
@@ -90,11 +99,16 @@ class _HomeState extends State<Home> {
         duration: Duration(milliseconds: 300), curve: Curves.linearToEaseOut);
   }
 
-  Widget authScreen() {
+  Scaffold authScreen() {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          Timeline(),
+          // Timeline(),
+          FlatButton(
+            child: Text("logout"),
+            onPressed: signOut,
+          ),
+
           ActivityFeed(),
           Upload(),
           Search(),
