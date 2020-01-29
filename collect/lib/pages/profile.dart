@@ -10,7 +10,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, isTitle: false),
+      appBar: header(context, isTitle: false, titleText: "Profile"),
       body: Text("Profile"),
     );
   }

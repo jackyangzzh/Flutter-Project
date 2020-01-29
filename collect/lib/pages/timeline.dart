@@ -18,13 +18,12 @@ class _TimelineState extends State<Timeline> {
     super.initState();
   }
 
-
   @override
   Widget build(context) {
     return Scaffold(
       appBar: header(context, isTitle: true),
-      body: FutureBuilder<QuerySnapshot>(
-        future: usersRef.getDocuments(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: usersRef.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return circularProgress(context);

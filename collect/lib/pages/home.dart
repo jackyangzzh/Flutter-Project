@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/pages/activity_feed.dart';
+import 'package:collect/pages/create_account.dart';
 import 'package:collect/pages/profile.dart';
 import 'package:collect/pages/search.dart';
 import 'package:collect/pages/timeline.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
+final userRef = Firestore.instance.collection('users');
 
 class Home extends StatefulWidget {
   @override
@@ -46,7 +49,7 @@ class _HomeState extends State<Home> {
 
   signInHandler(GoogleSignInAccount account) {
     if (account != null) {
-      print(account);
+      createUser();
       setState(() {
         _isAuth = true;
       });
@@ -57,21 +60,32 @@ class _HomeState extends State<Home> {
     }
   }
 
-  signIn() {
+  void createUser() async {
+    final GoogleSignInAccount currentUser = _googleSignIn.currentUser;
+    final DocumentSnapshot userId =
+        await userRef.document(currentUser.id).get();
+
+    if (!userId.exists) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CreateAccount()));
+    }
+  }
+
+  void signIn() {
     _googleSignIn.signIn();
   }
 
-  signOut() {
+  void signOut() {
     _googleSignIn.signOut();
   }
 
-  onPageChanged(int index) {
+  void onPageChanged(int index) {
     setState(() {
       this._index = index;
     });
   }
 
-  pageChangeTap(int index) {
+  void pageChangeTap(int index) {
     _pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.linearToEaseOut);
   }
