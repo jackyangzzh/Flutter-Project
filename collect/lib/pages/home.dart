@@ -28,17 +28,24 @@ class _HomeState extends State<Home> {
     super.initState();
     _pageController = PageController();
 
+    // _googleSignIn.onCurrentUserChanged.listen((account) {
+    //   signInHandler(account);
+    // }, onError: (error) {
+    //   print("Error when sigin in: " + error);
+    // });
+
+    // _googleSignIn.signInSilently(suppressErrors: false).then((account) {
+    //   signInHandler(account);
+    // }).catchError((error) {
+    //   print("Error when silent sigin in: " + error);
+    // });
+
     _googleSignIn.onCurrentUserChanged.listen((account) {
       signInHandler(account);
     }, onError: (error) {
       print("Error when sigin in: " + error);
     });
-
-    _googleSignIn.signInSilently(suppressErrors: false).then((account) {
-      signInHandler(account);
-    }).catchError((error) {
-      print("Error when silent sigin in: " + error);
-    });
+    _googleSignIn.signInSilently();
   }
 
   void signInHandler(GoogleSignInAccount account) {
