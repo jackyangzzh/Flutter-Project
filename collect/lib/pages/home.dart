@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/models/user.dart';
 import 'package:collect/pages/activity_feed.dart';
 import 'package:collect/pages/create_account.dart';
 import 'package:collect/pages/profile.dart';
@@ -12,6 +13,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 final userRef = Firestore.instance.collection('users');
 final DateTime timeStamp = DateTime.now();
+User currentUser;
 
 class Home extends StatefulWidget {
   @override
@@ -63,9 +65,9 @@ class _HomeState extends State<Home> {
 
   void createUser() async {
     final GoogleSignInAccount user = _googleSignIn.currentUser;
-    final DocumentSnapshot userId = await userRef.document(user.id).get();
+    DocumentSnapshot userInfo = await userRef.document(user.id).get();
 
-    if (!userId.exists) {
+    if (!userInfo.exists) {
       final username = await Navigator.push(
           context, MaterialPageRoute(builder: (context) => CreateAccount()));
 
@@ -78,7 +80,10 @@ class _HomeState extends State<Home> {
         "bio": "",
         "timestamp": timeStamp,
       });
+      userInfo = await userRef.document(user.id).get();
     }
+    currentUser = User.fromDocument(userInfo);
+    print(currentUser.username);
   }
 
   void signIn() {
