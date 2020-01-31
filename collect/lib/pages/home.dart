@@ -138,19 +138,19 @@ class _HomeState extends State<Home> {
         onTap: pageChangeTap,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.whatshot), title: Text('Timeline')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), title: Text('Feed')),
+              icon: Icon(Icons.group), title: Text('Timeline')),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.notifications), title: Text('Feed')),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.camera_alt,
                 size: 45,
               ),
               title: Text('Camera')),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.search), title: Text('Search')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search), title: Text('Search')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Profile'))
+              icon: Icon(Icons.person), title: Text('Profile'))
         ],
       ),
     );

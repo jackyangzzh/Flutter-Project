@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/models/user.dart';
 import 'package:collect/pages/timeline.dart';
@@ -35,12 +36,13 @@ class _SearchState extends State<Search> {
         if (!snapshot.hasData) {
           return circularProgress(context);
         }
-        List<Text> searchResultList = [];
+        List<UserResult> searchResultList = [];
         snapshot.data.documents.forEach((doc) {
           User user = User.fromDocument(doc);
-          searchResultList.add(Text(user.username));
+          UserResult userResult = UserResult(user);
+          searchResultList.add(userResult);
         });
-        if(searchResultList.length == 0){
+        if (searchResultList.length == 0) {
           return Text("Nothing was found");
         }
         return ListView(children: searchResultList);
@@ -79,8 +81,33 @@ class _SearchState extends State<Search> {
 }
 
 class UserResult extends StatelessWidget {
+  final User user;
+
+  UserResult(this.user);
+
   @override
   Widget build(BuildContext context) {
-    return Text("User Result");
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () {},
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 27,
+                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+              ),
+              title: Text(user.displayName,
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold)),
+              subtitle:
+                  Text(user.username, style: TextStyle(color: Colors.black)),
+            ),
+          ),
+          Divider()
+        ],
+      ),
+    );
   }
 }
