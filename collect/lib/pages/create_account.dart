@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collect/widgets/header.dart';
 import 'package:flutter/material.dart';
 
@@ -9,16 +11,28 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   String username;
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void submit() {
-    _formKey.currentState.save();
-    Navigator.pop(context, username);
+    final form = _formKey.currentState;
+
+    if (form.validate()) {
+      form.save();
+      SnackBar snackBar = SnackBar(
+        content: Text("Welcome $username!"),
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      Timer(Duration(seconds: 2), () {
+        Navigator.pop(context, username);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext parentContext) {
     return Scaffold(
-      appBar: header(context, isTitle: false, titleText: 'Welcome'),
+      key: _scaffoldKey,
+      appBar: header(context, isTitle: false, titleText: 'Welcome', removeButton: true),
       body: ListView(
         padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
         children: <Widget>[
@@ -36,6 +50,16 @@ class _CreateAccountState extends State<CreateAccount> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
+                        autovalidate: true,
+                        validator: (val) {
+                          if (val.trim().length < 3 || val.isEmpty) {
+                            return "Let's try a longer username";
+                          } else if (val.trim().length > 15) {
+                            return "Let's try a shorter username";
+                          } else {
+                            return null;
+                          }
+                        },
                         onSaved: (input) => username = input,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
