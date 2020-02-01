@@ -115,15 +115,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          // Timeline(),
-          FlatButton(
-            child: Text("logout"),
-            onPressed: signOut,
-          ),
+          Timeline(),
+          // FlatButton(
+          //   child: Text("logout"),
+          //   onPressed: signOut,
+          // ),
 
-          ActivityFeed(),
+          // ActivityFeed(),
           Upload(),
-          Search(),
+          // Search(),
           Profile()
         ],
         controller: _pageController,
@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.camera_alt,
-                size: 45,
+                size: 50,
               ),
               title: Text('Camera')),
           // BottomNavigationBarItem(
