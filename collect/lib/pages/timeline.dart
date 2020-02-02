@@ -65,7 +65,6 @@ class _TimelineState extends State<Timeline> {
   SliverAppBar buildSearchField() {
     return SliverAppBar(
       floating: true,
-      snap: true,
       title: TextFormField(
         controller: searchController,
         decoration: InputDecoration(

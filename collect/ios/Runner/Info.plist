@@ -20,16 +20,16 @@
 
 	<!-- For Geolocator -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-<string>This app needs access to location when open.</string>
+	<string>This app needs access to location when open.</string>
 	<!-- End of Geolocator -->
 
 	<!-- For Image Picker -->
-	<key>NSCameraUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Used to capture audio for image picker plugin</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
+	<string>Need to upload image</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need to upload image</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need to upload image</string>
 	<!-- End of Image Picker -->
 
 	<key>CFBundleDevelopmentRegion</key>
