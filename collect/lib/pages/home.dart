@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
           // ),
 
           // ActivityFeed(),
-          Upload(),
+          Upload(currentUser: currentUser),
           // Search(),
           Profile()
         ],
