@@ -20,12 +20,15 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  final _form = GlobalKey<FormState>();
+
   TextEditingController locationController = TextEditingController();
   TextEditingController captionController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   File file;
-  bool isLoading;
+  bool isLoading = false;
+  bool autoValidate = false;
   String postId = Uuid().v4();
 
   void handleTakePhoto() async {
@@ -42,7 +45,11 @@ class _UploadState extends State<Upload> {
     });
   }
 
-  void clearImage() {
+  Future<void> clearImage() async {
+    final _isValid = _form.currentState.validate();
+    if (!_isValid) {
+      return;
+    }
     setState(() {
       file = null;
     });
@@ -54,16 +61,37 @@ class _UploadState extends State<Upload> {
     });
     await compressImage();
     String mediaUrl = await uploadImage(file);
-    createPost();
+    createPost(
+        mediaUrl: mediaUrl,
+        location: locationController.text,
+        caption: captionController.text,
+        description: descriptionController.text);
+    captionController.clear();
+    locationController.clear();
+    descriptionController.clear();
+    setState(() {
+      isLoading = false;
+      file = null;
+    });
   }
 
   void createPost(
-      {String mediaUrl, String location, String captioin, String description}) {
+      {String mediaUrl, String location, String caption, String description}) {
     postRef
         .document(widget.currentUser.id)
         .collection("userPosts")
         .document(postId)
-        .setData({});
+        .setData({
+      "postId": postId,
+      "ownerId": widget.currentUser.id,
+      "username": widget.currentUser.username,
+      "mediaUrl": mediaUrl,
+      "caption": caption,
+      "description": description,
+      "location": location,
+      "timestamp": timeStamp,
+      'likes': {},
+    });
   }
 
   Future<String> uploadImage(imageFile) async {
@@ -107,49 +135,70 @@ class _UploadState extends State<Upload> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          isLoading ? linearProgress : Text(""),
-          SizedBox(
-            child: Image(
-              image: FileImage(file),
-              fit: BoxFit.cover,
+        child: Form(
+          key: _form,
+          autovalidate: autoValidate,
+          child: Column(children: <Widget>[
+            isLoading ? linearProgress(context) : Text(""),
+            SizedBox(
+              child: Image(
+                image: FileImage(file),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            alignment: Alignment.center,
-            child: TextField(
-              controller: captionController,
-              decoration: InputDecoration(
-                  hintText: "Caption", border: InputBorder.none),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              alignment: Alignment.center,
+              child: TextFormField(
+                style: TextStyle(fontSize: 20),
+                controller: captionController,
+                decoration: InputDecoration(
+                    errorText: captionController.text.length > 20
+                        ? "Enter something shorter!"
+                        : null,
+                    hintText: "Caption",
+                    border: InputBorder.none),
+                validator: (_value) {
+                  if (_value.length < 2) {
+                    return 'Please enter a title';
+                  }
+                  if (_value.length > 10) {
+                    return 'Please keep the title short (less than 60 characters)';
+                  }
+                  return null;
+                },
+              ),
             ),
-          ),
-          Divider(),
-          ListTile(
-            // leading: Icon(Icons.location_on),
-            title: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
+            Divider(),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              alignment: Alignment.center,
               child: TextField(
-                  controller: locationController,
-                  decoration: InputDecoration(
-                      hintText: "Location", border: InputBorder.none)),
+                maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                controller: descriptionController,
+                decoration: InputDecoration(
+                    hintText: "Description", border: InputBorder.none),
+              ),
             ),
-            trailing: IconButton(
-              icon: Icon(Icons.location_searching),
-              onPressed: () {},
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.location_on),
+              title: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                    controller: locationController,
+                    decoration: InputDecoration(
+                        hintText: "Location", border: InputBorder.none)),
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.location_searching),
+                tooltip: "Current Location",
+                onPressed: () {},
+              ),
             ),
-          ),
-          Divider(),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            alignment: Alignment.center,
-            child: TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                  hintText: "Description", border: InputBorder.none),
-            ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
