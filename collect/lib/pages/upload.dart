@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:collect/models/user.dart';
 import 'package:collect/widgets/progress.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as image;
 import 'package:uuid/uuid.dart';
+import 'home.dart';
 
 class Upload extends StatefulWidget {
   final User currentUser;
@@ -18,6 +20,10 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  TextEditingController locationController = TextEditingController();
+  TextEditingController captionController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
   File file;
   bool isLoading;
   String postId = Uuid().v4();
@@ -42,18 +48,41 @@ class _UploadState extends State<Upload> {
     });
   }
 
-  void handleSubmit() {
+  void handleSubmit() async {
     setState(() {
       isLoading = true;
     });
+    await compressImage();
+    String mediaUrl = await uploadImage(file);
+    createPost();
+  }
+
+  void createPost(
+      {String mediaUrl, String location, String captioin, String description}) {
+    postRef
+        .document(widget.currentUser.id)
+        .collection("userPosts")
+        .document(postId)
+        .setData({});
+  }
+
+  Future<String> uploadImage(imageFile) async {
+    StorageUploadTask uploadTask =
+        storageReference.child("post_$postId.jpg").putFile(imageFile);
+    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    String downloadUrl = await storageSnap.ref.getDownloadURL();
+    return downloadUrl;
   }
 
   void compressImage() async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
     image.Image imageFile = image.decodeImage(file.readAsBytesSync());
-    File('$path/img_$postId.jpg')
+    final compressedImageFile = File('$path/img_$postId.jpg')
       ..writeAsBytesSync(image.encodeJpg(imageFile, quality: 100));
+    setState(() {
+      file = compressedImageFile;
+    });
   }
 
   Scaffold buildUploadPage() {
@@ -90,6 +119,7 @@ class _UploadState extends State<Upload> {
             width: MediaQuery.of(context).size.width * 0.8,
             alignment: Alignment.center,
             child: TextField(
+              controller: captionController,
               decoration: InputDecoration(
                   hintText: "Caption", border: InputBorder.none),
             ),
@@ -100,6 +130,7 @@ class _UploadState extends State<Upload> {
             title: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: TextField(
+                  controller: locationController,
                   decoration: InputDecoration(
                       hintText: "Location", border: InputBorder.none)),
             ),
@@ -113,6 +144,7 @@ class _UploadState extends State<Upload> {
             width: MediaQuery.of(context).size.width * 0.8,
             alignment: Alignment.center,
             child: TextField(
+              controller: descriptionController,
               decoration: InputDecoration(
                   hintText: "Description", border: InputBorder.none),
             ),

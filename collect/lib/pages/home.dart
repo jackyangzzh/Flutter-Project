@@ -6,12 +6,15 @@ import 'package:collect/pages/profile.dart';
 import 'package:collect/pages/search.dart';
 import 'package:collect/pages/timeline.dart';
 import 'package:collect/pages/upload.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
+final StorageReference storageReference = FirebaseStorage.instance.ref();
 final userRef = Firestore.instance.collection('users');
+final postRef = Firestore.instance.collection('posts');
 final DateTime timeStamp = DateTime.now();
 User currentUser;
 
