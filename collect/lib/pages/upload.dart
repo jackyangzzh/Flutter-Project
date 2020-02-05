@@ -5,6 +5,7 @@ import 'package:collect/widgets/progress.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as image;
@@ -108,6 +109,17 @@ class _UploadState extends State<Upload> {
     });
   }
 
+  Future<void> getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemarkList = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark placemark = placemarkList[0];
+    String address =
+        "${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}";
+    locationController.text = address;
+  }
+
   Scaffold buildUploadPage() {
     return Scaffold(
       appBar: AppBar(
@@ -148,17 +160,18 @@ class _UploadState extends State<Upload> {
               style: TextStyle(fontSize: 20),
               controller: captionController,
               decoration: InputDecoration(
-                  hintText: "Caption",
-                  border: InputBorder.none,
-                  counterStyle: TextStyle()),
+                hintText: "Caption",
+                border: InputBorder.none,
+              ),
             ),
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.location_on),
+            // leading: Icon(Icons.location_on),
             title: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: TextField(
+                style: TextStyle(fontWeight: FontWeight.w300),
                   controller: locationController,
                   decoration: InputDecoration(
                       hintText: "Location", border: InputBorder.none)),
@@ -166,7 +179,7 @@ class _UploadState extends State<Upload> {
             trailing: IconButton(
               icon: Icon(Icons.location_searching),
               tooltip: "Current Location",
-              onPressed: () {},
+              onPressed: getUserLocation,
             ),
           ),
           Divider(),
