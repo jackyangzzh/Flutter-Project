@@ -27,17 +27,41 @@ class _ProfileState extends State<Profile> {
           padding: EdgeInsets.all(15),
           child: Column(children: <Widget>[
             CircleAvatar(
-              radius: 40,
+              radius: 30,
               backgroundImage: CachedNetworkImageProvider(user.photoUrl),
-            )
+            ),
+            Container(
+              padding: EdgeInsets.all(3),
+              child: Text(user.displayName, style: Theme.of(context).textTheme.title,),
+            ),
+            Container(
+              padding: EdgeInsets.only(bottom: 3),
+              child: Text(user.username, style: Theme.of(context).textTheme.subtitle),
+            ),
+            buildProfileButton(),
           ]),
         );
       },
     );
   }
 
-  Column buildCount() {
-    return Column();
+  Widget buildProfileButton(){
+    return Text("Profile Button");
+  }
+
+  //used for building followers counter etc.
+  Column buildCount(String label, int count) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(count.toString()),
+        Container(
+          margin: EdgeInsets.only(top: 5),
+          child: Text(label, style: TextStyle(color: Colors.grey)),
+        )
+      ],
+    );
   }
 
   @override

@@ -17,19 +17,23 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.lightGreen[50],
           fontFamily: 'Raleway',
           textTheme: ThemeData.light().textTheme.copyWith(
-              body1: TextStyle(fontSize: 15, color: Colors.black),
-              body2: TextStyle(color: Colors.black),
-              title: TextStyle(
-                fontSize: 17,
-                fontFamily: 'Montserrat',
-              ),
-              subtitle: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Montserrat',
-                color: Colors.grey,
-              ),
-              display1: TextStyle(fontSize: 15, fontFamily: 'Monteserrat'),
-              caption: TextStyle(fontSize: 13))),
+                body1: TextStyle(fontSize: 15, color: Colors.black),
+                title: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Montserrat',
+                ),
+                subtitle: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Montserrat',
+                ),
+                caption: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                display1: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Monteserrat'),
+                display2: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+              )),
       home: Home(),
     );
   }
