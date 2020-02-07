@@ -30,9 +30,12 @@ class _ProfileState extends State<Profile> {
         return Padding(
           padding: EdgeInsets.all(15),
           child: Column(children: <Widget>[
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+            Hero(
+              tag: 'userProfile',
+              child: CircleAvatar(
+                radius: 30,
+                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+              ),
             ),
             Container(
               padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -86,7 +89,8 @@ class _ProfileState extends State<Profile> {
               style: TextStyle(fontSize: 13, color: Colors.white),
             ),
             decoration: BoxDecoration(
-                color: Colors.green[600], borderRadius: BorderRadius.circular(5)),
+                color: Colors.green[600],
+                borderRadius: BorderRadius.circular(5)),
           ),
         ));
   }
