@@ -25,6 +25,7 @@ class _UploadState extends State<Upload> {
   TextEditingController locationController = TextEditingController();
   TextEditingController captionController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  bool _captionValid = true;
 
   File file;
   bool isLoading = false;
@@ -50,25 +51,36 @@ class _UploadState extends State<Upload> {
     });
   }
 
+  void checkValid() {
+    setState(() {
+      captionController.text.isEmpty
+          ? _captionValid = false
+          : _captionValid = true;
+    });
+  }
+
   void handleSubmit() async {
-    setState(() {
-      isLoading = true;
-    });
-    await compressImage();
-    String mediaUrl = await uploadImage(file);
-    createPost(
-        mediaUrl: mediaUrl,
-        location: locationController.text,
-        caption: captionController.text,
-        description: descriptionController.text);
-    captionController.clear();
-    locationController.clear();
-    descriptionController.clear();
-    setState(() {
-      isLoading = false;
-      file = null;
-      postId = Uuid().v4();
-    });
+    checkValid();
+    if (_captionValid) {
+      setState(() {
+        isLoading = true;
+      });
+      await compressImage();
+      String mediaUrl = await uploadImage(file);
+      createPost(
+          mediaUrl: mediaUrl,
+          location: locationController.text,
+          caption: captionController.text,
+          description: descriptionController.text);
+      captionController.clear();
+      locationController.clear();
+      descriptionController.clear();
+      setState(() {
+        isLoading = false;
+        file = null;
+        postId = Uuid().v4();
+      });
+    }
   }
 
   void createPost(
@@ -160,9 +172,9 @@ class _UploadState extends State<Upload> {
               style: TextStyle(fontSize: 20),
               controller: captionController,
               decoration: InputDecoration(
-                hintText: "Caption",
-                border: InputBorder.none,
-              ),
+                  hintText: "Caption",
+                  border: InputBorder.none,
+                  errorText: _captionValid ? null : "Enter a caption"),
             ),
           ),
           Divider(),
@@ -171,7 +183,7 @@ class _UploadState extends State<Upload> {
             title: Container(
               width: MediaQuery.of(context).size.width * 0.8,
               child: TextField(
-                style: TextStyle(fontWeight: FontWeight.w300),
+                  style: TextStyle(fontWeight: FontWeight.w300),
                   controller: locationController,
                   decoration: InputDecoration(
                       hintText: "Location", border: InputBorder.none)),

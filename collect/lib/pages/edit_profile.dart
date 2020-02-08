@@ -4,6 +4,8 @@ import 'package:collect/models/user.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/widgets/progress.dart';
 import "package:flutter/material.dart";
+import 'package:google_sign_in/google_sign_in.dart';
+import 'home.dart';
 
 class EditProfile extends StatefulWidget {
   final String currentUserId;
@@ -14,10 +16,13 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController displayNameController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   bool isLoading = false;
   User user;
+  bool _displayNameValid = true;
+  bool _bioValid = true;
 
   @override
   void initState() {
@@ -53,7 +58,9 @@ class _EditProfileState extends State<EditProfile> {
           ),
           TextField(
             controller: displayNameController,
-            decoration: InputDecoration(hintText: "What's your name?"),
+            decoration: InputDecoration(
+                hintText: "What's your name?",
+                errorText: _displayNameValid ? null : "Try a longer name"),
           )
         ],
       ),
@@ -76,21 +83,48 @@ class _EditProfileState extends State<EditProfile> {
           TextField(
             controller: bioController,
             maxLines: 2,
-            decoration: InputDecoration(hintText: "Something about yourself"),
+            decoration: InputDecoration(
+                hintText: "Something about yourself",
+                errorText: _bioValid ? null : "Try a shorter bio"),
           )
         ],
       ),
     );
   }
 
+  void updateProfileData() {
+    setState(() {
+      displayNameController.text.trim().length < 3 ||
+              displayNameController.text.isEmpty
+          ? _displayNameValid = false
+          : _displayNameValid = true;
+      bioController.text.trim().length > 80
+          ? _bioValid = false
+          : _bioValid = true;
+    });
+
+    if (_displayNameValid && _bioValid) {
+      userRef.document(widget.currentUserId).updateData({
+        "displayName": displayNameController.text,
+        "bio": bioController.text
+      });
+      SnackBar snackBar = SnackBar(content: Text("Profile Updated"));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+      Navigator.pop(context);
+    }
+  }
+
+  void logout() async {
+    await googleSignIn.signOut();
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(title: Text("Edit Profile"), actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.done),
-          onPressed: () => Navigator.pop(context),
-        )
+        IconButton(icon: Icon(Icons.done), onPressed: updateProfileData)
       ]),
       body: isLoading
           ? circularProgress(context)
@@ -119,7 +153,7 @@ class _EditProfileState extends State<EditProfile> {
                         width: 140,
                         height: 40,
                         child: FlatButton(
-                          onPressed: () {},
+                          onPressed: updateProfileData,
                           child: Container(
                             alignment: Alignment.center,
                             child: Text(
@@ -139,8 +173,11 @@ class _EditProfileState extends State<EditProfile> {
                         width: 120,
                         height: 40,
                         child: FlatButton.icon(
-                          icon: Icon(Icons.exit_to_app, color: Colors.red,),
-                          onPressed: () {},
+                          icon: Icon(
+                            Icons.exit_to_app,
+                            color: Colors.red,
+                          ),
+                          onPressed: logout,
                           label: Container(
                             alignment: Alignment.center,
                             child: Text(

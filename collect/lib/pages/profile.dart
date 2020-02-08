@@ -50,6 +50,8 @@ class _ProfileState extends State<Profile> {
                   style: Theme.of(context).textTheme.display3),
             ),
             Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              padding: EdgeInsets.only(bottom: 10),
               child: Text(user.bio, style: Theme.of(context).textTheme.caption),
             ),
             buildProfileButton(),

@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn();
+final GoogleSignIn googleSignIn = GoogleSignIn();
 final StorageReference storageReference = FirebaseStorage.instance.ref();
 final userRef = Firestore.instance.collection('users');
 final postRef = Firestore.instance.collection('posts');
@@ -45,12 +45,12 @@ class _HomeState extends State<Home> {
     //   print("Error when silent sigin in: " + error);
     // });
 
-    _googleSignIn.onCurrentUserChanged.listen((account) {
+    googleSignIn.onCurrentUserChanged.listen((account) {
       signInHandler(account);
     }, onError: (error) {
       print("Error when sigin in: " + error);
     });
-    _googleSignIn.signInSilently();
+    googleSignIn.signInSilently();
   }
 
   void signInHandler(GoogleSignInAccount account) {
@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
   }
 
   void createUser() async {
-    final GoogleSignInAccount user = _googleSignIn.currentUser;
+    final GoogleSignInAccount user = googleSignIn.currentUser;
     DocumentSnapshot userInfo = await userRef.document(user.id).get();
 
     if (!userInfo.exists) {
@@ -90,11 +90,11 @@ class _HomeState extends State<Home> {
   }
 
   void signIn() {
-    _googleSignIn.signIn();
+    googleSignIn.signIn();
   }
 
   void signOut() {
-    _googleSignIn.signOut();
+    googleSignIn.signOut();
   }
 
   @override
