@@ -38,21 +38,23 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 10, bottom: 5),
+              padding: EdgeInsets.only(top: 15, bottom: 2),
               child: Text(
                 user.displayName,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.display2,
               ),
             ),
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              padding: EdgeInsets.only(bottom: 20),
               child: Text(user.username,
                   style: Theme.of(context).textTheme.display3),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              padding: EdgeInsets.only(bottom: 10),
-              child: Text(user.bio, style: Theme.of(context).textTheme.caption),
+              padding: EdgeInsets.only(bottom: 20),
+              child: Text(user.bio,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.display4),
             ),
             buildProfileButton(),
           ]),
