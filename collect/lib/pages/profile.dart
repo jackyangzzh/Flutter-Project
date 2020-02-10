@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/models/user.dart';
 import 'package:collect/pages/edit_profile.dart';
+import 'package:collect/pages/home.dart';
 import 'package:collect/pages/timeline.dart';
 import 'package:collect/widgets/header.dart';
+import 'package:collect/widgets/post.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Profile extends StatefulWidget {
   final String profileId;
@@ -18,6 +21,32 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final String currentUserId = currentUser?.id;
+  bool isLoading = false;
+  int postCount;
+  List<Post> posts = [];
+  List<StaggeredTile> staggeredTile = [StaggeredTile.fit(2)];
+
+  @override
+  void initState() {
+    super.initState();
+    getPosts();
+  }
+
+  void getPosts() async {
+    setState(() {
+      isLoading = true;
+    });
+    QuerySnapshot snapshot = await postRef
+        .document(widget.profileId)
+        .collection('userPosts')
+        .orderBy('timestamp', descending: true)
+        .getDocuments();
+    setState(() {
+      postCount = snapshot.documents.length;
+      posts = snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
+      isLoading = false;
+    });
+  }
 
   Widget buildProfileHeader() {
     return FutureBuilder(
@@ -63,7 +92,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Function editProfile() {
+  void editProfile() {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -114,13 +143,54 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget buildIndividualPost(BuildContext context, int index) {
+    return posts[index];
+  }
+
+  Widget buildPosts() {
+    if (isLoading) {
+      return circularProgress(context);
+    }
+    // return Column(
+    //   children: posts,
+    // );
+
+    return Expanded(
+          child: StaggeredGridView.count(
+        padding: const EdgeInsets.all(3),
+        crossAxisCount: 4,
+        children: posts,
+        staggeredTiles: staggeredTile,
+        // staggeredTiles: (i) => new StaggeredTile.fit(2),
+        mainAxisSpacing: 3,
+        crossAxisSpacing: 3,
+      ),
+    );
+
+    //   return SingleChildScrollView(
+    //     child: StaggeredGridView.countBuilder(
+    //       padding: const EdgeInsets.all(3),
+    //       crossAxisCount: 4,
+    //       itemCount: postCount,
+    //       itemBuilder: (context, i) => buildIndividualPost(context, i),
+    //       staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
+    //       mainAxisSpacing: 3,
+    //       crossAxisSpacing: 3,
+    //     ),
+    //   );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context,
           isTitle: false, titleText: "Profile", removeButton: true),
       body: ListView(children: <Widget>[
-        buildProfileHeader(),
+        // buildProfileHeader(),
+        // Divider(
+        //   height: 0,
+        // ),
+        buildPosts(),
       ]),
     );
   }
