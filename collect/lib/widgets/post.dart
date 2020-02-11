@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/home.dart';
 import 'package:collect/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class Post extends StatefulWidget {
   final String caption;
   final String description;
   final String mediaUrl;
+  final Timestamp timestamp;
   final dynamic likes;
 
   Post(
@@ -19,6 +21,7 @@ class Post extends StatefulWidget {
       this.location,
       this.caption,
       this.description,
+      this.timestamp,
       this.mediaUrl,
       this.likes});
 
@@ -30,6 +33,7 @@ class Post extends StatefulWidget {
       location: doc['location'],
       caption: doc['caption'],
       description: doc['description'],
+      timestamp: doc['timestamp'],
       mediaUrl: doc['mediaUrl'],
       likes: doc['likes'],
     );
@@ -54,8 +58,10 @@ class Post extends StatefulWidget {
       username: this.username,
       location: this.location,
       caption: this.caption,
+      timestamp: this.timestamp,
       description: this.description,
       mediaUrl: this.mediaUrl,
+      
       likes: this.likes,
       likeCount: this.getLikeCount(this.likes));
 }
@@ -66,6 +72,7 @@ class _PostState extends State<Post> {
   final String username;
   final String location;
   final String caption;
+  final Timestamp timestamp;
   final String description;
   final String mediaUrl;
   int likeCount;
@@ -77,6 +84,7 @@ class _PostState extends State<Post> {
       this.username,
       this.location,
       this.caption,
+      this.timestamp,
       this.description,
       this.mediaUrl,
       this.likes,
@@ -88,8 +96,9 @@ class _PostState extends State<Post> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
         onTap: () {
+          print(widget.timestamp.toString());
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => PostDetail()));
+              context, MaterialPageRoute(builder: (context) => PostDetail(widget)));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
