@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatefulWidget {
@@ -87,8 +88,8 @@ class _PostState extends State<Post> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
         onTap: () {
-          // Navigator.of(context)
-          //     .pushNamed(ItemDetailScreen.routeName, arguments: item.id);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => PostDetail()));
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +105,7 @@ class _PostState extends State<Post> {
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 3),
                 child:
-                    Text(caption, style: Theme.of(context).textTheme.display1)),
+                    Text(caption, style: Theme.of(context).textTheme.headline)),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.01,
             ),

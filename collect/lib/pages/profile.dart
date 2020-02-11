@@ -24,7 +24,6 @@ class _ProfileState extends State<Profile> {
   bool isLoading = false;
   int postCount;
   List<Post> posts = [];
-  List<StaggeredTile> staggeredTile = [StaggeredTile.fit(2)];
 
   @override
   void initState() {
@@ -70,7 +69,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(top: 15, bottom: 2),
               child: Text(
                 user.displayName,
-                style: Theme.of(context).textTheme.display2,
+                style: Theme.of(context).textTheme.title,
               ),
             ),
             Container(
@@ -143,41 +142,30 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildIndividualPost(BuildContext context, int index) {
-    return posts[index];
-  }
-
   Widget buildPosts() {
     if (isLoading) {
       return circularProgress(context);
     }
-    // return Column(
-    //   children: posts,
-    // );
 
     return Expanded(
-          child: StaggeredGridView.count(
+      child: StaggeredGridView.countBuilder(
         padding: const EdgeInsets.all(3),
         crossAxisCount: 4,
-        children: posts,
-        staggeredTiles: staggeredTile,
-        // staggeredTiles: (i) => new StaggeredTile.fit(2),
+        itemCount: postCount,
+        itemBuilder: (_, i) => Post(
+            postId: posts[i].postId,
+            ownerId: posts[i].ownerId,
+            username: posts[i].username,
+            location: posts[i].location,
+            caption: posts[i].caption,
+            description: posts[i].description,
+            mediaUrl: posts[i].mediaUrl,
+            likes: posts[i].likes),
+        staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
         mainAxisSpacing: 3,
         crossAxisSpacing: 3,
       ),
     );
-
-    //   return SingleChildScrollView(
-    //     child: StaggeredGridView.countBuilder(
-    //       padding: const EdgeInsets.all(3),
-    //       crossAxisCount: 4,
-    //       itemCount: postCount,
-    //       itemBuilder: (context, i) => buildIndividualPost(context, i),
-    //       staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
-    //       mainAxisSpacing: 3,
-    //       crossAxisSpacing: 3,
-    //     ),
-    //   );
   }
 
   @override
@@ -185,13 +173,15 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: header(context,
           isTitle: false, titleText: "Profile", removeButton: true),
-      body: ListView(children: <Widget>[
-        // buildProfileHeader(),
-        // Divider(
-        //   height: 0,
-        // ),
-        buildPosts(),
-      ]),
+      body: Column(
+        children: <Widget>[
+          buildProfileHeader(),
+          Divider(
+            height: 0,
+          ),
+          buildPosts()
+        ],
+      ),
     );
   }
 }
