@@ -85,6 +85,7 @@ class _ProfileState extends State<Profile> {
                   style: Theme.of(context).textTheme.display4),
             ),
             buildProfileButton(),
+            Divider(),
           ]),
         );
       },
@@ -147,7 +148,7 @@ class _ProfileState extends State<Profile> {
       return circularProgress(context);
     }
 
-    return Expanded(
+    return Container(
       child: StaggeredGridView.countBuilder(
         padding: const EdgeInsets.all(3),
         crossAxisCount: 4,
@@ -169,15 +170,27 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar
+            SliverAppBar(
+              floating: false,
+              pinned: false,
+              title: Text("Profile"),
+            ),
+            new SliverPadding(
+              padding: new EdgeInsets.all(0),
+              sliver: new SliverList(
+                  delegate: new SliverChildListDelegate([
+                buildProfileHeader(),
+              ])),
+            ),
           ];
         },
+        body: buildPosts(),
       ),
     );
   }
