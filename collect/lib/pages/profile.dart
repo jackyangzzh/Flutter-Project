@@ -159,6 +159,7 @@ class _ProfileState extends State<Profile> {
             location: posts[i].location,
             caption: posts[i].caption,
             description: posts[i].description,
+            timestamp: posts[i].timestamp,
             mediaUrl: posts[i].mediaUrl,
             likes: posts[i].likes),
         staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
@@ -168,20 +169,33 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context,
-          isTitle: false, titleText: "Profile", removeButton: true),
-      body: Column(
-        children: <Widget>[
-          buildProfileHeader(),
-          Divider(
-            height: 0,
-          ),
-          buildPosts()
-        ],
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
+          return <Widget>[
+            SliverAppBar
+          ];
+        },
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: header(context,
+  //         isTitle: false, titleText: "Profile", removeButton: true),
+  //     body: Column(
+  //       children: <Widget>[
+  //         buildProfileHeader(),
+  //         Divider(
+  //           height: 0,
+  //         ),
+  //         buildPosts()
+  //       ],
+  //     ),
+  //   );
+  // }
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/widgets/post.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,22 +7,20 @@ class PostDetail extends StatelessWidget {
 
   PostDetail(this.post);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(post.username),
-        
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             SizedBox(
               child: Image.network(
-                  post.mediaUrl,
-                  fit: BoxFit.cover,
-                ),
+                post.mediaUrl,
+                fit: BoxFit.cover,
+              ),
             ),
             Container(
               alignment: Alignment.topLeft,
@@ -51,7 +48,7 @@ class PostDetail extends StatelessWidget {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.symmetric(vertical: 15, horizontal: 8),
               child: Text(
-                '${post.description}',
+                post.description == null ? '' : '${post.description}',
                 style: Theme.of(context).textTheme.body1,
               ),
             ),
@@ -59,8 +56,7 @@ class PostDetail extends StatelessWidget {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               child: Text(
-                // DateFormat.yMMMEd().format(post.timestamp.toDate()),
-                "",
+                DateFormat.yMMMEd().format(post.timestamp.toDate()),
                 style: Theme.of(context).textTheme.caption,
               ),
             ),
