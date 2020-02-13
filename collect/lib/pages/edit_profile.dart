@@ -4,7 +4,6 @@ import 'package:collect/models/user.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/widgets/progress.dart';
 import "package:flutter/material.dart";
-import 'package:google_sign_in/google_sign_in.dart';
 import 'home.dart';
 
 class EditProfile extends StatefulWidget {

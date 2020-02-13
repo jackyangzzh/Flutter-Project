@@ -24,6 +24,7 @@ class _ProfileState extends State<Profile> {
   bool isLoading = false;
   int postCount;
   List<Post> posts = [];
+  User user;
 
   @override
   void initState() {
@@ -54,7 +55,7 @@ class _ProfileState extends State<Profile> {
         if (!snapshot.hasData) {
           return circularProgress(context);
         }
-        User user = User.fromDocument(snapshot.data);
+        user = User.fromDocument(snapshot.data);
         return Padding(
           padding: EdgeInsets.all(15),
           child: Column(children: <Widget>[
@@ -85,7 +86,6 @@ class _ProfileState extends State<Profile> {
                   style: Theme.of(context).textTheme.display4),
             ),
             buildProfileButton(),
-            Divider(),
           ]),
         );
       },
@@ -148,25 +148,25 @@ class _ProfileState extends State<Profile> {
       return circularProgress(context);
     }
 
-    return Container(
-      child: StaggeredGridView.countBuilder(
-        padding: const EdgeInsets.all(3),
-        crossAxisCount: 4,
-        itemCount: postCount,
-        itemBuilder: (_, i) => Post(
-            postId: posts[i].postId,
-            ownerId: posts[i].ownerId,
-            username: posts[i].username,
-            location: posts[i].location,
-            caption: posts[i].caption,
-            description: posts[i].description,
-            timestamp: posts[i].timestamp,
-            mediaUrl: posts[i].mediaUrl,
-            likes: posts[i].likes),
-        staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
-        mainAxisSpacing: 3,
-        crossAxisSpacing: 3,
-      ),
+    return StaggeredGridView.countBuilder(
+      padding: const EdgeInsets.all(3),
+      crossAxisCount: 4,
+      itemCount: postCount,
+      itemBuilder: (_, i) => Post(
+          userPhoto: posts[i].userPhoto,
+          displayName: posts[i].displayName,
+          postId: posts[i].postId,
+          ownerId: posts[i].ownerId,
+          username: posts[i].username,
+          location: posts[i].location,
+          caption: posts[i].caption,
+          description: posts[i].description,
+          timestamp: posts[i].timestamp,
+          mediaUrl: posts[i].mediaUrl,
+          likes: posts[i].likes),
+      staggeredTileBuilder: (i) => new StaggeredTile.fit(2),
+      mainAxisSpacing: 3,
+      crossAxisSpacing: 3,
     );
   }
 
@@ -181,34 +181,13 @@ class _ProfileState extends State<Profile> {
               pinned: false,
               title: Text("Profile"),
             ),
-            new SliverPadding(
-              padding: new EdgeInsets.all(0),
-              sliver: new SliverList(
-                  delegate: new SliverChildListDelegate([
-                buildProfileHeader(),
-              ])),
-            ),
+            new SliverList(
+                delegate: new SliverChildListDelegate(
+                    [buildProfileHeader(), Divider()])),
           ];
         },
         body: buildPosts(),
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: header(context,
-  //         isTitle: false, titleText: "Profile", removeButton: true),
-  //     body: Column(
-  //       children: <Widget>[
-  //         buildProfileHeader(),
-  //         Divider(
-  //           height: 0,
-  //         ),
-  //         buildPosts()
-  //       ],
-  //     ),
-  //   );
-  // }
 }

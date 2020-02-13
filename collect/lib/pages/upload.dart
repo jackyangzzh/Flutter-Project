@@ -90,6 +90,8 @@ class _UploadState extends State<Upload> {
         .collection("userPosts")
         .document(postId)
         .setData({
+      "displayName": widget.currentUser.displayName,
+      "userPhoto": widget.currentUser.photoUrl,
       "postId": postId,
       "ownerId": widget.currentUser.id,
       "username": widget.currentUser.username,

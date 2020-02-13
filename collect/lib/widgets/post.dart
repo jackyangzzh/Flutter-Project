@@ -3,6 +3,8 @@ import 'package:collect/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatefulWidget {
+  final String userPhoto;
+  final String displayName;
   final String postId;
   final String ownerId;
   final String username;
@@ -14,7 +16,9 @@ class Post extends StatefulWidget {
   final dynamic likes;
 
   Post(
-      {this.postId,
+      {this.userPhoto,
+      this.displayName,
+      this.postId,
       this.ownerId,
       this.username,
       this.location,
@@ -26,6 +30,8 @@ class Post extends StatefulWidget {
 
   factory Post.fromDocument(DocumentSnapshot doc) {
     return Post(
+      userPhoto: doc['userPhoto'],
+      displayName: doc['displayName'],
       postId: doc['postId'],
       ownerId: doc['ownerId'],
       username: doc['username'],
@@ -48,10 +54,13 @@ class Post extends StatefulWidget {
         count++;
       }
     });
+    return count;
   }
 
   @override
   _PostState createState() => _PostState(
+      userPhoto: this.userPhoto,
+      displayName: this.displayName,
       postId: this.postId,
       ownerId: this.ownerId,
       username: this.username,
@@ -65,6 +74,8 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
+  final String userPhoto;
+  final String displayName;
   final String postId;
   final String ownerId;
   final String username;
@@ -77,7 +88,9 @@ class _PostState extends State<Post> {
   Map likes;
 
   _PostState(
-      {this.postId,
+      {this.userPhoto,
+      this.displayName,
+      this.postId,
       this.ownerId,
       this.username,
       this.location,
@@ -94,7 +107,6 @@ class _PostState extends State<Post> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
         onTap: () {
-          print(widget.timestamp);
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => PostDetail(widget)));
         },
@@ -121,15 +133,28 @@ class _PostState extends State<Post> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.favorite),
-                    iconSize: 17,
-                    onPressed: () {},
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(children: <Widget>[
+                      Icon(
+                        Icons.favorite_border,
+                        size: 17,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text('$likeCount')
+                    ]),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.comment),
-                    iconSize: 17,
-                    onPressed: () {},
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(children: <Widget>[
+                      Icon(Icons.comment, size: 17,),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text("")
+                    ]),
                   )
                 ],
               ),
