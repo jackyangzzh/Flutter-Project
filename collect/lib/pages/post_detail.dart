@@ -58,6 +58,7 @@ class PostDetail extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,33 +90,28 @@ class PostDetail extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     GestureDetector(
-                      onTap: () {},
-                      child: Row(children: <Widget>[
-                        Icon(
-                          Icons.favorite_border,
-                          size: 17,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text('${post.getLikeCount(post.likes)}'),
-                      ]),
+                      onTap: () => print("Liked"),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Row(children: <Widget>[
+                          Icon(
+                            Icons.favorite_border,
+                            size: 20,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${post.getLikeCount(post.likes)}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ]),
+                      ),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(children: <Widget>[
-                        Icon(
-                          Icons.comment,
-                          size: 17,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text("")
-                      ]),
-                    )
                   ],
                 ),
               ],
