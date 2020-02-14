@@ -25,6 +25,7 @@ class _ProfileState extends State<Profile> {
   int postCount;
   List<Post> posts = [];
   User user;
+  TabController _tabController;
 
   @override
   void initState() {
@@ -74,13 +75,13 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(bottom: 15),
               child: Text(user.username,
                   style: Theme.of(context).textTheme.display3),
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(bottom: 15),
               child: Text(user.bio,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.display4),
@@ -143,6 +144,12 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget buildCollection() {
+    return Center(
+      child: Text("Insert collection"),
+    );
+  }
+
   Widget buildPosts() {
     if (isLoading) {
       return circularProgress(context);
@@ -170,23 +177,55 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget buildToggle() {
+    return Container(
+      child: TabBar(
+        unselectedLabelColor: Colors.grey,
+        labelColor: Theme.of(context).primaryColor,
+        controller: _tabController,
+        indicatorColor: Theme.of(context).primaryColor,
+        tabs: <Widget>[
+          Tab(
+            icon: Icon(Icons.photo_size_select_actual),
+          ),
+          Tab(
+            icon: Icon(Icons.collections),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              floating: false,
-              pinned: false,
-              title: Text("Profile"),
-            ),
-            new SliverList(
-                delegate: new SliverChildListDelegate(
-                    [buildProfileHeader(), Divider()])),
-          ];
-        },
-        body: buildPosts(),
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                floating: false,
+                pinned: false,
+                title: Text("Profile"),
+              ),
+              new SliverList(
+                  delegate: new SliverChildListDelegate([
+                buildProfileHeader(),
+                Divider(),
+                buildToggle(),
+                Divider()
+              ])),
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController,
+            children: <Widget>[
+              buildPosts(),
+              buildCollection(),
+            ],
+          ),
+        ),
       ),
     );
   }

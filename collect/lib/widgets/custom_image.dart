@@ -5,8 +5,7 @@ cachedNetworkImage(mediaUrl) {
   return CachedNetworkImage(
     imageUrl: mediaUrl,
     fit: BoxFit.cover,
-    placeholder: (_, url) => Padding(
-      padding: EdgeInsets.all(15),
-    ),
+    placeholder: (_, url) => Image.asset('assets/images/placeholder.png'),
+    errorWidget: (_, url, error) => Icon(Icons.error),
   );
 }

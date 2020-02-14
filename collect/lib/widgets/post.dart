@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/pages/post_detail.dart';
+import 'package:collect/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 
 class Post extends StatefulWidget {
@@ -113,10 +114,9 @@ class _PostState extends State<Post> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            FadeInImage(
-              placeholder: AssetImage('assets/images/placeholder.png'),
-              image: NetworkImage(mediaUrl),
-              fit: BoxFit.cover,
+            Hero(
+              tag: 'userImage',
+              child: cachedNetworkImage(mediaUrl),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
@@ -149,7 +149,10 @@ class _PostState extends State<Post> {
                   GestureDetector(
                     onTap: () {},
                     child: Row(children: <Widget>[
-                      Icon(Icons.comment, size: 17,),
+                      Icon(
+                        Icons.comment,
+                        size: 17,
+                      ),
                       const SizedBox(
                         width: 10,
                       ),
