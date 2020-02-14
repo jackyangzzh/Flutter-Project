@@ -68,7 +68,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 15, bottom: 2),
+              padding: EdgeInsets.only(top: 10, bottom: 2),
               child: Text(
                 user.displayName,
                 style: Theme.of(context).textTheme.title,
@@ -153,8 +153,11 @@ class _ProfileState extends State<Profile> {
   Widget buildPosts() {
     if (isLoading) {
       return circularProgress(context);
+    } else if (posts.isEmpty) {
+      return Center(
+        child: Text("Nothing to show here..."),
+      );
     }
-
     return StaggeredGridView.countBuilder(
       padding: const EdgeInsets.all(3),
       crossAxisCount: 4,

@@ -52,7 +52,7 @@ class PostDetail extends StatelessWidget {
             GestureDetector(
               onDoubleTap: () {},
               child: Hero(
-                tag: 'userImage',
+                tag: post.postId,
                 child: cachedNetworkImage(post.mediaUrl),
               ),
             ),
@@ -63,6 +63,7 @@ class PostDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(
                           top: 20, bottom: 10, left: 8, right: 8),
@@ -88,30 +89,33 @@ class PostDetail extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () => print("Liked"),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Row(children: <Widget>[
-                          Icon(
-                            Icons.favorite_border,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${post.getLikeCount(post.likes)}',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ]),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () => print("Liked"),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Row(children: <Widget>[
+                            Icon(
+                              Icons.favorite_border,
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '${post.getLikeCount(post.likes)}',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ]),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

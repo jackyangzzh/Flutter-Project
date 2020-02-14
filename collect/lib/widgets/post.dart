@@ -111,11 +111,12 @@ class _PostState extends State<Post> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => PostDetail(widget)));
         },
+        onDoubleTap: (){},
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Hero(
-              tag: 'userImage',
+              tag: postId,
               child: cachedNetworkImage(mediaUrl),
             ),
             SizedBox(
