@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collect/pages/home.dart';
 import 'package:collect/widgets/custom_image.dart';
 import 'package:collect/widgets/post.dart';
 import 'package:flutter/material.dart';

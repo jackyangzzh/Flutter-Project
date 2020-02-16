@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/home.dart';
 import 'package:collect/pages/post_detail.dart';
 import 'package:collect/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,7 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
+  final String currentUserId = currentUser?.id;
   final String userPhoto;
   final String displayName;
   final String postId;
@@ -87,6 +89,7 @@ class _PostState extends State<Post> {
   final String mediaUrl;
   int likeCount;
   Map likes;
+  bool isLiked = false;
 
   _PostState(
       {this.userPhoto,
@@ -102,6 +105,34 @@ class _PostState extends State<Post> {
       this.likes,
       this.likeCount});
 
+  void likePost() {
+    bool _isLiked = likes[currentUserId] == true;
+
+    if (_isLiked) {
+      postRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData({'likes.$currentUserId': false});
+      setState(() {
+        likeCount--;
+        isLiked = false;
+        likes[currentUserId] = false;
+      });
+    } else {
+      postRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .updateData({'likes.$currentUserId': true});
+      setState(() {
+        likeCount++;
+        isLiked = true;
+        likes[currentUserId] = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -111,7 +142,7 @@ class _PostState extends State<Post> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => PostDetail(widget)));
         },
-        onDoubleTap: (){},
+        onDoubleTap: likePost,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -135,11 +166,12 @@ class _PostState extends State<Post> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () {},
+                    onTap: likePost,
                     child: Row(children: <Widget>[
                       Icon(
-                        Icons.favorite_border,
+                        isLiked ? Icons.favorite : Icons.favorite_border,
                         size: 17,
+                        color: Colors.red,
                       ),
                       const SizedBox(
                         width: 10,
