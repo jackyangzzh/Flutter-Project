@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:animator/animator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/pages/post_detail.dart';
@@ -89,7 +92,14 @@ class _PostState extends State<Post> {
   final String mediaUrl;
   int likeCount;
   Map likes;
-  bool isLiked = false;
+  bool isLiked;
+  bool showHeart = false;
+
+  @override
+  void initState() {
+    isLiked = likes[currentUserId] == true;
+    super.initState();
+  }
 
   _PostState(
       {this.userPhoto,
@@ -129,8 +139,15 @@ class _PostState extends State<Post> {
         likeCount++;
         isLiked = true;
         likes[currentUserId] = true;
+        showHeart = true;
       });
     }
+
+    Timer(Duration(milliseconds: 500), () {
+      setState(() {
+        showHeart = false;
+      });
+    });
   }
 
   @override
@@ -148,7 +165,28 @@ class _PostState extends State<Post> {
           children: <Widget>[
             Hero(
               tag: postId,
-              child: cachedNetworkImage(mediaUrl),
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  cachedNetworkImage(mediaUrl),
+                  showHeart
+                      ? Animator(
+                          duration: Duration(milliseconds: 300),
+                          tween: Tween(begin: 0.8, end: 1.4),
+                          curve: Curves.easeInOut,
+                          cycles: 0,
+                          builder: (anim) => Transform.scale(
+                            scale: anim.value,
+                            child: Icon(
+                              Icons.favorite,
+                              size: 50,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
