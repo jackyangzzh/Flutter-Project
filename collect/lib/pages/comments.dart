@@ -1,4 +1,4 @@
-import 'package:collect/widgets/header.dart';
+import 'package:collect/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class Comments extends StatefulWidget {
@@ -17,6 +17,7 @@ class CommentsState extends State<Comments> {
   final String postId;
   final String ownerId;
   final String mediaUrl;
+  TextEditingController commentController = TextEditingController();
 
   CommentsState({this.postId, this.ownerId, this.mediaUrl});
 
@@ -24,13 +25,33 @@ class CommentsState extends State<Comments> {
     return Text("comment");
   }
 
+  void addComment() {
+    commentRef.document(postId).collection("comments").add({
+      "username": currentUser.username,
+      "comment": commentController.text,
+      "timestamp": timeStamp,
+      "userUrl": currentUser.photoUrl,
+      "userId": currentUser.id
+    });
+    commentController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: header(context, titleText: "Comment"),
+        appBar: AppBar(title: Text("Comment")),
         body: Column(
           children: <Widget>[
-            buildComment(),
+            Expanded(child: buildComment()),
+            Divider(),
+            ListTile(
+              title: TextFormField(
+                controller: commentController,
+                decoration: InputDecoration(hintText: "Comment here..."),
+              ),
+              trailing:
+                  IconButton(icon: Icon(Icons.send), onPressed: addComment),
+            )
           ],
         ));
   }
