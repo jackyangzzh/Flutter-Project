@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:animator/animator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/comments.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/pages/post_detail.dart';
 import 'package:collect/widgets/custom_image.dart';
@@ -150,6 +151,17 @@ class _PostState extends State<Post> {
     });
   }
 
+  void showComment(BuildContext context,
+      {String postId, String ownerId, String mediaUrl}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Comments(
+        postId: postId,
+        ownerId: ownerId,
+        mediaUrl: mediaUrl,
+      );
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -218,7 +230,9 @@ class _PostState extends State<Post> {
                     ]),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => showComment(
+                      context,
+                    ),
                     child: Row(children: <Widget>[
                       Icon(
                         Icons.comment,
