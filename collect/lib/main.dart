@@ -32,10 +32,19 @@ class MyApp extends StatelessWidget {
                     fontSize: 34,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Monteserrat'),
-                display2: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Colors.black),
+                display2: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
                 display3: TextStyle(fontSize: 13, color: Colors.grey[700]),
-                display4: TextStyle(fontSize: 13, fontWeight: FontWeight.normal, color: Colors.black),
-                headline: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+                display4: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black),
+                headline: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black),
               )),
       home: Home(),
     );

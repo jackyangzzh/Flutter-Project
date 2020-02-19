@@ -211,6 +211,9 @@ class _ProfileState extends State<Profile> {
                 floating: false,
                 pinned: false,
                 title: Text("Profile"),
+                actions: <Widget>[
+                  IconButton(icon: Icon(Icons.notifications), onPressed: () {})
+                ],
               ),
               new SliverList(
                   delegate: new SliverChildListDelegate([
