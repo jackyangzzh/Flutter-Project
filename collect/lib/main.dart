@@ -34,9 +34,8 @@ class MyApp extends StatelessWidget {
                     fontFamily: 'Monteserrat'),
                 display2: TextStyle(
                     fontSize: 17,
-                    fontWeight: FontWeight.w600,
                     color: Colors.black),
-                display3: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                display3: TextStyle(fontSize: 12, color: Colors.grey[700]),
                 display4: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.normal,

@@ -40,7 +40,7 @@ class CommentsState extends State<Comments> {
         snapshot.data.documents.forEach((doc) {
           comments.add(Comment.fromDocument(doc));
         });
-        return ListView(
+        return Column(
           children: comments,
         );
       },
@@ -103,12 +103,45 @@ class Comment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        ListTile(
-          title: Text(comment),
-          leading: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(userUrl),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.85,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: CachedNetworkImageProvider(userUrl),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              username,
+                              style: Theme.of(context).textTheme.display4,
+                            ),
+                            Text(
+                              timeago.format(timestamp.toDate()),
+                              style: Theme.of(context).textTheme.display3,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        comment,
+                        style: Theme.of(context).textTheme.display2,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          subtitle: Text(timeago.format(timestamp.toDate())),
         ),
         Divider()
       ],

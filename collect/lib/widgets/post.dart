@@ -232,6 +232,9 @@ class _PostState extends State<Post> {
                   GestureDetector(
                     onTap: () => showComment(
                       context,
+                      postId: postId,
+                      ownerId: ownerId,
+                      mediaUrl: mediaUrl,
                     ),
                     child: Row(children: <Widget>[
                       Icon(
