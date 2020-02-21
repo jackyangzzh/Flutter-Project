@@ -1,21 +1,52 @@
-import 'dart:ffi';
-
+import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/widgets/custom_image.dart';
 import 'package:collect/widgets/post.dart';
+import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class PostDetail extends StatelessWidget {
-  final Post post;
+class PostDetail extends StatefulWidget {
+  final String postId;
+  final String ownerId;
 
-  PostDetail(this.post);
+  PostDetail({this.postId, this.ownerId});
+
+  @override
+  _PostDetailState createState() =>
+      _PostDetailState(postId: this.postId, ownerId: this.ownerId);
+}
+
+class _PostDetailState extends State<PostDetail> {
+  final String postId;
+  final String ownerId;
+
+  Post post;
+
+  _PostDetailState({this.postId, this.ownerId});
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return FutureBuilder(
+      future: postRef
+          .document(ownerId)
+          .collection('userPosts')
+          .document(postId)
+          .get(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return circularProgress(context);
+        }
+        post = Post.fromDocument(snapshot.data);
+        print(post.ownerId);
+        return Scaffold(
+          appBar: AppBar(
         elevation: 0,
         title: GestureDetector(
           onTap: () => print("tapped"),
@@ -53,8 +84,29 @@ class PostDetail extends StatelessWidget {
             GestureDetector(
               onDoubleTap: () {},
               child: Hero(
-                tag: post.postId,
-                child: cachedNetworkImage(post.mediaUrl),
+                tag: postId,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    cachedNetworkImage(post.mediaUrl),
+                    // showHeart
+                    //     ? Animator(
+                    //         duration: Duration(milliseconds: 300),
+                    //         tween: Tween(begin: 0.8, end: 1.4),
+                    //         curve: Curves.easeInOut,
+                    //         cycles: 0,
+                    //         builder: (anim) => Transform.scale(
+                    //           scale: anim.value,
+                    //           child: Icon(
+                    //             Icons.favorite,
+                    //             size: 50,
+                    //             color: Colors.redAccent,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Container(),
+                  ],
+                ),
               ),
             ),
             Row(
@@ -139,6 +191,10 @@ class PostDetail extends StatelessWidget {
           ],
         ),
       ),
+        );
+      },
     );
+      
+    
   }
 }

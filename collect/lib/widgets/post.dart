@@ -168,8 +168,13 @@ class _PostState extends State<Post> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PostDetail(widget)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PostDetail(
+                        postId: postId,
+                        ownerId: ownerId,
+                      )));
         },
         onDoubleTap: likePost,
         child: Column(
