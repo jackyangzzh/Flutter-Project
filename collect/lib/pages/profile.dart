@@ -4,7 +4,6 @@ import 'package:collect/models/user.dart';
 import 'package:collect/pages/edit_profile.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/pages/timeline.dart';
-import 'package:collect/widgets/header.dart';
 import 'package:collect/widgets/post.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(bottom: 15),
               child: Text(user.bio,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.display4),
+                  style: TextStyle(fontSize: 13)),
             ),
             buildProfileButton(),
           ]),

@@ -50,6 +50,7 @@ class CommentsState extends State<Comments> {
   void addComment() {
     commentRef.document(postId).collection("comments").add({
       "username": currentUser.username,
+      "displayName": currentUser.displayName,
       "comment": commentController.text,
       "timestamp": timeStamp,
       "userUrl": currentUser.photoUrl,
@@ -81,17 +82,24 @@ class CommentsState extends State<Comments> {
 
 class Comment extends StatelessWidget {
   final String username;
+  final String displayName;
   final String userId;
   final String userUrl;
   final String comment;
   final Timestamp timestamp;
 
   Comment(
-      {this.username, this.userId, this.userUrl, this.comment, this.timestamp});
+      {this.username,
+      this.displayName,
+      this.userId,
+      this.userUrl,
+      this.comment,
+      this.timestamp});
 
   factory Comment.fromDocument(DocumentSnapshot doc) {
     return Comment(
       username: doc["username"],
+      displayName: doc["displayName"],
       userId: doc["userId"],
       userUrl: doc["userUrl"],
       comment: doc["comment"],
@@ -104,7 +112,7 @@ class Comment extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: MediaQuery.of(context).size.width * 0.87,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
@@ -118,11 +126,12 @@ class Comment extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              username,
+                              displayName,
                               style: Theme.of(context).textTheme.display4,
                             ),
                             Text(
@@ -132,9 +141,16 @@ class Comment extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(
-                        comment,
-                        style: Theme.of(context).textTheme.display2,
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: Text(
+                          comment,
+                          overflow: TextOverflow.visible,
+                          style: Theme.of(context).textTheme.headline,
+                        ),
                       ),
                     ],
                   ),
