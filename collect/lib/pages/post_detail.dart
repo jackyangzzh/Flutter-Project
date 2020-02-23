@@ -96,6 +96,7 @@ class _PostDetailState extends State<PostDetail> {
         post = Post.fromDocument(snapshot.data);
         likes = post.likes;
         likeCount = getLikeCount(likes);
+        isLiked = likes[currentUserId] == true;
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
@@ -244,8 +245,15 @@ class _PostDetailState extends State<PostDetail> {
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ),
-                Container(
-                  child: Comment(),
+                Divider(height: 40,),
+                SizedBox(
+                  height: 1000,
+                  child: Comments(
+                    postId: post.postId,
+                    ownerId: post.ownerId,
+                    mediaUrl: post.mediaUrl,
+                    isWidget: true,
+                  ),
                 ),
               ],
             ),

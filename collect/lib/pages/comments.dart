@@ -9,21 +9,26 @@ class Comments extends StatefulWidget {
   final String postId;
   final String ownerId;
   final String mediaUrl;
+  final bool isWidget;
 
-  Comments({this.postId, this.ownerId, this.mediaUrl});
+  Comments({this.postId, this.ownerId, this.mediaUrl, this.isWidget});
 
   @override
   CommentsState createState() => CommentsState(
-      postId: this.postId, ownerId: this.ownerId, mediaUrl: this.mediaUrl);
+      postId: this.postId,
+      ownerId: this.ownerId,
+      mediaUrl: this.mediaUrl,
+      isWidget: this.isWidget);
 }
 
 class CommentsState extends State<Comments> {
   final String postId;
   final String ownerId;
   final String mediaUrl;
+  final bool isWidget;
   TextEditingController commentController = TextEditingController();
 
-  CommentsState({this.postId, this.ownerId, this.mediaUrl});
+  CommentsState({this.postId, this.ownerId, this.mediaUrl, this.isWidget});
 
   Widget buildComment() {
     return StreamBuilder(
@@ -61,22 +66,23 @@ class CommentsState extends State<Comments> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("Comment")),
-        body: Column(
-          children: <Widget>[
-            Expanded(child: buildComment()),
-            Divider(),
-            ListTile(
-              title: TextFormField(
-                controller: commentController,
-                decoration: InputDecoration(hintText: "Comment here..."),
-              ),
-              trailing:
-                  IconButton(icon: Icon(Icons.send), onPressed: addComment),
-            )
-          ],
-        ));
+    return Column(
+      children: <Widget>[
+        isWidget
+            ? SizedBox(
+                child: buildComment(),
+              )
+            : Expanded(child: buildComment()),
+        Divider(),
+        ListTile(
+          title: TextFormField(
+            controller: commentController,
+            decoration: InputDecoration(hintText: "Comment here..."),
+          ),
+          trailing: IconButton(icon: Icon(Icons.send), onPressed: addComment),
+        )
+      ],
+    );
   }
 }
 

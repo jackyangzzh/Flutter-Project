@@ -154,11 +154,16 @@ class _PostState extends State<Post> {
   void showComment(BuildContext context,
       {String postId, String ownerId, String mediaUrl}) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Comments(
-        postId: postId,
-        ownerId: ownerId,
-        mediaUrl: mediaUrl,
-      );
+      return Scaffold(
+          appBar: AppBar(
+            title: Text("Comments"),
+          ),
+          body: Comments(
+            postId: postId,
+            ownerId: ownerId,
+            mediaUrl: mediaUrl,
+            isWidget: false,
+          ));
     }));
   }
 
