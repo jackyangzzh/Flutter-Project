@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/models/user.dart';
+import 'package:collect/pages/activity_feed.dart';
 import 'package:collect/pages/edit_profile.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/pages/timeline.dart';
@@ -198,12 +199,8 @@ class _ProfileState extends State<Profile> {
   }
 
   void buildNotification() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Scaffold(
-        appBar: AppBar(title: Text("Notification")),
-        body: Center(child: Text("News ")),
-      );
-    }));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ActivityFeed()));
   }
 
   @override

@@ -61,6 +61,10 @@ class CommentsState extends State<Comments> {
       "userUrl": currentUser.photoUrl,
       "userId": currentUser.id
     });
+    bool isNotOwner = ownerId != currentUser.id;
+    if (!isNotOwner) {
+      return;
+    }
     feedRef.document(ownerId).collection('feedItems').add({
       'type': 'comment',
       'commentData': commentController.text,
