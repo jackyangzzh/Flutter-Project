@@ -55,6 +55,7 @@ class _PostDetailState extends State<PostDetail> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': false});
+      removeLikeToFeed();
       setState(() {
         likeCount--;
         isLiked = false;
@@ -66,6 +67,7 @@ class _PostDetailState extends State<PostDetail> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': true});
+      addLikeToFeed();
       setState(() {
         likeCount++;
         isLiked = true;
@@ -78,6 +80,39 @@ class _PostDetailState extends State<PostDetail> {
       setState(() {
         showHeart = false;
       });
+    });
+  }
+
+  void addLikeToFeed() {
+    bool isNotOwner = currentUserId != ownerId;
+    if (!isNotOwner) {
+      return;
+    }
+    feedRef.document(ownerId).collection('feedItems').document(postId).setData({
+      'type': 'like',
+      'username': currentUser.username,
+      'userId': currentUser.id,
+      'userUrl': currentUser.photoUrl,
+      'postId': postId,
+      'mediaUrl': post.mediaUrl,
+      'timestamp': post.timestamp
+    });
+  }
+
+  void removeLikeToFeed() {
+    bool isNotOwner = currentUserId != ownerId;
+    if (!isNotOwner) {
+      return;
+    }
+    feedRef
+        .document(ownerId)
+        .collection('feedItems')
+        .document(postId)
+        .get()
+        .then((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
     });
   }
 
@@ -99,6 +134,12 @@ class _PostDetailState extends State<PostDetail> {
         isLiked = likes[currentUserId] == true;
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () =>
+                  Navigator.pop(context, [isLiked, likes, likeCount]),
+            ),
             elevation: 0,
             title: GestureDetector(
               onTap: () => print("tapped"),
@@ -245,7 +286,9 @@ class _PostDetailState extends State<PostDetail> {
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ),
-                Divider(height: 40,),
+                Divider(
+                  height: 40,
+                ),
                 SizedBox(
                   height: 1000,
                   child: Comments(

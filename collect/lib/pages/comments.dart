@@ -61,6 +61,16 @@ class CommentsState extends State<Comments> {
       "userUrl": currentUser.photoUrl,
       "userId": currentUser.id
     });
+    feedRef.document(ownerId).collection('feedItems').add({
+      'type': 'comment',
+      'commentData': commentController.text,
+      'username': currentUser.username,
+      'userId': currentUser.id,
+      'userUrl': currentUser.photoUrl,
+      'postId': postId,
+      'mediaUrl': mediaUrl,
+      'timestamp': timeStamp,
+    });
     commentController.clear();
   }
 

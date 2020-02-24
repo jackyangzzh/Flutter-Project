@@ -202,19 +202,35 @@ class _PostState extends State<Post> {
     }));
   }
 
+  void refresh() async {
+    DocumentSnapshot doc;
+    doc = await postRef
+        .document(ownerId)
+        .collection('userPosts')
+        .document(postId)
+        .get();
+    likes = doc['likes'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          List results;
+          results = await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => PostDetail(
                         postId: postId,
                         ownerId: ownerId,
                       )));
+          setState(() {
+            isLiked = results[0];
+            likes = results[1];
+            likeCount = results[2];
+          });
         },
         onDoubleTap: likePost,
         child: Column(
