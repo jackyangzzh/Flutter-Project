@@ -125,6 +125,7 @@ class _PostState extends State<Post> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': false});
+      removeLikeToFeed();
       setState(() {
         likeCount--;
         isLiked = false;
@@ -136,6 +137,7 @@ class _PostState extends State<Post> {
           .collection('userPosts')
           .document(postId)
           .updateData({'likes.$currentUserId': true});
+      addLikeToFeed();
       setState(() {
         likeCount++;
         isLiked = true;
@@ -148,6 +150,39 @@ class _PostState extends State<Post> {
       setState(() {
         showHeart = false;
       });
+    });
+  }
+
+  void addLikeToFeed() {
+    bool isNotOwner = currentUserId != ownerId;
+    if (!isNotOwner) {
+      return;
+    }
+    feedRef.document(ownerId).collection('feedItems').document(postId).setData({
+      'type': 'like',
+      'username': currentUser.username,
+      'userId': currentUser.id,
+      'userUrl': currentUser.photoUrl,
+      'postId': postId,
+      'mediaUrl': mediaUrl,
+      'timestamp': timestamp
+    });
+  }
+
+  void removeLikeToFeed() {
+    bool isNotOwner = currentUserId != ownerId;
+    if (!isNotOwner) {
+      return;
+    }
+    feedRef
+        .document(ownerId)
+        .collection('feedItems')
+        .document(postId)
+        .get()
+        .then((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
     });
   }
 

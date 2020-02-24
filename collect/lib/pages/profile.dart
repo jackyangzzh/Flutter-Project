@@ -82,8 +82,7 @@ class _ProfileState extends State<Profile> {
               width: MediaQuery.of(context).size.width * 0.7,
               padding: EdgeInsets.only(bottom: 15),
               child: Text(user.bio,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13)),
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 13)),
             ),
             buildProfileButton(),
           ]),
@@ -198,6 +197,15 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  void buildNotification() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Scaffold(
+        appBar: AppBar(title: Text("Notification")),
+        body: Center(child: Text("News ")),
+      );
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,7 +219,9 @@ class _ProfileState extends State<Profile> {
                 pinned: false,
                 title: Text("Profile"),
                 actions: <Widget>[
-                  IconButton(icon: Icon(Icons.notifications), onPressed: () {})
+                  IconButton(
+                      icon: Icon(Icons.notifications),
+                      onPressed: buildNotification)
                 ],
               ),
               new SliverList(
