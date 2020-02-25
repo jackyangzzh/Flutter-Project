@@ -59,34 +59,46 @@ class _ProfileState extends State<Profile> {
         user = User.fromDocument(snapshot.data);
         return Padding(
           padding: EdgeInsets.all(15),
-          child: Column(children: <Widget>[
-            Hero(
-              tag: 'userProfile',
-              child: CircleAvatar(
-                radius: 30,
-                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10, bottom: 2),
-              child: Text(
-                user.displayName,
-                style: Theme.of(context).textTheme.title,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 15),
-              child: Text(user.username,
-                  style: Theme.of(context).textTheme.display3),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              padding: EdgeInsets.only(bottom: 15),
-              child: Text(user.bio,
-                  textAlign: TextAlign.center, style: TextStyle(fontSize: 13)),
-            ),
-            buildProfileButton(),
-          ]),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Hero(
+                  tag: 'userProfile',
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 10, bottom: 2),
+                  child: Text(
+                    user.displayName,
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Text(user.username,
+                      style: Theme.of(context).textTheme.display3),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Text(user.bio,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 13)),
+                ),
+                buildProfileButton(),
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      buildCount("Follower", 5),
+                      buildCount("Following", 3),
+                    ],
+                  ),
+                ),
+              ]),
         );
       },
     );
@@ -111,8 +123,8 @@ class _ProfileState extends State<Profile> {
 
   Container buildButton({String text, Function function}) {
     return Container(
-        width: 120,
-        height: 25,
+        width: 130,
+        height: 27,
         child: FlatButton(
           onPressed: function,
           child: Container(
@@ -123,23 +135,28 @@ class _ProfileState extends State<Profile> {
             ),
             decoration: BoxDecoration(
                 color: Colors.green[600],
-                borderRadius: BorderRadius.circular(5)),
+                borderRadius: BorderRadius.circular(15)),
           ),
         ));
   }
 
   //used for building followers counter etc.
-  Column buildCount(String label, int count) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(count.toString()),
-        Container(
-          margin: EdgeInsets.only(top: 5),
-          child: Text(label, style: TextStyle(color: Colors.grey)),
-        )
-      ],
+  Widget buildCount(String label, int count) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 5),
+            child: Text(label, style: Theme.of(context).textTheme.display3),
+          ),
+          SizedBox(
+            width: 80,
+          ),
+          Text(count.toString()),
+        ],
+      ),
     );
   }
 
@@ -226,7 +243,7 @@ class _ProfileState extends State<Profile> {
                 buildProfileHeader(),
                 Divider(),
                 buildToggle(),
-                Divider()
+                Divider(),
               ])),
             ];
           },

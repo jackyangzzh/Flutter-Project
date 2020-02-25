@@ -301,6 +301,7 @@ class _PostState extends State<Post> {
                       Icon(
                         Icons.comment,
                         size: 17,
+                        color: Colors.blue[800],
                       ),
                       const SizedBox(
                         width: 10,
