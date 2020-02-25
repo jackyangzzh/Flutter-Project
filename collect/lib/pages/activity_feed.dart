@@ -14,7 +14,7 @@ class _ActivityFeedState extends State<ActivityFeed> {
   Future getFeed() async {
     QuerySnapshot snapshot = await feedRef
         .document(currentUser.id)
-        .collection('feedItem')
+        .collection('feedItems')
         .orderBy('timestamp', descending: true)
         .limit(50)
         .getDocuments();
@@ -46,6 +46,9 @@ class _ActivityFeedState extends State<ActivityFeed> {
   }
 }
 
+  Widget mediaPreview;
+  String feedText;
+
 class ActivityFeedItem extends StatelessWidget {
   final String username;
   final String userId;
@@ -55,9 +58,6 @@ class ActivityFeedItem extends StatelessWidget {
   final String userUrl;
   final String comment;
   final Timestamp timestamp;
-
-  Widget mediaPreview;
-  Text feedText;
 
   ActivityFeedItem({
     this.username,
@@ -69,6 +69,7 @@ class ActivityFeedItem extends StatelessWidget {
     this.comment,
     this.timestamp,
   });
+
 
   factory ActivityFeedItem.fromDocument(DocumentSnapshot doc) {
     return ActivityFeedItem(
@@ -84,7 +85,7 @@ class ActivityFeedItem extends StatelessWidget {
   }
 
   void buildMediaPreview() {
-    if (type == 'like' || type == comment) {
+    if (type == 'like' || type == 'comment') {
       mediaPreview = GestureDetector(
         onTap: () => print("post"),
         child: Container(
@@ -105,13 +106,13 @@ class ActivityFeedItem extends StatelessWidget {
     }
 
     if (type == "like") {
-      feedText = Text("liked");
+      feedText = " liked";
     } else if (type == "follow") {
-      feedText = Text("Followed");
+      feedText = " followed";
     } else if (type == "comment") {
-      feedText = Text("said: $comment");
+      feedText =" says: $comment";
     } else {
-      feedText = Text("Unknown type $type");
+      feedText = " Unknown type $type";
     }
   }
 
@@ -125,11 +126,12 @@ class ActivityFeedItem extends StatelessWidget {
         color: Colors.white54,
         child: ListTile(
           title: GestureDetector(
-            onTap: () => print("Show profioe"),
+            onTap: () => print("Show profile"),
             child: RichText(
               overflow: TextOverflow.ellipsis,
               text: TextSpan(
                   style: TextStyle(fontSize: 14, color: Colors.black),
+                  // style: Theme.of(context).textTheme.body1,
                   children: [
                     TextSpan(
                         text: username,
@@ -142,7 +144,8 @@ class ActivityFeedItem extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(userUrl),
           ),
           subtitle: Text(
-            timeago.format(timestamp.toDate()),
+            timeago.format(timestamp.toDate(),),
+            style: Theme.of(context).textTheme.display3,
             overflow: TextOverflow.ellipsis,
           ),
           trailing: mediaPreview,
