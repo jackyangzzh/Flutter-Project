@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/post_detail.dart';
+import 'package:collect/pages/profile.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:collect/pages/home.dart';
@@ -46,8 +48,8 @@ class _ActivityFeedState extends State<ActivityFeed> {
   }
 }
 
-  Widget mediaPreview;
-  String feedText;
+Widget mediaPreview;
+String feedText;
 
 class ActivityFeedItem extends StatelessWidget {
   final String username;
@@ -70,7 +72,6 @@ class ActivityFeedItem extends StatelessWidget {
     this.timestamp,
   });
 
-
   factory ActivityFeedItem.fromDocument(DocumentSnapshot doc) {
     return ActivityFeedItem(
       username: doc['username'],
@@ -84,10 +85,10 @@ class ActivityFeedItem extends StatelessWidget {
     );
   }
 
-  void buildMediaPreview() {
+  void buildMediaPreview(context) {
     if (type == 'like' || type == 'comment') {
       mediaPreview = GestureDetector(
-        onTap: () => print("post"),
+        onTap: () => showPost(context, postId: postId, ownerId: userId),
         child: Container(
             height: 50,
             width: 50,
@@ -110,7 +111,7 @@ class ActivityFeedItem extends StatelessWidget {
     } else if (type == "follow") {
       feedText = " followed";
     } else if (type == "comment") {
-      feedText =" says: $comment";
+      feedText = " says: $comment";
     } else {
       feedText = " Unknown type $type";
     }
@@ -118,7 +119,7 @@ class ActivityFeedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    buildMediaPreview();
+    buildMediaPreview(context);
 
     return Padding(
       padding: EdgeInsets.only(bottom: 2.0),
@@ -126,13 +127,13 @@ class ActivityFeedItem extends StatelessWidget {
         color: Colors.white54,
         child: ListTile(
           title: GestureDetector(
-            onTap: () => print("Show profile"),
+            onTap: () => showProfile(context, userId: userId),
             child: RichText(
               overflow: TextOverflow.ellipsis,
-              text: TextSpan(
-                  style: TextStyle(fontSize: 14, color: Colors.black),
-                  // style: Theme.of(context).textTheme.body1,
-                  children: [
+              text:
+                  TextSpan(style: TextStyle(fontSize: 14, color: Colors.black),
+                      // style: Theme.of(context).textTheme.body1,
+                      children: [
                     TextSpan(
                         text: username,
                         style: TextStyle(fontWeight: FontWeight.bold)),
@@ -144,7 +145,9 @@ class ActivityFeedItem extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(userUrl),
           ),
           subtitle: Text(
-            timeago.format(timestamp.toDate(),),
+            timeago.format(
+              timestamp.toDate(),
+            ),
             style: Theme.of(context).textTheme.display3,
             overflow: TextOverflow.ellipsis,
           ),
@@ -153,4 +156,16 @@ class ActivityFeedItem extends StatelessWidget {
       ),
     );
   }
+}
+
+void showProfile(BuildContext context, {String userId}) {
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => Profile(profileId: userId)));
+}
+
+void showPost(BuildContext context, {String postId, String ownerId}) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => PostDetail(postId: postId, ownerId: ownerId)));
 }

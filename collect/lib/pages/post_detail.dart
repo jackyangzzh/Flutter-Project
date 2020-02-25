@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collect/pages/activity_feed.dart';
 import 'package:collect/pages/comments.dart';
 import 'package:collect/pages/home.dart';
 import 'package:collect/widgets/custom_image.dart';
@@ -142,7 +143,7 @@ class _PostDetailState extends State<PostDetail> {
             ),
             elevation: 0,
             title: GestureDetector(
-              onTap: () => print("tapped"),
+              onTap: () => showProfile(context, userId: ownerId),
               child: Row(
                 children: <Widget>[
                   CircleAvatar(

@@ -4,6 +4,7 @@ import 'package:collect/widgets/header.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collect/pages/activity_feed.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -55,7 +56,7 @@ class _TimelineState extends State<Timeline> {
           searchResultList.add(userResult);
         });
         if (searchResultList.length == 0) {
-          return Text("Nothing was found");
+          return Center(child: Text("Nothing was found"));
         }
         return ListView(children: searchResultList);
       },
@@ -95,9 +96,7 @@ class _TimelineState extends State<Timeline> {
             .map((user) => Text(user['username']))
             .toList();
         return Container(
-          child: ListView(
-            children: userList,
-          ),
+
         );
       },
     );
@@ -128,7 +127,7 @@ class UserResult extends StatelessWidget {
       child: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () {},
+            onTap: () => showProfile(context, userId: user.id),
             child: ListTile(
               leading: CircleAvatar(
                 radius: 27,

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/models/user.dart';
+import 'package:collect/pages/profile.dart';
 import 'package:collect/pages/timeline.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
@@ -85,29 +86,36 @@ class UserResult extends StatelessWidget {
 
   UserResult(this.user);
 
+  void showProfile(BuildContext context, {String userId}) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Profile(profileId: userId)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          GestureDetector(
-            onTap: () {},
-            child: ListTile(
-              leading: CircleAvatar(
-                radius: 27,
-                backgroundImage: CachedNetworkImageProvider(user.photoUrl),
-              ),
-              title: Text(user.displayName,
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              subtitle:
-                  Text(user.username, style: TextStyle(color: Colors.black)),
-            ),
-          ),
-          Divider()
-        ],
-      ),
-    );
+    return Container();
+    // return Container(
+    //   color: Colors.green,
+    //   child: Column(
+    //     children: <Widget>[
+    //       GestureDetector(
+    //         // onTap: () => showProfile(context, userId: user.id),
+    //         onTap: () => print("Tapped"),
+    //         child: ListTile(
+    //           leading: CircleAvatar(
+    //             radius: 25,
+    //             backgroundImage: CachedNetworkImageProvider(user.photoUrl),
+    //           ),
+    //           title: Text(user.displayName,
+    //               style: TextStyle(
+    //                   color: Colors.black, fontWeight: FontWeight.bold)),
+    //           subtitle:
+    //               Text(user.username, style: TextStyle(color: Colors.black)),
+    //         ),
+    //       ),
+    //       Divider()
+    //     ],
+    //   ),
+    // );
   }
 }
