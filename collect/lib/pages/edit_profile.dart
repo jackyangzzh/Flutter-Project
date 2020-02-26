@@ -162,7 +162,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             decoration: BoxDecoration(
                                 color: Colors.green[600],
-                                borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(15)),
                           ),
                         )),
                   ),

@@ -50,7 +50,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     child: Form(
                       key: _formKey,
                       child: TextFormField(
-                        autovalidate: true,
+
                         validator: (val) {
                           if (val.trim().length < 3 || val.isEmpty) {
                             return "Let's try a longer username";

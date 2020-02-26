@@ -20,6 +20,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool isFollowing = false;
   final String currentUserId = currentUser?.id;
   bool isLoading = false;
   int postCount;
@@ -81,12 +82,14 @@ class _ProfileState extends State<Profile> {
                   child: Text(user.username,
                       style: Theme.of(context).textTheme.display3),
                 ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: Text(user.bio,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13)),
-                ),
+                user.bio.isEmpty
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Text(user.bio,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 13)),
+                      ),
                 buildProfileButton(),
                 Container(
                   padding: EdgeInsets.only(top: 10),
@@ -113,10 +116,18 @@ class _ProfileState extends State<Profile> {
                 )));
   }
 
+  void handleUnfollow() {}
+
+  void handleFollow() {}
+
   Widget buildProfileButton() {
     bool isProfileOwn = currentUserId == widget.profileId;
     if (isProfileOwn) {
       return buildButton(text: "Edit Profile", function: editProfile);
+    } else if (isFollowing) {
+      return buildButton(text: "Unfollow", function: handleUnfollow);
+    } else if (!isFollowing) {
+      return buildButton(text: "Follow", function: handleFollow);
     }
     return Text("Profile Button");
   }
@@ -131,10 +142,14 @@ class _ProfileState extends State<Profile> {
             alignment: Alignment.center,
             child: Text(
               text,
-              style: TextStyle(fontSize: 13, color: Colors.white),
+              style: TextStyle(
+                  fontSize: 13,
+                  color: isFollowing ? Colors.black : Colors.white),
             ),
             decoration: BoxDecoration(
-                color: Colors.green[600],
+                border: Border.all(
+                    color: isFollowing ? Colors.grey : Colors.green[600]),
+                color: isFollowing ? Colors.white : Colors.green[600],
                 borderRadius: BorderRadius.circular(15)),
           ),
         ));
