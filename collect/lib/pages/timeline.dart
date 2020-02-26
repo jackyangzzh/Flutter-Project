@@ -130,14 +130,13 @@ class UserResult extends StatelessWidget {
             onTap: () => showProfile(context, userId: user.id),
             child: ListTile(
               leading: CircleAvatar(
-                radius: 27,
+                radius: 22,
                 backgroundImage: CachedNetworkImageProvider(user.photoUrl),
               ),
               title: Text(user.displayName,
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
+                  style: Theme.of(context).textTheme.display4),
               subtitle:
-                  Text(user.username, style: TextStyle(color: Colors.black)),
+                  Text(user.username, style: Theme.of(context).textTheme.headline),
             ),
           ),
           Divider()

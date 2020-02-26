@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/models/user.dart';
-import 'package:collect/pages/activity_feed.dart';
 import 'package:collect/pages/create_account.dart';
 import 'package:collect/pages/profile.dart';
-import 'package:collect/pages/search.dart';
 import 'package:collect/pages/timeline.dart';
 import 'package:collect/pages/upload.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -17,6 +15,8 @@ final userRef = Firestore.instance.collection('users');
 final postRef = Firestore.instance.collection('posts');
 final commentRef = Firestore.instance.collection('comments');
 final feedRef = Firestore.instance.collection('feed');
+final followerRef = Firestore.instance.collection('followers');
+final followingRef = Firestore.instance.collection('following');
 final DateTime timeStamp = DateTime.now();
 User currentUser;
 

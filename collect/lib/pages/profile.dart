@@ -116,9 +116,63 @@ class _ProfileState extends State<Profile> {
                 )));
   }
 
-  void handleUnfollow() {}
+  void handleUnfollow() {
+    setState(() {
+      isFollowing = false;
+    });
+    followerRef
+        .document(widget.profileId)
+        .collection('userFollowers')
+        .document(currentUserId)
+        .get()
+        .then((doc) {
+      doc.reference.delete();
+    });
+    followingRef
+        .document(currentUserId)
+        .collection('userFollowing')
+        .document(widget.profileId)
+        .get()
+        .then((doc) {
+      doc.reference.delete();
+    });
+    feedRef
+        .document(widget.profileId)
+        .collection('feedItems')
+        .document(currentUserId)
+        .get()
+        .then((doc) {
+      doc.reference.delete();
+    });
+  }
 
-  void handleFollow() {}
+  void handleFollow() {
+    setState(() {
+      isFollowing = true;
+    });
+    followerRef
+        .document(widget.profileId)
+        .collection('userFollowers')
+        .document(currentUserId)
+        .setData({});
+    followingRef
+        .document(currentUserId)
+        .collection('userFollowing')
+        .document(widget.profileId)
+        .setData({});
+    feedRef
+        .document(widget.profileId)
+        .collection('feedItems')
+        .document(currentUserId)
+        .setData({
+      'type': 'follow',
+      'ownerId': widget.profileId,
+      'username': currentUser.username,
+      'userId': currentUserId,
+      'userUrl': currentUser.photoUrl,
+      'timestamp': timeStamp
+    });
+  }
 
   Widget buildProfileButton() {
     bool isProfileOwn = currentUserId == widget.profileId;
@@ -149,7 +203,7 @@ class _ProfileState extends State<Profile> {
             decoration: BoxDecoration(
                 border: Border.all(
                     color: isFollowing ? Colors.grey : Colors.green[600]),
-                color: isFollowing ? Colors.white : Colors.green[600],
+                color: isFollowing ? Colors.transparent : Colors.green[600],
                 borderRadius: BorderRadius.circular(15)),
           ),
         ));
@@ -177,7 +231,7 @@ class _ProfileState extends State<Profile> {
 
   Widget buildCollection() {
     return Center(
-      child: Text("Insert collection"),
+      child: Text("Collection Feature Coming Soon..."),
     );
   }
 
