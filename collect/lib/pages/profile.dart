@@ -26,12 +26,17 @@ class _ProfileState extends State<Profile> {
   int postCount;
   List<Post> posts = [];
   User user;
+  int followerCount = 0;
+  int followingCount = 0;
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     getPosts();
+    getFollowers();
+    getFollowing();
+    checkIfFollow();
   }
 
   void getPosts() async {
@@ -47,6 +52,37 @@ class _ProfileState extends State<Profile> {
       postCount = snapshot.documents.length;
       posts = snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
       isLoading = false;
+    });
+  }
+
+  void getFollowers() async {
+    QuerySnapshot snapshot = await followerRef
+        .document(widget.profileId)
+        .collection('userFollowers')
+        .getDocuments();
+    setState(() {
+      followerCount = snapshot.documents.length;
+    });
+  }
+
+  void getFollowing() async {
+    QuerySnapshot snapshot = await followingRef
+        .document(widget.profileId)
+        .collection('userFollowing')
+        .getDocuments();
+    setState(() {
+      followingCount = snapshot.documents.length;
+    });
+  }
+
+  void checkIfFollow() async {
+    DocumentSnapshot doc = await followerRef
+        .document(widget.profileId)
+        .collection('userFollowers')
+        .document(currentUserId)
+        .get();
+    setState(() {
+      isFollowing = doc.exists;
     });
   }
 
@@ -96,8 +132,8 @@ class _ProfileState extends State<Profile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      buildCount("Follower", 5),
-                      buildCount("Following", 3),
+                      buildCount("Follower", followerCount),
+                      buildCount("Following", followingCount),
                     ],
                   ),
                 ),
