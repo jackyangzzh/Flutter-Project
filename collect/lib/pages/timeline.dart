@@ -82,6 +82,12 @@ class _TimelineState extends State<Timeline> {
         ),
         onFieldSubmitted: searchHandler,
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.filter_list),
+          onPressed: () {},
+        )
+      ],
     );
   }
 
@@ -95,9 +101,7 @@ class _TimelineState extends State<Timeline> {
         final List<Text> userList = snapshot.data.documents
             .map((user) => Text(user['username']))
             .toList();
-        return Container(
-
-        );
+        return Container();
       },
     );
   }
@@ -135,8 +139,8 @@ class UserResult extends StatelessWidget {
               ),
               title: Text(user.displayName,
                   style: Theme.of(context).textTheme.display4),
-              subtitle:
-                  Text(user.username, style: Theme.of(context).textTheme.headline),
+              subtitle: Text(user.username,
+                  style: Theme.of(context).textTheme.headline),
             ),
           ),
           Divider()
