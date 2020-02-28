@@ -10,7 +10,7 @@ admin.initializeApp();
 // });
 
 exports.onCreateFollower = functions.firestore.document("/followers/{userId}/userFollowers/{followerId}").onCreate(async (snapshot, context) => {
-    console.log("Follower created ", snapshot.data());
+    console.log("Follower created ", snapshot.id);
     const userId = context.params.userId;
     const followerId = context.params.followerId;
 
@@ -27,4 +27,21 @@ exports.onCreateFollower = functions.firestore.document("/followers/{userId}/use
             timelinePostRef.doc(postId).set(postData);
         }
     })
-})
+});
+
+exports.onDeleteFollower = functions.firestore.document("followers/{userId}/userFollowers/{followerId}").onDelete(async (snapshot, context) => {
+    console.log("follower deleted ", snapshot.id);
+
+    const userId = context.params.userId;
+    const followerId = context.params.followerId;
+
+    const timelinePostRef = admin.firestore().collection('timeline').doc(followerId).collection('timelinePosts').where('ownerId', '==', userId);
+
+    const querySnapshot = await timelinePostRef.get();
+
+    querySnapshot.forEach(doc => {
+        if (doc.exists) {
+            doc.ref.delete();
+        }
+    })
+});
