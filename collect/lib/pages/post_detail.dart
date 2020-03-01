@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animator/animator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/pages/activity_feed.dart';
 import 'package:collect/pages/comments.dart';
 import 'package:collect/pages/home.dart';
@@ -45,6 +46,37 @@ class _PostDetailState extends State<PostDetail> {
       }
     });
     return count;
+  }
+
+  void deletePost() async {
+    postRef
+        .document(ownerId)
+        .collection('userPosts')
+        .document(postId)
+        .get()
+        .then((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
+    });
+    storageReference.child("post_$postId.jpg").delete();
+    QuerySnapshot snapshot = await feedRef
+        .document(ownerId)
+        .collection("feedItems")
+        .where('postId', isEqualTo: postId)
+        .getDocuments();
+    snapshot.documents.forEach((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
+    });
+    QuerySnapshot commentSnap =
+        await commentRef.document(postId).collection('comments').getDocuments();
+    commentSnap.documents.forEach((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
+    });
   }
 
   void likePost() {
@@ -119,6 +151,7 @@ class _PostDetailState extends State<PostDetail> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPostOwner = currentUserId == ownerId;
     return FutureBuilder(
       future: postRef
           .document(ownerId)
@@ -166,10 +199,26 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.more_vert),
-                onPressed: () {},
-              )
+              // IconButton(
+              //   icon: Icon(Icons.more_vert),
+              //   onPressed: () => deletePost(context),
+              // )
+              isPostOwner
+                  ? PopupMenuButton<int>(
+                      icon: Icon(Icons.more_vert),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 1,
+                          child: Text("Delete"),
+                        ),
+                      ],
+                      onSelected: (val) {
+                        if (val == 1) {
+                          deletePost();
+                        }
+                      },
+                    )
+                  : Container()
             ],
           ),
           body: SingleChildScrollView(

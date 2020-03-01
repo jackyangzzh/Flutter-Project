@@ -15,24 +15,20 @@ exports.onCreateFollower = functions.firestore
     const userId = context.params.userId;
     const followerId = context.params.followerId;
 
-    // 1) Create followed users posts ref
     const followedUserPostsRef = admin
       .firestore()
       .collection("posts")
       .doc(userId)
       .collection("userPosts");
 
-    // 2) Create following user's timeline ref
     const timelinePostsRef = admin
       .firestore()
       .collection("timeline")
       .doc(followerId)
       .collection("timelinePosts");
 
-    // 3) Get followed users posts
     const querySnapshot = await followedUserPostsRef.get();
 
-    // 4) Add each user post to following user's timeline
     querySnapshot.forEach(doc => {
       if (doc.exists) {
         const postId = doc.id;
