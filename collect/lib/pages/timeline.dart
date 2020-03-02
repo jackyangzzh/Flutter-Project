@@ -1,24 +1,46 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collect/models/user.dart';
 import 'package:collect/widgets/header.dart';
+import 'package:collect/widgets/post.dart';
 import 'package:collect/widgets/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collect/pages/activity_feed.dart';
+import 'package:collect/pages/home.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
 class Timeline extends StatefulWidget {
+  final User currentUser;
+
+  Timeline({this.currentUser});
+
   @override
   _TimelineState createState() => _TimelineState();
 }
 
 class _TimelineState extends State<Timeline> {
   List<dynamic> users = [];
+  List<Post> posts;
 
   @override
   void initState() {
     super.initState();
+    getTimeline();
+  }
+
+  Future<void> getTimeline() async {
+    // print(widget.currentUser);
+    QuerySnapshot snapshot = await timelineRef
+        .document(widget.currentUser.id)
+        .collection('timelinePosts')
+        .orderBy('timestamp', descending: true)
+        .getDocuments();
+    List<Post> posts =
+        snapshot.documents.map((doc) => Post.fromDocument(doc)).toList();
+    setState(() {
+      this.posts = posts;
+    });
   }
 
   Future<QuerySnapshot> searchResults;
@@ -92,18 +114,34 @@ class _TimelineState extends State<Timeline> {
   }
 
   Widget buildTimeline() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: usersRef.snapshots(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return circularProgress(context);
-        }
-        final List<Text> userList = snapshot.data.documents
-            .map((user) => Text(user['username']))
-            .toList();
-        return Container();
-      },
+    return RefreshIndicator(
+      onRefresh: () => getTimeline(),
+      child: buildTimelineSection(),
+      // child: StreamBuilder<QuerySnapshot>(
+      //   stream: usersRef.snapshots(),
+      //   builder: (context, snapshot) {
+      //     if (!snapshot.hasData) {
+      //       return circularProgress(context);
+      //     }
+      //     final List<Text> userList = snapshot.data.documents
+      //         .map((user) => Text(user['username']))
+      //         .toList();
+      //     return Container();
+      //   },
+      // ),
     );
+  }
+
+  Widget buildTimelineSection() {
+    if (posts == null) {
+      return circularProgress(context);
+    } else if (posts.isEmpty) {
+      return Text("No posts");
+    } else {
+      return ListView(
+        children: posts,
+      );
+    }
   }
 
   @override

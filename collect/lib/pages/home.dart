@@ -17,6 +17,7 @@ final commentRef = Firestore.instance.collection('comments');
 final feedRef = Firestore.instance.collection('feed');
 final followerRef = Firestore.instance.collection('followers');
 final followingRef = Firestore.instance.collection('following');
+final timelineRef = Firestore.instance.collection('timeline');
 final DateTime timeStamp = DateTime.now();
 User currentUser;
 
@@ -34,18 +35,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _pageController = PageController();
-
-    // _googleSignIn.onCurrentUserChanged.listen((account) {
-    //   signInHandler(account);
-    // }, onError: (error) {
-    //   print("Error when sigin in: " + error);
-    // });
-
-    // _googleSignIn.signInSilently(suppressErrors: false).then((account) {
-    //   signInHandler(account);
-    // }).catchError((error) {
-    //   print("Error when silent sigin in: " + error);
-    // });
 
     googleSignIn.onCurrentUserChanged.listen((account) {
       signInHandler(account);
@@ -88,7 +77,6 @@ class _HomeState extends State<Home> {
       userInfo = await userRef.document(user.id).get();
     }
     currentUser = User.fromDocument(userInfo);
-    print(currentUser.username);
   }
 
   void signIn() {
@@ -117,15 +105,11 @@ class _HomeState extends State<Home> {
   }
 
   Scaffold authScreen() {
+    print(currentUser);
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          Timeline(),
-          // FlatButton(
-          //   child: Text("logout"),
-          //   onPressed: signOut,
-          // ),
-
+          Timeline(currentUser: currentUser),
           // ActivityFeed(),
           Upload(currentUser: currentUser),
           // Search(),
